@@ -1,0 +1,153 @@
+.right-content{
+    background-color: #41306b7a;
+    height: 46em;
+    width: 67%;
+    padding: 8px;
+    float: right;
+    position: relative;
+    overflow: auto;
+}
+
+fieldset{
+    border-width: 1px;
+    border-color: cyan;
+    margin-top: 23px;
+}
+
+legend{
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.left-part{
+    width: 49%;
+    float: left;
+}
+
+.right-part{
+    float: right;
+    width: 49%;
+}
+
+.border{
+    border-color: rgb(13, 206, 206);
+    border-width: 1px;
+    border-style: groove;
+    border-radius: 5px;
+    display: flex;
+    background-color: rgb(212, 239, 255);
+}
+
+pre {
+    font-family: monospace;
+    background-color: #fff;
+    width: em(440);
+    border-radius: .25em;
+    line-height: 0;
+    margin-top: 2px;
+    margin-bottom: 50px;
+    counter-reset: line;
+    float: left;
+    width: 18%;
+}
+    
+pre span {
+    display: block;
+    line-height: 19px;
+    background-color: rgb(212, 239, 255);
+}
+
+pre span:before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid rgb(13, 206, 206);
+    padding: 1px 5px;
+    margin-right: .5em;
+    color: rgb(6, 170, 170);
+    width: 60px;
+    text-align: end;
+}
+
+.title{
+    padding: 7px 2px;
+}
+
+.list-text{
+    float: right;
+    width: 80%;
+    background: white;
+    margin-top: 5px;
+    overflow: scroll;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.list-text span{
+    line-height: 26px;
+    display: block;
+}
+   
+.hot-key-word{
+    text-align: right;
+    margin-top: 5px;
+}
+
+.icon{
+    float: right;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.list{
+    margin-top: 0px;
+}
+
+.btn{
+    color: white;
+}
+
+.green-btn{
+    background-color: green;
+}
+
+.left-btn{
+    float: left;
+    width: 48%;
+    background-color: aqua;
+}
+
+.right-btn{
+    float: right;
+    width: 48%;
+    background-color: brown;;
+}
+
+.used-list{
+    margin-top: 10px;
+}
+
+.unused-list{
+    margin-top: 40px;
+}
+
+input{
+    text-align: center;
+    width: 50px;
+    font-size: 13px;
+}
+
+.checkbox{
+    width: 1em;
+    vertical-align: bottom;
+}
+
+.radio{
+    width: 1em;
+    vertical-align: top;
+}
+
+.link{
+    color: rgb(7, 91, 139);
+    cursor: pointer;
+}

@@ -1,0 +1,3 @@
+- In this folder, we run: "npm install", "ng build --prod --base-href=/autoplaylist/" to have folder: "dist"
+- Copy folder "dist" to folder: "Deploy", then open folder "Deploy", run: "mvn clean install".
+- Then deploy file war and open browser with URL: http://localhost:8080/autoplaylist/

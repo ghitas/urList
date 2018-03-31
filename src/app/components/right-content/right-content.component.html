@@ -1,0 +1,275 @@
+<div class="right-content">
+      <div class="left-part">
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Cài đặt chung</div>
+                  <div class="card-body text-dark">
+                        <div>
+                              Tùy chọn xuất bản PLL:
+                              <select>
+                                    <option>Công khai</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                        <div>
+                              Ngôn ngữ sử dụng cho playlist:
+                              <select [(ngModel)]="selectedLang" (ngModelChange)="onChangeLang($event)">
+                                    <option *ngFor="let item of langs" [ngValue]="item"> {{item.name}} </option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                        <div>
+                              Số lượng playlist trên kênh:
+                              <input type="text" value="1000">
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                        <div>
+                              <input type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                        <div>
+                              <input type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                  </div>
+            </div>
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Cài đặt tìm kiếm video</div>
+                  <div class="card-body text-dark">
+                        <div>
+                              Số lượng video cho mỗi playlist từ:
+                              <input type="text" value="30"> tới
+                              <input type="text" value="50">
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Sắp xếp video theo:
+                              <select [(ngModel)]="selectedSort" (ngModelChange)="onChangeLang($event)">
+                                    <option *ngFor="let item of sortVideo" [ngValue]="item"> {{item.name}} </option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Thời gian đăng video:
+                              <select>
+                                    <option>1 năm trở lại đây</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Thời lượng video:
+                              <select>
+                                    <option>Không giới hạn</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Chất lượng video:
+                              <select>
+                                    <option>Mọi chất lượng</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Live video:
+                              <select>
+                                    <option>Bất kỳ</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              Kiểu video:
+                              <select>
+                                    <option>Tất cả</option>
+                              </select>
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+                  </div>
+            </div>
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Cài đặt video của bạn</div>
+                  <div class="card-body text-dark">
+                        <div>
+                              <input type="radio" class="radio"> Không chèn video của bạn (có sẽ view chèn sau
+                              <span class="link">tại đây</span>)
+                        </div>
+
+                        <div>
+                              <input type="radio" class="radio" checked> Chèn video của bạn lúc tạo PLL
+                              <span class="link">tại đây</span>)
+                        </div>
+
+                        <div>
+                              Số lượng video của bạn cần thêm
+                              <input type="text" placeholder="10"> (max 10)
+                              <i class="fa fa-question-circle icon"></i>
+                        </div>
+
+                        <div>
+                              ID video của bạn, mỗi id mỗi hàng (
+                              <span class="link">Lấy ID</span>)
+                        </div>
+
+                        <div>
+                              <div class="title">Danh sách từ khóa đã bỏ qua:
+                                    <i class="fa fa-question-circle icon"></i>
+                              </div>
+                              <textarea class="lined" rows="10" cols="53">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+
+The naming has caused confusion, giving the 
+impression that the language is a spin-off of Java, 
+and it has been characterized by many as a 
+marketing ploy by Netscape to give JavaScript the 
+cachet of what was then the hot new web-programming language.
+</textarea>
+                              <div>
+                                    <input type="checkbox" class="checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                    <i class="fa fa-question-circle icon"></i>
+                              </div>
+
+                              <div>
+                                    <input type="checkbox" class="checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                    <i class="fa fa-question-circle icon"></i>
+                              </div>
+
+                              <div>
+                                    <input type="checkbox" class="checkbox" checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
+                                    <i class="fa fa-question-circle icon"></i>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+      <!-- right part  -->
+      <div class="right-part">
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):
+                        <i class="fa fa-question-circle icon"></i>
+                  </div>
+                  <div class="card-body text-dark">
+                        <textarea class="lined" rows="10" cols="53">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+
+The naming has caused confusion, giving the 
+impression that the language is a spin-off of Java, 
+and it has been characterized by many as a 
+marketing ploy by Netscape to give JavaScript the 
+cachet of what was then the hot new web-programming language.
+</textarea>
+                  </div>
+                  <div class="card-footer">
+                        <div class="pull-right">
+                              <span>Lấy key đang hot tại:</span>
+                              <select>
+                                    <option>Hoa Kỳ</option>
+                              </select>
+                              <button class="btn btn-success btn-sm">Lấy key</button>
+                        </div>
+                  </div>
+            </div>
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Danh sách từ khóa đã sử dụng:
+                        <i class="fa fa-question-circle icon"></i>
+                  </div>
+                  <div class="card-body text-dark">
+                        <textarea class="lined" rows="10" cols="53">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+
+The naming has caused confusion, giving the 
+impression that the language is a spin-off of Java, 
+and it has been characterized by many as a 
+marketing ploy by Netscape to give JavaScript the 
+cachet of what was then the hot new web-programming language.
+</textarea>
+                  </div>
+                  <div class="card-footer">
+                        <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+                              <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                    <button class="btn btn-info btn-sm">Sửa từ khóa đã sử dụng</button>
+                              </div>
+                              <div class="btn-group" role="group" aria-label="Third group">
+                                    <button class="btn btn-danger btn-sm">Xóa hết</button>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+            <div class="card border-secondary mb-3">
+                  <div class="card-header">Danh sách từ khóa đã bỏ qua:
+                        <i class="fa fa-question-circle icon"></i>
+                  </div>
+                  <div class="card-body text-dark">
+                        <textarea class="lined" rows="10" cols="53">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+
+The naming has caused confusion, giving the 
+impression that the language is a spin-off of Java, 
+and it has been characterized by many as a 
+marketing ploy by Netscape to give JavaScript the 
+cachet of what was then the hot new web-programming language.
+</textarea>
+                  </div>
+                  <div class="card-footer">
+                        <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+                              <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                    <button class="btn btn-info btn-sm">Sửa từ khóa đã bỏ qua</button>
+                              </div>
+                              <div class="btn-group" role="group" aria-label="Third group">
+                                    <button class="btn btn-danger btn-sm">Xóa hết</button>
+                              </div>
+                        </div>
+                  </div>
+
+            </div>
+      </div>
+</div>

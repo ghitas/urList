@@ -1,0 +1,19 @@
+<div class="card" style="width: 30rem; margin-top:30px; margin-left: 30%;">
+	<div class="card-body">
+		<form (submit)="loginUser($event)">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Username</span>
+				</div>
+				<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon2">Password</span>
+				</div>
+				<input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon2">
+			</div>
+			<button type="submit" class="btn btn-primary">Loggin</button>
+		</form>
+	</div>
+</div>

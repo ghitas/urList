@@ -1,0 +1,81 @@
+<div class="left-content">
+    <div class="text-part">
+        <div class="text-info">
+            <div class="chanel-info">
+                Kênh đang sử dụng:
+                <span class="chanel-name link">Howa Reeves</span> [
+                <span class="link" (click)="Oauth2()">Chuyển kênh</span> ]
+                <br/>
+                <br/> Tổng số playlist trên kênh:
+                <span class="number-playlist link">134</span>
+                <br/>
+                <br/> Serial đang sử dụng: 6asdfafqwwerq
+                <br/>
+                <br/> Vài playlist mới nhất trên kênh:
+                <br/>
+                <div class="new-playlist-content">
+                    <div>
+                        <span class="link">Harry Potter Book 1 Audiobook Part 1</span>
+                        <span>[46 video]</span>
+                    </div>
+                    <div>
+                        <span class="link">Harry Potter Book 4 Part 1 Audible Audiobook</span>
+                        <span>[41 video]</span>
+                    </div>
+                    <div>
+                        <span class="link">Harry Potter Book 1 Part 2</span>
+                        <span>[35 video]</span>
+                    </div>
+                    <div>
+                        <span class="link">Harry Potter Book 1 Part 1 Audiobook</span>
+                        <span>[40 video]</span>
+                    </div>
+                    <div>
+                        <span class="link">Harry Potter Book 1 Listen Online</span>
+                        <span>[50 video]</span>
+                    </div>
+                </div>
+
+                <br/> Chào bạn! Hãy tùy chọn cấu hình (hoặc để mặc định), sau đó nhập các ID video của bạn (không bắt buộc) và
+                danh sách từ khóa (bắt đầu) để bắt đầu.
+                <br/>
+                <button class="btn btn-success btn-sm" [ngClass]="disableCreatePlayListBtn ? 'inactive-create-playlist-btn' : 'active-create-playlist-btn'"
+                    (click)="createList()">
+                    Tạo Playlist
+                </button>
+                <div class="progress" *ngIf="onProcess">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                        aria-valuemax="100" style="width: 100%">
+                    </div>
+                </div>
+                <div class="success-message">{{message}}</div>
+                <br/>
+            </div>
+            <div class="tool-info">
+                <div class="tool-info-text">
+                    Tool đang được cập nhật nhiều tính năng mới. Xem thông báo mới nhất tại
+                    <span>Group</span> và hướng dẫn sử dụng tại
+                    <div class="link">
+                        Blog Quick Auto
+                        <sup>TM</sup>
+                    </div>
+                </div>
+<textarea class="lined" rows="10" cols="54">JavaScript was originally developed by Brendan 
+Eich of Netscape under the name Mocha, 
+which was later renamed to LiveScript, 
+and finally to JavaScript. 
+
+The change of name from LiveScript to JavaScript roughly 
+coincided with Netscape adding support for 
+Java technology in its Netscape Navigator 
+web browser. 
+
+JavaScript was first introduced 
+and deployed in the Netscape browser version 
+2.0B3 in December 1995. 
+</textarea>
+            </div>
+
+        </div>
+    </div>
+</div>

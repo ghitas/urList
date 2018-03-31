@@ -1,0 +1,59 @@
+.left-content{
+    float: left;
+    width: 31%;
+    position: absolute;
+}
+
+.text-part{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.text-info{
+    font-size: 13px;
+}
+
+.chanel-name{
+    font-weight: bold;
+    
+}
+
+.link{
+    color: rgb(7, 91, 139);
+    cursor: pointer;
+}
+
+.number-playlist{
+    font-weight: bold;
+}
+
+.new-playlist-content{
+    font-size: 11px;
+    color: black;
+    line-height: 15px;
+}
+
+.active-create-playlist-btn{
+    background-color: green;
+    color: white;
+}
+
+.inactive-create-playlist-btn{
+    background-color: gray;
+    color: rgb(160, 156, 156);
+    cursor: auto;
+}
+
+sup{
+    font-size: 8px;
+}
+
+.tool-info-text{
+    background-color: #f7f7f7;
+    padding: 10px 10px;
+    border-top-left-radius: 5px;
+}
+
+.success-message{
+    color: green;
+}
