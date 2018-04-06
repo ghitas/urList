@@ -1,13 +1,15 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { EventService} from '../services/event.service'
+import { EventService} from '../services/event.service';
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-app-modal',
   templateUrl: './app-modal.component.html',
   styleUrls: ['./app-modal.component.css']
 })
-export class AppModalComponent implements OnInit {
+export class AppModalComponent implements OnDestroy {
   ngOnInit() {
   }
   dialog = {
@@ -26,6 +28,7 @@ export class AppModalComponent implements OnInit {
 	constructor(private appservice: EventService, private elRef: ElementRef) {
 		this.subs = appservice.componentSaid$.subscribe(mess => {
 			this.dialog = mess;
+			debugger;
 			/**
 			 * show "Keep" or "no keep"
 			 */
@@ -39,8 +42,9 @@ export class AppModalComponent implements OnInit {
 		this.subs.unsubscribe();
 	}
 	public show(): void {
-		this.visible = true;
-		setTimeout(() => this.visibleAnimate = true, 100);
+		// this.visible = true;
+		// setTimeout(() => this.visibleAnimate = true, 100);
+		$("#modal").modal("show");
 	}
 
 	public hide(choose: string): void {

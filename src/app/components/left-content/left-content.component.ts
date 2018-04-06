@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { EventService } from '../../services/event.service';
 import { PlayListService } from '../../services/playlist.service';
+declare var $: any;
 
 @Component({
     selector: 'left-content',
@@ -14,6 +15,7 @@ export class LeftContentComponent implements OnInit {
     route: string;
     autho: string;
     onProcess: boolean = false;
+    urlChanel: string;
 
     constructor(private _eventService: EventService) {
         if (window.location.href.indexOf("code=") > 0) {
@@ -21,59 +23,34 @@ export class LeftContentComponent implements OnInit {
             this.autho = this.autho.slice(4, this.autho.length);
             this.autho = "4/" + this.autho;
             this.autho += "#";
+            window.history.pushState("", "", "/autoplaylist/callback");
         }
+        this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
+            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
+            "response_type=code&" +
+            "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
+            "scope=https://www.googleapis.com/auth/youtube&" +
+            "approval_prompt=force&" +
+            "access_type=offline";
     }
 
-    ngOnInit() {
-        // this._eventService.creatingPlaylist$.subscribe(event => {
-        //     this.disableCreatePlayListBtn = event;
-        //     if (!this.disableCreatePlayListBtn) {
-        //         this.message = 'Đã tạo play list thành công !!!!!!!';
-        //         setTimeout(() => {
-        //             this.message = '';
-        //         }, 2000);
-        //     }
-        // });
-    }
+    ngOnInit() { }
 
-    Oauth2(): void {
-        var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
-        var VALIDURL = 'https://accounts.google.com/o/oauth2/token';
-        var SCOPE = 'https://www.googleapis.com/auth/youtube';
-        var CLIENTID = '364602988528-7nbkl7eertpdfomppohbcrosdte8snln.apps.googleusercontent.com';
-        var REDIRECT = 'http://localhost:8080/callback'
-        var LOGOUT = 'http://accounts.google.com/Logout';
-        var TYPE = 'token';
-        var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
-        var acToken;
-        var tokenType;
-        var expiresIn;
-        var user;
-        var loggedIn = false;
-        login();
-        function login() {
-            _url = "https://accounts.google.com/o/oauth2/auth?" +
-                "redirect_uri=http://localhost:8080/autoplaylist/callback&" +
-                "response_type=code&" +
-                "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
-                "scope=https://www.googleapis.com/auth/youtube&" +
-                "approval_prompt=force&" +
-                "access_type=offline";
-            window.location.href = _url;
-        }
-    }
-    createList(){
+    createList() {
         var that = this;
         this.onProcess = true;
-        var url = "http://45.77.247.155:8080/youtube/addPlaylist";
+        var name = $("#areaKey").val().split("\n")[0];
+        var desc = $("#areaDesc").val();
+        var url = "http://test.tokybook.com:8080/youtube/addPlaylist";
         var method = "POST";
         var postData = {
-            "name": "Xin Chao",
+            "name": name,
             "privacy": "public",
-            "description": "testing",
+            "description": desc,
             "authCode": this.autho
         };
         var xhr = new XMLHttpRequest();
+        debugger;
         xhr.open(method, url, true);
         xhr.responseType = 'text';
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");

@@ -9,7 +9,7 @@ export class AuthuguardGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (localStorage.getItem("autho") === "yes")
+    if (localStorage.getItem('autho') === 'yes')
       return true;
     return this.user.getUserLoggedIn();
   }

@@ -14,7 +14,7 @@ export class RightContentComponent implements OnInit {
     playlistNames: string[] = [];
     usedPlaylistNames: string[] = [];
     message: string = '';
-
+    colArea = 50;
     langs = [
         { name: "Tiếng Việt", key: "vn" },
         { name: "English", key: "en" }
@@ -38,6 +38,7 @@ export class RightContentComponent implements OnInit {
         $(".lined").linedtextarea(
             {selectedLine: 1}
         );
+        this.colArea = 50;
     }
 
     onChangeLang(e) {

@@ -1,9 +1,12 @@
 .main-content{
     background-color: #f7fbd4;
-    height: 70em;
     color: black;
     line-height: 18px;
     font-size: 13px;
     margin-top: -15px;
+}
+
+.content-right{
+    background: #ecf0f1;
 }
 

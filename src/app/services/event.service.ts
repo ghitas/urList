@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, Request, RequestMethod } from '@angular/http';
+import { RightContentComponent } from '../components/right-content/right-content.component';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Subject } from 'rxjs/Subject';
@@ -18,6 +19,8 @@ export class EventService {
   creatingPlaylist$ = this.creatingPlaylist.asObservable();
 
   public isUserLoggedIn = false;
+  public user: string;
+  public pass: string;
 
   constructor(private http: Http, private router: Router) {
     this.isUserLoggedIn = false;
@@ -26,10 +29,12 @@ export class EventService {
   setUserLoggedIn(id, pass) {
     this.isUserLoggedIn = false;
     var data = { "userId": id, "password": pass };
-    this.post("http://45.77.247.155:8080/youtube/login", data).subscribe((res) => {
+    this.post("http://test.tokybook.com:8080/youtube/login", data).subscribe((res) => {
       if (res.code === 0) {
         this.isUserLoggedIn = true;
         localStorage.setItem("autho","yes");
+        localStorage.setItem("user",id);
+        this.user = id;
         this.getUserLoggedIn();
         this.router.navigate(['/dashboard']);
       }else{
@@ -66,18 +71,18 @@ export class EventService {
   dialogSay(message: any) {
     this.dialogSaySource.next(message);
   }
-  
+
   showPopup(title: string, content: string, btnYN: boolean, yesFun: string, noFun: string, choose: string) {
-		var dialog = {
-			title: title,
-			content: content,
-			btnYN: btnYN,
-			access: {
-				yes: yesFun,
-				no: noFun,
-				choose: choose
-			}
-		};
-		this.componentSay(dialog);
+    var dialog = {
+      title: title,
+      content: content,
+      btnYN: btnYN,
+      access: {
+        yes: yesFun,
+        no: noFun,
+        choose: choose
+      }
+    };
+    this.componentSay(dialog);
   };
 }
