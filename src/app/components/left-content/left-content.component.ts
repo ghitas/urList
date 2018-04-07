@@ -16,6 +16,7 @@ export class LeftContentComponent implements OnInit {
     autho: string;
     onProcess: boolean = false;
     urlChanel: string;
+    getInfo:string
 
     constructor(private _eventService: EventService) {
         if (window.location.href.indexOf("code=") > 0) {
@@ -26,6 +27,13 @@ export class LeftContentComponent implements OnInit {
             window.history.pushState("", "", "/autoplaylist/callback");
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
+            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
+            "response_type=code&" +
+            "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
+            "scope=https://www.googleapis.com/auth/youtube&" +
+            "approval_prompt=force&" +
+            "access_type=offline";
+        this.getInfo = "https://accounts.google.com/o/oauth2/auth?" +
             "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +

@@ -1,12 +1,15 @@
-.main-content{
-    background-color: #f7fbd4;
+.main{
+    background: linear-gradient(217deg, #9b3fb53b, rgba(253, 254, 255, 0.23) 70.71%), linear-gradient(127deg, #555484c4, #ffffff52 70.71%), linear-gradient(336deg, #150bae40, #af5e4c7d 70.71%);
     color: black;
     line-height: 18px;
     font-size: 13px;
-    margin-top: -15px;
+}
+#dashboard {
+  animation-duration: 0.3s;
+  -webkit-animation-duration: 0.3s;
+  -moz-animation-duration: 0.3s;
+  -o-animation-duration: 0.3s;
 }
 
-.content-right{
-    background: #ecf0f1;
-}
+
 

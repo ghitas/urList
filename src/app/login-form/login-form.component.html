@@ -1,19 +1,53 @@
-<div class="card" style="width: 30rem; margin-top:30px; margin-left: 30%;">
-	<div class="card-body">
-		<form (submit)="loginUser($event)">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1">Username</span>
+<div id="pageLogin" class="container animated fadeIn">
+	<div class="row" style="margin-top: 30px;">
+		<div class="col-sm"></div>
+		<div class="col-12 col-sm-12 col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<form (submit)="loginUser($event)">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1">Username</span>
+							</div>
+							<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon2">Password</span>
+							</div>
+							<input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon2">
+						</div>
+						<button type="submit" class="btn btn-primary">Loggin</button>
+					</form>
 				</div>
-				<input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
 			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon2">Password</span>
-				</div>
-				<input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="basic-addon2">
-			</div>
-			<button type="submit" class="btn btn-primary">Loggin</button>
-		</form>
+		</div>
+		<div class="col-sm"></div>
 	</div>
 </div>
+<button *ngIf='!isLoggedIn()' (click)="signIn()">sign in and create spreadsheet</button>
+<button *ngIf='isLoggedIn()' (click)="signOut()">sign out baby</button>
+
+<div *ngIf='isLoggedIn()'> 
+  <p *ngIf='!sheet'>
+    <button  (click)=create()>Create empty sheet</button>
+  </p>
+
+  <p *ngIf='sheet'>
+      <span>sheetId {{sheet.spreadsheetId}}</span>
+  </p>
+
+  <p>
+    <label>Spreadsheet id</label>
+    <input type="text" [(ngModel)]=sheetId />
+    <button (click)="findSheet()">fetch spreadsheet</button>
+  </p>
+
+  <p *ngIf="foundSheet">
+    <code>
+    {{foundSheet | json}}
+    </code>
+  </p> 
+  
+</div>
+

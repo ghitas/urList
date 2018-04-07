@@ -1,5 +1,4 @@
 import { Component, ElementRef } from '@angular/core';
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -10,9 +9,10 @@ export class AppComponent {
         title: "Thông báo",
         body: "Nội dung"
     }
-    constructor() { }
+    constructor() {
+    }
 
     ngOnInit() { }
-    showModal(){
+    showModal() {
     }
 }
