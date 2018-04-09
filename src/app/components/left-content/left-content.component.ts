@@ -36,11 +36,11 @@ export class LeftContentComponent implements OnInit {
             "scope=https://www.googleapis.com/auth/youtube&" +
             "approval_prompt=force&" +
             "access_type=offline";
-        this.userInfo = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://localhost:8080/autoplaylist/callback&" +
+        this.getInfo = "https://accounts.google.com/o/oauth2/auth?" +
+            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
-            "scope=https://www.googleapis.com/auth/userinfo.profile&" +
+            "scope=https://www.googleapis.com/auth/youtube&" +
             "approval_prompt=force&" +
             "access_type=offline";
     }
