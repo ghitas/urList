@@ -19,7 +19,8 @@ export class LeftContentComponent implements OnInit {
     urlChanel: string;
     userInfo: string;
     user: string = "unknow";
-
+    getInfo: string;
+    GoogleAuth: any;
 
     constructor(private _eventService: EventService) {
         if (window.location.href.indexOf("code=") > 0) {
@@ -44,26 +45,31 @@ export class LeftContentComponent implements OnInit {
             "approval_prompt=force&" +
             "access_type=offline";
     }
-    changeUser(): void {
-
-    }
-    authorizeButton: any;
     ngOnInit() {
+        this.handleClientLoad();
     }
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
-
     // Array of API discovery doc URLs for APIs used by the quickstart
     DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
-
     // Authorization scopes required by the API. If using multiple scopes,
     // separated them with spaces.
-    SCOPES = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner';
+    SCOPES = [
+        "https://www.googleapis.com/auth/youtube",
+        //Manage your YouTube account
+        "https://www.googleapis.com/auth/youtube.force-ssl",
+        //Manage your YouTube account
+        "https://www.googleapis.com/auth/youtube.readonly",
+        //View your YouTube account
+        "https://www.googleapis.com/auth/youtube.upload",
+        //Manage your YouTube videos
+        "https://www.googleapis.com/auth/youtubepartner",
+    ].join(" ");
 
     /**
      *  On load, called to load the auth2 library and API client library.
      */
-    handleClientLoad(): void {
+    handleClientLoad() {
         var that = this;
         var initClient = this.initClient;
         // gapi.load('client:auth2', initClient(that));
@@ -91,57 +97,125 @@ export class LeftContentComponent implements OnInit {
     initClient(that) {
         var those = that;
         gapi.client.init({
+            apiKey: 'AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE',
             discoveryDocs: that.DISCOVERY_DOCS,
             clientId: that.CLIENT_ID,
             scope: that.SCOPES
         }).then(function () {
-            // Listen for sign-in state changes.
-            gapi.auth2.getAuthInstance().isSignedIn.listen(that.updateSigninStatus);
+            those.GoogleAuth = gapi.auth2.getAuthInstance();
 
-            // Handle the initial sign-in state.
-            that.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-            that.handleAuthClick(those);
+            // Listen for sign-in state changes.
+            those.GoogleAuth.isSignedIn.listen(those.updateSigninStatus);
+
+            // Handle initial sign-in state. (Determine if user is already signed in.)
+            those.setSigninStatus();
+
+           // document.getElementById("channel").addEventListener("click", those.handleAuthClick);
         });
     }
-
+    handleAuthClick(event) {
+        // Sign user in after click on auth button.
+        this.GoogleAuth.signIn();
+    }
     /**
      *  Called when the signed in status changes, to update the UI
      *  appropriately. After a sign-in, the API is called.
      */
     updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-            this.getChannel();
+        this.setSigninStatus();
+    }
+    setSigninStatus() {
+        var user = this.GoogleAuth.currentUser.get();
+        var isAuthorized = user.hasGrantedScopes('https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner');
+        // Toggle button text and displayed statement based on current auth status.
+        if (isAuthorized) {
+            this.defineRequest();
         }
+        this.user = user.w3.ig;
+        this.autho = user.Zi.access_token;
+    }
+    createResource(properties) {
+        var resource = {};
+        var normalizedProps = properties;
+        for (var p in properties) {
+            var value = properties[p];
+            if (p && p.substr(-2, 2) == '[]') {
+                var adjustedName = p.replace('[]', '');
+                if (value) {
+                    normalizedProps[adjustedName] = value.split(',');
+                }
+                delete normalizedProps[p];
+            }
+        }
+        for (var p in normalizedProps) {
+            // Leave properties that don't have values out of inserted resource.
+            if (normalizedProps.hasOwnProperty(p) && normalizedProps[p]) {
+                var propArray = p.split('.');
+                var ref = resource;
+                for (var pa = 0; pa < propArray.length; pa++) {
+                    var key = propArray[pa];
+                    if (pa == propArray.length - 1) {
+                        ref[key] = normalizedProps[p];
+                    } else {
+                        ref = ref[key] = ref[key] || {};
+                    }
+                }
+            };
+        }
+        return resource;
     }
 
-    /**
-     *  Sign in the user upon button click.
-     */
-    handleAuthClick(that) {
-        gapi.auth2.getAuthInstance().signIn().then(function (res) {
-            console.log(res.w3);
-            that.user = res.w3.ig;
-            that.autho = res.Zi.access_token;
-        });
+    removeEmptyParams(params) {
+        for (var p in params) {
+            if (!params[p] || params[p] == 'undefined') {
+                delete params[p];
+            }
+        }
+        return params;
     }
 
-    /**
-     *  Sign out the user upon button click.
-     */
-    handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-    }
-
-    /**
-     * Print files.
-     */
-    getChannel() {
-        gapi.client.youtube.channels.list({
-            'part': 'snippet,contentDetails,statistics',
-            'forUsername': 'anhcanhet777'
-        }).then(function (response) {
+    executeRequest(request) {
+        request.execute(function (response) {
             console.log(response);
         });
+    }
+
+    buildApiRequest(requestMethod, path, params, properties) {
+        params = this.removeEmptyParams(params);
+        var request;
+        if (properties) {
+            var resource = this.createResource(properties);
+            request = gapi.client.request({
+                'body': resource,
+                'method': requestMethod,
+                'path': path,
+                'params': params
+            });
+        } else {
+            request = gapi.client.request({
+                'method': requestMethod,
+                'path': path,
+                'params': params
+            });
+        }
+        this.executeRequest(request);
+    }
+
+    /***** END BOILERPLATE CODE *****/
+
+
+    defineRequest() {
+        // See full sample for buildApiRequest() code, which is not 
+        // specific to a particular API or API method.
+
+        this.buildApiRequest('GET',
+            '/youtube/v3/playlists',
+            {
+                'channelId': 'UC6rVB-_0m1hsn9iEp0YUtng',
+                'maxResults': '25',
+                'part': 'snippet,contentDetails'
+            }, null);
+
     }
     createList() {
         var that = this;
