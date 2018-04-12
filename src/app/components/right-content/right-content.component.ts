@@ -59,20 +59,20 @@ export class RightContentComponent implements OnInit {
             this.playlistTexts = '';
         } else {
             for (var i = 0; i < this.playlistNames.length; i++) {
-                this._playListService.addPlaylist(this.playlistNames[i]).subscribe((res) => {
+                // this._playListService.addPlaylist(this.playlistNames[i]).subscribe((res) => {
 
-                    // count number of play list are created
-                    if (JSON.parse(res._body).code == 0) {
-                        count = count + 1;
-                    }
+                //     // count number of play list are created
+                //     if (JSON.parse(res._body).code == 0) {
+                //         count = count + 1;
+                //     }
 
-                    // after finish reating all play lists, enable button create play list
-                    if (count == this.playlistNames.length) {
-                        this._eventService.creatingPlaylist.next(false);
-                        this.usedPlaylistNames = this.playlistNames;
-                        this.playlistTexts = '';
-                    }
-                });
+                //     // after finish reating all play lists, enable button create play list
+                //     if (count == this.playlistNames.length) {
+                //         this._eventService.creatingPlaylist.next(false);
+                //         this.usedPlaylistNames = this.playlistNames;
+                //         this.playlistTexts = '';
+                //     }
+                // });
             }
         }
     }

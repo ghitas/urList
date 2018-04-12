@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from '../services/event.service';
-import { GapiService } from "../services/gapi.service";
 
 @Component({
   selector: 'app-login-form',
@@ -9,12 +8,12 @@ import { GapiService } from "../services/gapi.service";
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  constructor(private router: Router, 
-    private user: EventService,
-    private gapiService: GapiService) {
+  constructor(private router: Router,
+    private user: EventService) {
   }
 
   ngOnInit() {
+    this.initClient();
   }
 
   loginUser(e) {
@@ -24,14 +23,6 @@ export class LoginFormComponent implements OnInit {
     this.user.setUserLoggedIn(username, password);
   }
 
-  public isLoggedIn(): boolean {
-    return this.gapiService.isUserSignedIn();
-  }
-  
-  public signIn() {
-    this.gapiService.signIn();
-  }
-  public signOut() {
-    this.gapiService.signOut();
+  initClient() {
   }
 }

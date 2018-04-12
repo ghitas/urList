@@ -6,7 +6,7 @@ import { Component, ElementRef } from '@angular/core';
 })
 export class AppComponent {
     public modal: object = {
-        title: "Thông báo",
+        title: "Annouce",
         body: "Nội dung"
     }
     constructor() {

@@ -18,11 +18,33 @@ export class LeftContentComponent implements OnInit {
     onProcess: boolean = false;
     urlChanel: string;
     userInfo: string;
-    user: string = "unknow";
+    userNm: string = "unknow";
     getInfo: string;
     GoogleAuth: any;
-
-    constructor(private _eventService: EventService) {
+    API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
+    // Client ID and API key from the Developer Console
+    CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+    // Authorization scopes required by the API. If using multiple scopes,
+    // separated them with spaces.
+    SCOPES = [
+        "https://www.googleapis.com/auth/youtube",
+        //Manage your YouTube account
+        "https://www.googleapis.com/auth/youtube.force-ssl",
+        //Manage your YouTube account
+        "https://www.googleapis.com/auth/youtube.readonly",
+        //View your YouTube account
+        "https://www.googleapis.com/auth/youtube.upload",
+        //Manage your YouTube videos
+        "https://www.googleapis.com/auth/youtubepartner",
+    ].join(" ");
+    isAuthorized = true;
+    currentApiRequest = true;
+    constructor(
+        private _eventService: EventService,
+        private servicePlaylist: PlayListService,
+    ) {
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
@@ -48,35 +70,15 @@ export class LeftContentComponent implements OnInit {
     ngOnInit() {
         this.handleClientLoad();
     }
-    // Client ID and API key from the Developer Console
-    CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
-    // Array of API discovery doc URLs for APIs used by the quickstart
-    DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
-    // Authorization scopes required by the API. If using multiple scopes,
-    // separated them with spaces.
-    SCOPES = [
-        "https://www.googleapis.com/auth/youtube",
-        //Manage your YouTube account
-        "https://www.googleapis.com/auth/youtube.force-ssl",
-        //Manage your YouTube account
-        "https://www.googleapis.com/auth/youtube.readonly",
-        //View your YouTube account
-        "https://www.googleapis.com/auth/youtube.upload",
-        //Manage your YouTube videos
-        "https://www.googleapis.com/auth/youtubepartner",
-    ].join(" ");
-
     /**
      *  On load, called to load the auth2 library and API client library.
      */
     handleClientLoad() {
         var that = this;
-        var initClient = this.initClient;
-        // gapi.load('client:auth2', initClient(that));
         gapi.load('client:auth2', {
             callback: function () {
                 // Handle gapi.client initialization.
-                initClient(that);
+                that.initClient();
             },
             onerror: function () {
                 // Handle loading error.
@@ -94,23 +96,23 @@ export class LeftContentComponent implements OnInit {
      *  Initializes the API client library and sets up sign-in state
      *  listeners.
      */
-    initClient(that) {
-        var those = that;
+    initClient() {
+        var that = this;
         gapi.client.init({
-            apiKey: 'AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE',
-            discoveryDocs: that.DISCOVERY_DOCS,
-            clientId: that.CLIENT_ID,
-            scope: that.SCOPES
+            apiKey: this.API_KEY,
+            discoveryDocs: this.DISCOVERY_DOCS,
+            clientId: this.CLIENT_ID,
+            scope: this.SCOPES
         }).then(function () {
-            those.GoogleAuth = gapi.auth2.getAuthInstance();
-
+            that.GoogleAuth = gapi.auth2.getAuthInstance();
             // Listen for sign-in state changes.
-            those.GoogleAuth.isSignedIn.listen(those.updateSigninStatus);
-
+            that.GoogleAuth.isSignedIn.listen(that.updateSigninStatus.bind(that));
             // Handle initial sign-in state. (Determine if user is already signed in.)
-            those.setSigninStatus();
-
-           // document.getElementById("channel").addEventListener("click", those.handleAuthClick);
+            if (that.GoogleAuth.isSignedIn.get() === true) {
+                that.updateSigninStatus(true);
+            } else {
+                //document.getElementById("btnMaster").addEventListener("click", that.GoogleAuth.signIn);
+            }
         });
     }
     handleAuthClick(event) {
@@ -118,21 +120,51 @@ export class LeftContentComponent implements OnInit {
         this.GoogleAuth.signIn();
     }
     /**
-     *  Called when the signed in status changes, to update the UI
-     *  appropriately. After a sign-in, the API is called.
+     * Store the request details. Then check to determine whether the user
+     * has authorized the application.
+     *   - If the user has granted access, make the API request.
+     *   - If the user has not granted access, initiate the sign-in flow.
+     */
+    sendAuthorizedApiRequest(requestDetails) {
+        this.currentApiRequest = requestDetails;
+        if (this.isAuthorized) {
+            // Make API request
+            // gapi.client.request(requestDetails)
+            this.setSigninStatus();
+            // Reset currentApiRequest variable.
+            this.currentApiRequest = false;
+        } else {
+            this.GoogleAuth.signIn();
+        }
+    }
+
+    /**
+     * Listener called when user completes auth flow. If the currentApiRequest
+     * variable is set, then the user was prompted to authorize the application
+     * before the request executed. In that case, proceed with that API request.
      */
     updateSigninStatus(isSignedIn) {
-        this.setSigninStatus();
+        if (isSignedIn) {
+            this.isAuthorized = true;
+            if (this.currentApiRequest) {
+                this.sendAuthorizedApiRequest(this.currentApiRequest);
+            }
+        } else {
+            this.isAuthorized = false;
+        }
     }
     setSigninStatus() {
         var user = this.GoogleAuth.currentUser.get();
+        // this.userNm = user.Zi.
+        console.log(user);
+        /**
+         * get playlist
+         */
         var isAuthorized = user.hasGrantedScopes('https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner');
         // Toggle button text and displayed statement based on current auth status.
         if (isAuthorized) {
             this.defineRequest();
         }
-        this.user = user.w3.ig;
-        this.autho = user.Zi.access_token;
     }
     createResource(properties) {
         var resource = {};
@@ -218,31 +250,45 @@ export class LeftContentComponent implements OnInit {
 
     }
     createList() {
-        var that = this;
-        this.onProcess = true;
         var name = $("#areaKey").val().split("\n")[0];
         var desc = $("#areaDesc").val();
-        var url = "http://test.tokybook.com:8080/youtube/addPlaylist";
-        var method = "POST";
-        var postData = {
+        let url = "http://test.tokybook.com:8080/youtube/addPlaylist";
+        let body = {
             "name": name,
             "privacy": "public",
             "description": desc,
             "authCode": this.autho
-        };
-        var xhr = new XMLHttpRequest();
-        debugger;
-        xhr.open(method, url, true);
-        xhr.responseType = 'text';
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onreadystatechange = processRequest;
-        function processRequest(e) {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                console.log(xhr.responseText);
-                that.onProcess = false;
-            }
         }
-        xhr.send(JSON.stringify(postData));
+        this.servicePlaylist.createPlaylist(url, body).subscribe(
+            res => console.log(res),
+            err => console.log(err)
+        );
     }
+    // createList() {
+    //     var that = this;
+    //     this.onProcess = true;
+    //     var name = $("#areaKey").val().split("\n")[0];
+    //     var desc = $("#areaDesc").val();
+    //     var url = "http://test.tokybook.com:8080/youtube/addPlaylist";
+    //     var method = "POST";
+    //     var postData = {
+    //         "name": name,
+    //         "privacy": "public",
+    //         "description": desc,
+    //         "authCode": this.autho
+    //     };
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open(method, url, true);
+    //     xhr.responseType = 'text';
+    //     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    //     xhr.onreadystatechange = processRequest;
+    //     function processRequest(e) {
+    //         if (xhr.readyState == 4 && xhr.status == 200) {
+    //             console.log(xhr.responseText);
+    //             that.onProcess = false;
+    //         }
+    //     }
+    //     xhr.send(JSON.stringify(postData));
+    // }
 
 }

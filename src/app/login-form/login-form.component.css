@@ -4,3 +4,6 @@
   -moz-animation-duration: 0.3s;
   -o-animation-duration: 0.3s;
 }
+#basic-addon1,#basic-addon2{
+  min-width: 100px;
+}

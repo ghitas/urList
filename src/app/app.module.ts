@@ -10,8 +10,6 @@ import { Http, HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { PlayListService } from './services/playlist.service';
 import { EventService } from './services/event.service';
-import { GapiService } from './services/gapi.service';
-import { SheetResource } from './services/SheetResource';
 import { PlaceholderDirective } from './directives/place-holder.directive';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
@@ -81,6 +79,6 @@ const appRoutes: Routes = [
 
   bootstrap: [AppComponent],
 
-  providers: [PlayListService, EventService, GapiService, SheetResource, AuthuguardGuard],
+  providers: [PlayListService, EventService, AuthuguardGuard],
 })
 export class AppModule { }
