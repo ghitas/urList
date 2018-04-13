@@ -69,6 +69,7 @@ export class LeftContentComponent implements OnInit {
     }
     ngOnInit() {
         this.handleClientLoad();
+        //this.appStart();
     }
     /**
      *  On load, called to load the auth2 library and API client library.
@@ -105,9 +106,12 @@ export class LeftContentComponent implements OnInit {
             scope: this.SCOPES
         }).then(function () {
             that.GoogleAuth = gapi.auth2.getAuthInstance();
+            var user = that.GoogleAuth.currentUser.get();
+            console.log(user);
             // Listen for sign-in state changes.
             that.GoogleAuth.isSignedIn.listen(that.updateSigninStatus.bind(that));
             // Handle initial sign-in state. (Determine if user is already signed in.)
+            //that.makeApiCall();
             if (that.GoogleAuth.isSignedIn.get() === true) {
                 that.updateSigninStatus(true);
             } else {
@@ -129,7 +133,6 @@ export class LeftContentComponent implements OnInit {
         this.currentApiRequest = requestDetails;
         if (this.isAuthorized) {
             // Make API request
-            // gapi.client.request(requestDetails)
             this.setSigninStatus();
             // Reset currentApiRequest variable.
             this.currentApiRequest = false;
@@ -152,6 +155,16 @@ export class LeftContentComponent implements OnInit {
         } else {
             this.isAuthorized = false;
         }
+    }
+    makeApiCall() {
+        gapi.client.load('plus', 'v1', function () {
+            var request = gapi.client.plus.people.get({
+                'userId': 'me'
+            });
+            request.execute(function (response) {
+                console.log(response);
+            });
+        });
     }
     setSigninStatus() {
         var user = this.GoogleAuth.currentUser.get();
@@ -290,5 +303,98 @@ export class LeftContentComponent implements OnInit {
     //     }
     //     xhr.send(JSON.stringify(postData));
     // }
+    auth2: any; // The Sign-In object.
+    googleUser: any; // The current user.
+    /**
+ * Calls startAuth after Sign in V2 finishes setting up.
+ */
+    appStart = function () {
+        gapi.load('auth2', this.initSigninV2.bind(this));
+    };
 
+    /**
+     * Initializes Signin v2 and sets up listeners.
+     */
+    initSigninV2 = function () {
+        this.auth2 = gapi.auth2.init({
+            client_id: '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com',
+            scope: 'profile'
+        });
+
+        // Listen for sign-in state changes.
+        this.auth2.isSignedIn.listen(this.signinChanged.bind(this));
+
+        // Listen for changes to current user.
+        this.auth2.currentUser.listen(this.userChanged.bind(this));
+
+        // Add funtion change user to button
+        this.GoogleAuth = gapi.auth2.getAuthInstance();
+        document.getElementById("account").addEventListener("click", this.GoogleAuth.signIn);
+
+        // Sign in the user if they are currently signed in.
+        // if (this.auth2.isSignedIn.get() == true) {
+        //     this.auth2.signIn();
+        // }
+
+        // Start with the current live values.
+        //this.refreshValues();
+    };
+    /**
+ * Listener method for sign-out live value.
+ *
+ * @param {boolean} val the updated signed out state.
+ */
+    signinChanged = function (val) {
+        console.log('Signin state changed to ', val);
+        // document.getElementById('signed-in-cell').innerText = val;
+    };
+
+    /**
+     * Listener method for when the user changes.
+     *
+     * @param {GoogleUser} user the updated user.
+     */
+    userChanged = function (user) {
+        console.log('User now: ', user);
+        // this.googleUser = user;
+        // //this.updateGoogleUser();
+        // document.getElementById('curr-user-cell').innerText =
+        //     JSON.stringify(user, undefined, 2);
+    };
+    /**
+ * Updates the properties in the Google User table using the current user.
+ */
+// updateGoogleUser = function () {
+//     if (this.googleUser) {
+//       document.getElementById('user-id').innerText = googleUser.getId();
+//       document.getElementById('user-scopes').innerText =
+//         googleUser.getGrantedScopes();
+//       document.getElementById('auth-response').innerText =
+//         JSON.stringify(googleUser.getAuthResponse(), undefined, 2);
+//     } else {
+//       document.getElementById('user-id').innerText = '--';
+//       document.getElementById('user-scopes').innerText = '--';
+//       document.getElementById('auth-response').innerText = '--';
+//     }
+//   };
+  
+//   /**
+//    * Retrieves the current user and signed in states from the GoogleAuth
+//    * object.
+//    */
+//   refreshValues = function() {
+//     if (auth2){
+//       console.log('Refreshing values...');
+  
+//       googleUser = auth2.currentUser.get();
+  
+//       document.getElementById('curr-user-cell').innerText =
+//         JSON.stringify(googleUser, undefined, 2);
+//       document.getElementById('signed-in-cell').innerText =
+//         auth2.isSignedIn.get();
+  
+//       updateGoogleUser();
+//     }
+//   }
 }
+

@@ -8,12 +8,10 @@ import { EventService } from '../services/event.service';
   styleUrls: ['./login-form.component.css']
 })
 export class LoginFormComponent implements OnInit {
-  constructor(private router: Router,
-    private user: EventService) {
+  constructor(private router: Router, private user: EventService) {
   }
 
   ngOnInit() {
-    this.initClient();
   }
 
   loginUser(e) {
@@ -21,8 +19,5 @@ export class LoginFormComponent implements OnInit {
     var username = e.target.elements[0].value;
     var password = e.target.elements[1].value;
     this.user.setUserLoggedIn(username, password);
-  }
-
-  initClient() {
   }
 }

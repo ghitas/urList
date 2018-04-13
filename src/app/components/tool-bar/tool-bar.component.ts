@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
-//declare var gapi: any;
 
 @Component({
     selector: 'tool-bar',
@@ -14,17 +13,11 @@ export class ToolBarComponent implements OnInit {
         this.username = localStorage.getItem("user");
     }
     constructor(private router: Router, private service: EventService) { }
-    // btnLoggout(): void {
-    //     localStorage.clear();
-    //     this.service.user = null;
-    //     this.service.pass = null;
-    //     this.router.navigate(["/"]);
-    //     this.username = this.service.user;
-    // }
-    /**
-     *  Sign out the user upon button click.
-     */
-    handleSignoutClick():void {
-        gapi.auth2.getAuthInstance().signOut();
+    btnLoggout(): void {
+        localStorage.clear();
+        this.service.user = null;
+        this.service.pass = null;
+        this.router.navigate(["/"]);
+        this.username = this.service.user;
     }
 }

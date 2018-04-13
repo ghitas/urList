@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -6,13 +7,12 @@ import { Component, ElementRef } from '@angular/core';
 })
 export class AppComponent {
     public modal: object = {
-        title: "Annouce",
+        title: "Thông báo",
         body: "Nội dung"
     }
-    constructor() {
-    }
+    constructor() { }
 
     ngOnInit() { }
-    showModal() {
+    showModal(){
     }
 }
