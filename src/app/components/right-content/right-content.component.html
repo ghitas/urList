@@ -7,29 +7,29 @@
                               <div class="mb-1">
                                     <span>Tùy chọn xuất bản PLL:</span>
                                     <select>
-                                          <option>Công khai</option>
+                                          <option selected>Công khai</option>
+                                          <option>Không công khai</option>
+                                          <option>Riêng tư</option>
                                     </select>
-                                    <i class="fa fa-question-circle"></i>
                               </div>
                               <div class="mb-1">
                                     <span>Ngôn ngữ sử dụng cho playlist:</span>
                                     <select [(ngModel)]="selectedLang" (ngModelChange)="onChangeLang($event)">
                                           <option *ngFor="let item of langs" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
                               <div class="mb-1">
                                     <span>Số lượng playlist trên kênh:</span>
-                                    <input class="form-control" type="number" value="1000">
-                                    <i class="fa fa-question-circle icon"></i>
+                                    <input class="form-control" value="50">
                               </div>
                               <div class="mb-1">
                                     <input type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
                               <div class="mb-1">
                                     <input type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
-                                    <i class="fa fa-question-circle icon"></i>
+                              </div>
+                              <div class="mb-1">
+                                    <input type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
                               </div>
                         </div>
                   </div>
@@ -40,7 +40,6 @@
                                     <span>Số lượng video cho mỗi playlist từ:</span>
                                     <input class="form-control" type="text" value="30"> tới
                                     <input class="form-control" type="text" value="50">
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
@@ -48,47 +47,41 @@
                                     <select [(ngModel)]="selectedSort" (ngModelChange)="onChangeLang($event)">
                                           <option *ngFor="let item of sortVideo" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
                                     <span>Thời gian đăng video:</span>
-                                    <select>
-                                          <option>1 năm trở lại đây</option>
+                                    <select [(ngModel)]="selectedUpload" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of uploadTime" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
                                     <span>Thời lượng video:</span>
-                                    <select>
-                                          <option>Không giới hạn</option>
+                                    <select [(ngModel)]="selectedTime" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of viewTime" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
                                     <span>Chất lượng video:</span>
-                                    <select>
-                                          <option>Mọi chất lượng</option>
+                                    <select [(ngModel)]="selectedQuality" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of qualityVideo" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
                                     <span>Live video:</span>
-                                    <select>
-                                          <option>Bất kỳ</option>
+                                    <select [(ngModel)]="selectedLive" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of liveVideo" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
 
                               <div class="mb-1">
                                     <span>Kiểu video:</span>
-                                    <select>
-                                          <option>Tất cả</option>
+                                    <select [(ngModel)]="selectedStyle" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of styleVideo" [ngValue]="item"> {{item.name}} </option>
                                     </select>
-                                    <i class="fa fa-question-circle icon"></i>
                               </div>
                         </div>
                   </div>
@@ -96,43 +89,30 @@
                         <div class="card-header">Cài đặt video của bạn</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input type="radio" class="radio">
+                                    <input type="radio" name="radSet" class="radio" value="true" [(ngModel)]="setVideoRadio">
                                     <span>Không chèn video của bạn (có sẽ view chèn sau tại đây)</span>
                               </div>
-
                               <div class="mb-1">
-                                    <input type="radio" class="radio" checked> 
+                                    <input type="radio" name="radSet" class="radio" value="false" [(ngModel)]="setVideoRadio"> 
                                     <span>Chèn video của bạn lúc tạo PLL (tại đây)</span>
                               </div>
-
                               <div class="mb-1">
                                     <span>Số lượng video của bạn cần thêm</span>
-                                    <input class="form-control" type="text" placeholder="10"> (max 10)
-                                    <i class="fa fa-question-circle icon"></i>
+                                    <input [attr.disabled]="setVideoRadio === 'true'" class="form-control" type="text" placeholder="10"> (max 10)
                               </div>
-
                               <div class="mb-1">
                                     <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
                               </div>
-
                               <div class="mb-1">
-                                    <div class="title">Danh sách từ khóa đã bỏ qua:
-                                          <i class="fa fa-question-circle icon"></i>
-                                    </div>
-                                    <textarea class="lined" rows="10" style="width:100%"></textarea>
+                                    <textarea class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
                                     <div>
                                           <input type="checkbox" class="checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ danh sách
-                                          <i class="fa fa-question-circle icon"></i>
                                     </div>
-
                                     <div>
                                           <input type="checkbox" class="checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên PLL
-                                          <i class="fa fa-question-circle icon"></i>
                                     </div>
-
                                     <div>
                                           <input type="checkbox" class="checkbox" checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
-                                          <i class="fa fa-question-circle icon"></i>
                                     </div>
                               </div>
                         </div>
@@ -146,24 +126,17 @@
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="areaKey" class="lined" rows="10" style="width:100%"></textarea>
+                              <textarea id="areaKey" class="lined" rows="10" style="width:100%">{{listKeys}}</textarea>
                         </div>
-                        <div class="card-footer">
-                              <div class="pull-right">
-                                    <span>Lấy key đang hot tại:</span>
-                                    <select>
-                                          <option>Hoa Kỳ</option>
-                                    </select>
-                                    <button class="btn btn-success btn-sm">Lấy key</button>
-                              </div>
-                        </div>
+                        <!-- <div class="card-footer">
+                        </div> -->
                   </div>
                   <div class="card border-secondary mb-3">
-                        <div class="card-header">Miêu tả:
+                        <div class="card-header">Danh sách từ khóa đã sử dụng:
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="areaDesc" class="lined" rows="10" style="width:100%"></textarea>
+                              <textarea id="areaDesc" class="lined" rows="10" style="width:100%">{{listKeysUsed}}</textarea>
                         </div>
                         <div class="card-footer">
                               <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
@@ -178,7 +151,7 @@
                   </div>
                   <div class="card border-secondary mb-3">
                         <div class="card-header">Danh sách từ khóa đã bỏ qua:
-                              <i class="fa fa-question-circle icon"></i>
+                              
                         </div>
                         <div class="card-body text-dark">
                               <textarea class="lined" rows="10" style="width:100%"></textarea>

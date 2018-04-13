@@ -20,13 +20,65 @@ export class RightContentComponent implements OnInit {
         { name: "English", key: "en" }
     ];
     selectedLang = this.langs[0];
+
     sortVideo = [
-        { name: "Mức độ liên quan đến từ khóa", key: "near" },
-        { name: "Thời gian đăng mới nhất", key: "time" },
-        { name: "Số view cao tới thấp", key: "view" },
-        { name: "Kênh nhiều video tới thấp", key: "chenal" }
+        { name: "Mức độ liên quan đến từ khóa", key: "sort1" },
+        { name: "Thời gian đăng mới nhất", key: "sort2" },
+        { name: "Số view cao tới thấp", key: "sort3" },
+        { name: "Kênh nhiều video tới ít", key: "sort4" },
+        { name: "Đánh giá cao tới thấp", key: "sort5" },
+        { name: "Theo bảng chữ cái", key: "sort6" }
     ];
     selectedSort = this.sortVideo[0];
+
+    uploadTime = [
+        { name: "Không xác định", key: "sort1" },
+        { name: "Hôm nay", key: "sort2" },
+        { name: "3 ngày gần đây", key: "sort3" },
+        { name: "7 ngày gần đây", key: "sort4" },
+        { name: "15 ngày gần đây", key: "sort5" },
+        { name: "1 tháng gần đây", key: "sort6" },
+        { name: "3 tháng gần đây", key: "sort7" },
+        { name: "6 tháng gần đây", key: "sort8" },
+        { name: "1 năm gần đây", key: "sort9" }
+    ];
+    selectedUpload = this.uploadTime[0];
+
+    viewTime = [
+        { name: "Không giới hạn", key: "sort1" },
+        { name: "Hôm nay", key: "sort2" },
+        { name: "3 ngày gần đây", key: "sort3" },
+        { name: "7 ngày gần đây", key: "sort4" },
+        { name: "15 ngày gần đây", key: "sort5" },
+    ];
+    selectedTime = this.viewTime[0];
+
+    qualityVideo = [
+        { name: "Mọi chất lượng", key: "sort1" },
+        { name: "HD", key: "sort2" },
+        { name: "Bình thường", key: "sort3" }
+    ];
+    selectedQuality = this.qualityVideo[0];
+
+    liveVideo = [
+        { name: "Bất kỳ", key: "sort1" },
+        { name: "Đã live xong", key: "sort2" },
+        { name: "Đang live", key: "sort3" },
+        { name: "Sẽ live", key: "sort4" }
+    ];
+    selectedLive = this.liveVideo[0];
+
+    styleVideo = [
+        { name: "Tất cả", key: "sort1" },
+        { name: "Tập phim (episode)", key: "sort2" },
+        { name: "Full phim (movie)", key: "sort3" }
+    ];
+    selectedStyle = this.styleVideo[0];
+    listKeys = "test thu xem\nnhu the nao la duoc\ndi choi ko em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em";
+    listKeysUsed = "mieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke";
+    idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
+
+    setVideoRadio = "true";
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) { }

@@ -50,7 +50,8 @@ export class LeftContentComponent implements OnInit {
             this.autho = this.autho.slice(4, this.autho.length);
             this.autho = "4/" + this.autho;
             this.autho += "#";
-            window.history.pushState("", "", "/autoplaylist/callback");
+            console.log(this.autho);
+            //window.history.pushState("", "", "/autoplaylist/callback");
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
             "redirect_uri=http://localhost:8080/autoplaylist/callback&" +
@@ -112,6 +113,7 @@ export class LeftContentComponent implements OnInit {
             that.GoogleAuth.isSignedIn.listen(that.updateSigninStatus.bind(that));
             // Handle initial sign-in state. (Determine if user is already signed in.)
             //that.makeApiCall();
+            document.getElementById("btnMaster").addEventListener("click", that.handleAuthClick.bind(that));
             if (that.GoogleAuth.isSignedIn.get() === true) {
                 that.updateSigninStatus(true);
             } else {
@@ -121,7 +123,38 @@ export class LeftContentComponent implements OnInit {
     }
     handleAuthClick(event) {
         // Sign user in after click on auth button.
-        this.GoogleAuth.signIn();
+        // var options = {
+        //     "redirect_uri":"http://localhost:8080/autoplaylist/callback",
+        //     "response_type":"code",
+        //     "client_id":"123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com",
+        //     "scope":"https://www.googleapis.com/auth/youtube",
+        //     "approval_prompt":"force",
+        //     "access_type":"offline"
+        // };
+        // var options = {
+        //     ux_mode: "redirect",
+        //     redirect_uri: "http://localhost:8080/autoplaylist/callback"
+        // }
+        // this.GoogleAuth.signIn(options);
+        var options = new gapi.auth2.SigninOptionsBuilder(
+            {
+                "redirect_uri": "http://localhost:8080/autoplaylist/callback",
+                "response_type": "code",
+                "client_id": "123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com",
+                "scope": "https://www.googleapis.com/auth/youtube",
+                "approval_prompt": "force",
+                "access_type": "offline",
+                "ux_mode": "redirect"
+            });
+        var googleUser = this.GoogleAuth.currentUser.get();
+        googleUser.grant(options).then(
+            function (success) {
+                console.log(JSON.stringify({ message: "success", value: success }));
+                console.log(window.location.hash);
+            },
+            function (fail) {
+                alert(JSON.stringify({ message: "fail", value: fail }));
+            });
     }
     /**
      * Store the request details. Then check to determine whether the user
@@ -156,16 +189,16 @@ export class LeftContentComponent implements OnInit {
             this.isAuthorized = false;
         }
     }
-    makeApiCall() {
-        gapi.client.load('plus', 'v1', function () {
-            var request = gapi.client.plus.people.get({
-                'userId': 'me'
-            });
-            request.execute(function (response) {
-                console.log(response);
-            });
-        });
-    }
+    // makeApiCall() {
+    //     gapi.client.load('plus', 'v1', function () {
+    //         var request = gapi.client.plus.people.get({
+    //             'userId': 'me'
+    //         });
+    //         request.execute(function (response) {
+    //             console.log(response);
+    //         });
+    //     });
+    // }
     setSigninStatus() {
         var user = this.GoogleAuth.currentUser.get();
         // this.userNm = user.Zi.
@@ -277,37 +310,11 @@ export class LeftContentComponent implements OnInit {
             err => console.log(err)
         );
     }
-    // createList() {
-    //     var that = this;
-    //     this.onProcess = true;
-    //     var name = $("#areaKey").val().split("\n")[0];
-    //     var desc = $("#areaDesc").val();
-    //     var url = "http://test.tokybook.com:8080/youtube/addPlaylist";
-    //     var method = "POST";
-    //     var postData = {
-    //         "name": name,
-    //         "privacy": "public",
-    //         "description": desc,
-    //         "authCode": this.autho
-    //     };
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open(method, url, true);
-    //     xhr.responseType = 'text';
-    //     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    //     xhr.onreadystatechange = processRequest;
-    //     function processRequest(e) {
-    //         if (xhr.readyState == 4 && xhr.status == 200) {
-    //             console.log(xhr.responseText);
-    //             that.onProcess = false;
-    //         }
-    //     }
-    //     xhr.send(JSON.stringify(postData));
-    // }
     auth2: any; // The Sign-In object.
     googleUser: any; // The current user.
     /**
- * Calls startAuth after Sign in V2 finishes setting up.
- */
+     * Calls startAuth after Sign in V2 finishes setting up.
+     */
     appStart = function () {
         gapi.load('auth2', this.initSigninV2.bind(this));
     };
@@ -340,10 +347,10 @@ export class LeftContentComponent implements OnInit {
         //this.refreshValues();
     };
     /**
- * Listener method for sign-out live value.
- *
- * @param {boolean} val the updated signed out state.
- */
+     * Listener method for sign-out live value.
+     *
+     * @param {boolean} val the updated signed out state.
+     */
     signinChanged = function (val) {
         console.log('Signin state changed to ', val);
         // document.getElementById('signed-in-cell').innerText = val;
@@ -362,39 +369,39 @@ export class LeftContentComponent implements OnInit {
         //     JSON.stringify(user, undefined, 2);
     };
     /**
- * Updates the properties in the Google User table using the current user.
- */
-// updateGoogleUser = function () {
-//     if (this.googleUser) {
-//       document.getElementById('user-id').innerText = googleUser.getId();
-//       document.getElementById('user-scopes').innerText =
-//         googleUser.getGrantedScopes();
-//       document.getElementById('auth-response').innerText =
-//         JSON.stringify(googleUser.getAuthResponse(), undefined, 2);
-//     } else {
-//       document.getElementById('user-id').innerText = '--';
-//       document.getElementById('user-scopes').innerText = '--';
-//       document.getElementById('auth-response').innerText = '--';
-//     }
-//   };
-  
-//   /**
-//    * Retrieves the current user and signed in states from the GoogleAuth
-//    * object.
-//    */
-//   refreshValues = function() {
-//     if (auth2){
-//       console.log('Refreshing values...');
-  
-//       googleUser = auth2.currentUser.get();
-  
-//       document.getElementById('curr-user-cell').innerText =
-//         JSON.stringify(googleUser, undefined, 2);
-//       document.getElementById('signed-in-cell').innerText =
-//         auth2.isSignedIn.get();
-  
-//       updateGoogleUser();
-//     }
-//   }
+     * Updates the properties in the Google User table using the current user.
+     */
+    // updateGoogleUser = function () {
+    //     if (this.googleUser) {
+    //       document.getElementById('user-id').innerText = googleUser.getId();
+    //       document.getElementById('user-scopes').innerText =
+    //         googleUser.getGrantedScopes();
+    //       document.getElementById('auth-response').innerText =
+    //         JSON.stringify(googleUser.getAuthResponse(), undefined, 2);
+    //     } else {
+    //       document.getElementById('user-id').innerText = '--';
+    //       document.getElementById('user-scopes').innerText = '--';
+    //       document.getElementById('auth-response').innerText = '--';
+    //     }
+    //   };
+
+    //   /**
+    //    * Retrieves the current user and signed in states from the GoogleAuth
+    //    * object.
+    //    */
+    //   refreshValues = function() {
+    //     if (auth2){
+    //       console.log('Refreshing values...');
+
+    //       googleUser = auth2.currentUser.get();
+
+    //       document.getElementById('curr-user-cell').innerText =
+    //         JSON.stringify(googleUser, undefined, 2);
+    //       document.getElementById('signed-in-cell').innerText =
+    //         auth2.isSignedIn.get();
+
+    //       updateGoogleUser();
+    //     }
+    //   }
 }
 

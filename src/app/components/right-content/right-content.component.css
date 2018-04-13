@@ -12,6 +12,7 @@
 .card-body div > select,.card-footer div > select{
     color: #495057;
     border-radius: 0.25em;
+    border: 1px solid #ced4da;
 }
 .card-body .form-control{
     border: 1px solid #ced4da;
@@ -19,7 +20,8 @@
     text-align: center;
     padding: 0px;
     display: inline;
-    width:15%;
+    line-height: 1.2;
+    width: 11%;
 }
 .card-body{
     padding: 0.75em;
