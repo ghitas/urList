@@ -23,7 +23,7 @@ export class LeftContentComponent implements OnDestroy {
     getInfo: string;
     GoogleAuth: any;
     user: any;
-    chanel: any;
+    channelId: any;
     API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
@@ -68,7 +68,7 @@ export class LeftContentComponent implements OnDestroy {
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 console.log(res);
                 this.user = res.data.channelTitle;
-                this.chanel = res.data.chanel;
+                this.channelId = res.data.channelId;
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
@@ -308,24 +308,22 @@ export class LeftContentComponent implements OnDestroy {
             "names": keys,
             "privacy": "public",
             "description": "Thong test testing",
-            "chanel": this.chanel,
+            "chanel": "UC6rVB-_0m1hsn9iEp0YUtng",
 
-            "searchVideoSetting": {
-                "minResults": 0,
-                "maxResults": 0,
-                "order": "",
-                "publishedAfter": -1,
-                "videoDuration": "",
-                "videoDefinition": "",
-                "eventType": "",
-                "videoType": ""
-            }
+            "searchVideoSetting": data.searchVideoSetting
         }
+        console.log(body);
+        this.onProcess = true;
+        var that = this;
         this._eventService.post(url, body).subscribe(
             res => {
                 console.log(res);
+                that.onProcess = false;
             },
-            err => console.log(err)
+            err => {
+                console.log(err);
+                that.onProcess = false;
+            }
         )
     }
     auth2: any; // The Sign-In object.

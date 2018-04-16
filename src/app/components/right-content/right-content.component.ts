@@ -26,56 +26,55 @@ export class RightContentComponent implements OnDestroy {
     ];
     selectedLang = this.langs[0];
     sortVideo = [
-        { name: "Mức độ liên quan đến từ khóa", key: "sort1" },
-        { name: "Thời gian đăng mới nhất", key: "sort2" },
-        { name: "Số view cao tới thấp", key: "sort3" },
-        { name: "Kênh nhiều video tới ít", key: "sort4" },
-        { name: "Đánh giá cao tới thấp", key: "sort5" },
-        { name: "Theo bảng chữ cái", key: "sort6" }
+        { name: "Mức độ liên quan đến từ khóa", key: "relevance" },
+        { name: "Thời gian đăng mới nhất", key: "date" },
+        { name: "Số view cao tới thấp", key: "viewCount" },
+        { name: "Kênh nhiều video tới ít", key: "videoCount" },
+        { name: "Đánh giá cao tới thấp", key: "rating" },
+        { name: "Theo bảng chữ cái", key: "title" }
     ];
     selectedSort = this.sortVideo[0];
 
     uploadTime = [
-        { name: "Không xác định", key: "sort1" },
-        { name: "Hôm nay", key: "sort2" },
-        { name: "3 ngày gần đây", key: "sort3" },
-        { name: "7 ngày gần đây", key: "sort4" },
-        { name: "15 ngày gần đây", key: "sort5" },
-        { name: "1 tháng gần đây", key: "sort6" },
-        { name: "3 tháng gần đây", key: "sort7" },
-        { name: "6 tháng gần đây", key: "sort8" },
-        { name: "1 năm gần đây", key: "sort9" }
+        { name: "Không xác định", key: -1 },
+        { name: "Hôm nay", key: 0 },
+        { name: "3 ngày gần đây", key: 3 },
+        { name: "7 ngày gần đây", key: 7 },
+        { name: "15 ngày gần đây", key: 15 },
+        { name: "1 tháng gần đây", key: 30 },
+        { name: "3 tháng gần đây", key: 90 },
+        { name: "6 tháng gần đây", key: 180 },
+        { name: "1 năm gần đây", key: 365 }
     ];
     selectedUpload = this.uploadTime[0];
 
     viewTime = [
-        { name: "Không giới hạn", key: "sort1" },
-        { name: "Hôm nay", key: "sort2" },
-        { name: "3 ngày gần đây", key: "sort3" },
-        { name: "7 ngày gần đây", key: "sort4" },
-        { name: "15 ngày gần đây", key: "sort5" },
+        { name: "Không giới hạn", key: "any" },
+        { name: "Ngắn hơn 4 phút", key: "short" },
+        { name: "từ 4 đến 20 phút", key: "medium" },
+        { name: "dài hơn 20 phút", key: "long" }
     ];
     selectedTime = this.viewTime[0];
 
     qualityVideo = [
-        { name: "Mọi chất lượng", key: "sort1" },
-        { name: "HD", key: "sort2" },
-        { name: "Bình thường", key: "sort3" }
+        { name: "Mọi chất lượng", key: "any" },
+        { name: "HD", key: "high" },
+        { name: "Bình thường", key: "standard" }
     ];
     selectedQuality = this.qualityVideo[0];
 
     liveVideo = [
-        { name: "Bất kỳ", key: "sort1" },
-        { name: "Đã live xong", key: "sort2" },
-        { name: "Đang live", key: "sort3" },
-        { name: "Sẽ live", key: "sort4" }
+        { name: "Bất kỳ", key: "" },
+        { name: "Đã live xong", key: "completed" },
+        { name: "Đang live", key: "live" },
+        { name: "Sẽ live", key: "upcoming" }
     ];
     selectedLive = this.liveVideo[0];
 
     styleVideo = [
-        { name: "Tất cả", key: "sort1" },
-        { name: "Tập phim (episode)", key: "sort2" },
-        { name: "Full phim (movie)", key: "sort3" }
+        { name: "Tất cả", key: "any" },
+        { name: "Tập phim (episode)", key: "episode" },
+        { name: "Full phim (movie)", key: "movie" }
     ];
     selectedStyle = this.styleVideo[0];
     listKeys = "test thu xem\nnhu the nao la duoc\ndi choi ko em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em";
@@ -84,23 +83,37 @@ export class RightContentComponent implements OnDestroy {
 
     setVideoRadio = "true";
 
-    constructor(private _eventService: EventService,
-        private _playListService: PlayListService) {
+    constructor(
+        private _eventService: EventService,
+        private _playListService: PlayListService
+    ) {
+        var that = this;
         this.subs = _eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "rightComponent")
                 if (mess.mess === "get key list") {
+                    var key = (<HTMLInputElement>document.getElementById("areaKey")).value;
+                    var searchVideoSetting = {
+                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_result")).value,
+                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_result")).value,
+                        "order": that.selectedSort.key,
+                        "publishedAfter": that.selectedUpload.key,
+                        "videoDuration": that.selectedTime.key,
+                        "videoDefinition": that.selectedQuality.key,
+                        "eventType": that.selectedLive.key,
+                        "videoType": that.selectedStyle.key
+                    }
                     var mes = {
                         talkTo: "leftComponent",
                         mess: "get key list",
                         data: {
-                            keys: this.listKeys
+                            keys: key,
+                            searchVideoSetting: searchVideoSetting
                         }
                     }
                     _eventService.componentSay(mes);
                 }
         });
     }
-
     ngOnInit() {
         $(".lined").linedtextarea(
             { selectedLine: 1 }
