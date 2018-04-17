@@ -50,9 +50,9 @@ export class RightContentComponent implements OnDestroy {
 
     viewTime = [
         { name: "Không giới hạn", key: "any" },
-        { name: "Ngắn hơn 4 phút", key: "short" },
-        { name: "từ 4 đến 20 phút", key: "medium" },
-        { name: "dài hơn 20 phút", key: "long" }
+        { name: "Ngắn dưới 4 phút", key: "long" },
+        { name: "Từ 4 đến 20 phút", key: "medium" },
+        { name: "Dài trên 20 phút", key: "long" }
     ];
     selectedTime = this.viewTime[0];
 
@@ -83,18 +83,16 @@ export class RightContentComponent implements OnDestroy {
 
     setVideoRadio = "true";
 
-    constructor(
-        private _eventService: EventService,
-        private _playListService: PlayListService
-    ) {
+    constructor(private _eventService: EventService,
+        private _playListService: PlayListService) {
         var that = this;
         this.subs = _eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "rightComponent")
                 if (mess.mess === "get key list") {
                     var key = (<HTMLInputElement>document.getElementById("areaKey")).value;
                     var searchVideoSetting = {
-                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_result")).value,
-                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_result")).value,
+                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_resuld")).value,
+                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_resuld")).value,
                         "order": that.selectedSort.key,
                         "publishedAfter": that.selectedUpload.key,
                         "videoDuration": that.selectedTime.key,
@@ -114,6 +112,7 @@ export class RightContentComponent implements OnDestroy {
                 }
         });
     }
+
     ngOnInit() {
         $(".lined").linedtextarea(
             { selectedLine: 1 }
