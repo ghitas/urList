@@ -1,18 +1,18 @@
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { EventService} from '../services/event.service';
+import { EventService } from '../services/event.service';
 declare var jquery: any;
 declare var $: any;
 
 @Component({
-  selector: 'app-app-modal',
-  templateUrl: './app-modal.component.html',
-  styleUrls: ['./app-modal.component.css']
+	selector: 'app-app-modal',
+	templateUrl: './app-modal.component.html',
+	styleUrls: ['./app-modal.component.css']
 })
 export class AppModalComponent implements OnDestroy {
-  ngOnInit() {
-  }
-  dialog = {
+	ngOnInit() {
+	}
+	dialog = {
 		title: "title",
 		content: "content",
 		btnYN: true,
@@ -27,18 +27,20 @@ export class AppModalComponent implements OnDestroy {
 	subs = new Subscription;
 	constructor(private appservice: EventService, private elRef: ElementRef) {
 		this.subs = appservice.componentSaid$.subscribe(mess => {
-			this.dialog = mess;
-			debugger;
-			/**
-			 * show "Keep" or "no keep"
-			 */
-			this.dialog.content == "After upload Inventory sheet , keep inventory record?"?this.keep=true:this.keep=false;
-			this.show();
+			if (mess.talkTo === 'dialog') {
+				this.dialog = mess.data;
+				debugger;
+				/**
+				 * show "Keep" or "no keep"
+				 */
+				this.dialog.content == "After upload Inventory sheet , keep inventory record?" ? this.keep = true : this.keep = false;
+				this.show();
+			}
 		});
 	}
 	public visible = false;
 	private visibleAnimate = false;
-	ngOnDestroy(){
+	ngOnDestroy() {
 		this.subs.unsubscribe();
 	}
 	public show(): void {

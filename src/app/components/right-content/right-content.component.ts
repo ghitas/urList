@@ -1,6 +1,7 @@
 import { EventService } from '../../services/event.service';
 import { PlayListService } from '../../services/playlist.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 declare var jquery: any;
 declare var $: any;
 
@@ -9,7 +10,11 @@ declare var $: any;
     templateUrl: './right-content.component.html',
     styleUrls: ['./right-content.component.css']
 })
-export class RightContentComponent implements OnInit {
+export class RightContentComponent implements OnDestroy {
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+    subs = new Subscription;
     playlistTexts = '';
     playlistNames: string[] = [];
     usedPlaylistNames: string[] = [];
@@ -20,7 +25,6 @@ export class RightContentComponent implements OnInit {
         { name: "English", key: "en" }
     ];
     selectedLang = this.langs[0];
-
     sortVideo = [
         { name: "Mức độ liên quan đến từ khóa", key: "sort1" },
         { name: "Thời gian đăng mới nhất", key: "sort2" },
@@ -81,11 +85,25 @@ export class RightContentComponent implements OnInit {
     setVideoRadio = "true";
 
     constructor(private _eventService: EventService,
-        private _playListService: PlayListService) { }
+        private _playListService: PlayListService) {
+        this.subs = _eventService.componentSaid$.subscribe(mess => {
+            if (mess.talkTo === "rightComponent")
+                if (mess.mess === "get key list") {
+                    var mes = {
+                        talkTo: "leftComponent",
+                        mess: "get key list",
+                        data: {
+                            keys: this.listKeys
+                        }
+                    }
+                    _eventService.componentSay(mes);
+                }
+        });
+    }
 
     ngOnInit() {
         $(".lined").linedtextarea(
-            {selectedLine: 1}
+            { selectedLine: 1 }
         );
         this.colArea = 50;
     }
@@ -135,7 +153,7 @@ export class RightContentComponent implements OnInit {
             }
         }
 
-        return tempPlaylistNames
+        return tempPlaylistNames;
     }
 
 }

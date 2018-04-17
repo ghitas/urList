@@ -73,7 +73,7 @@ export class EventService {
   }
 
   showPopup(title: string, content: string, btnYN: boolean, yesFun: string, noFun: string, choose: string) {
-    var dialog = {
+    var data = {
       title: title,
       content: content,
       btnYN: btnYN,
@@ -83,6 +83,10 @@ export class EventService {
         choose: choose
       }
     };
-    this.componentSay(dialog);
+    var mess = {
+      talkTo: "dialog",
+      data: data
+    }
+    this.componentSay(mess);
   };
 }

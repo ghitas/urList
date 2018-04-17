@@ -1,7 +1,8 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { EventService } from '../../services/event.service';
 import { PlayListService } from '../../services/playlist.service';
+import { Subscription } from 'rxjs';
 declare var $: any;
 declare var gapi: any;
 
@@ -10,7 +11,7 @@ declare var gapi: any;
     templateUrl: './left-content.component.html',
     styleUrls: ['./left-content.component.css']
 })
-export class LeftContentComponent implements OnInit {
+export class LeftContentComponent implements OnDestroy {
     message: string = '';
     disableCreatePlayListBtn: boolean = false;
     route: string;
@@ -21,6 +22,8 @@ export class LeftContentComponent implements OnInit {
     userNm: string = "unknow";
     getInfo: string;
     GoogleAuth: any;
+    user: any;
+    chanel: any;
     API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
@@ -41,20 +44,35 @@ export class LeftContentComponent implements OnInit {
     ].join(" ");
     isAuthorized = true;
     currentApiRequest = true;
+    ngOnDestroy(): void {
+        this.subs.unsubscribe();
+    }
+    subs = new Subscription;
     constructor(
         private _eventService: EventService,
         private servicePlaylist: PlayListService,
     ) {
+        this.subs = this._eventService.componentSaid$.subscribe(mess => {
+            if (mess.talkTo === "leftComponent") {
+                if (mess.mess === "get key list")
+                    this.createMultiPlayList(mess.data);
+            }
+        });
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
             this.autho = "4/" + this.autho;
             this.autho += "#";
             console.log(this.autho);
-            //window.history.pushState("", "", "/autoplaylist/callback");
+            window.history.pushState("", "", "/autoplaylist/callback");
+            this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
+                console.log(res);
+                this.user = res.data.channelTitle;
+                this.chanel = res.data.chanel;
+            }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://localhost:8080/autoplaylist/callback&" +
+            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
             "scope=https://www.googleapis.com/auth/youtube&" +
@@ -69,7 +87,7 @@ export class LeftContentComponent implements OnInit {
             "access_type=offline";
     }
     ngOnInit() {
-        this.handleClientLoad();
+        //this.handleClientLoad();
         //this.appStart();
     }
     /**
@@ -112,49 +130,25 @@ export class LeftContentComponent implements OnInit {
             // Listen for sign-in state changes.
             that.GoogleAuth.isSignedIn.listen(that.updateSigninStatus.bind(that));
             // Handle initial sign-in state. (Determine if user is already signed in.)
-            //that.makeApiCall();
             document.getElementById("btnMaster").addEventListener("click", that.handleAuthClick.bind(that));
             if (that.GoogleAuth.isSignedIn.get() === true) {
                 that.updateSigninStatus(true);
             } else {
-                //document.getElementById("btnMaster").addEventListener("click", that.GoogleAuth.signIn);
+                document.getElementById("btnMaster").addEventListener("click", that.GoogleAuth.signIn);
             }
         });
     }
     handleAuthClick(event) {
-        // Sign user in after click on auth button.
-        // var options = {
-        //     "redirect_uri":"http://localhost:8080/autoplaylist/callback",
-        //     "response_type":"code",
-        //     "client_id":"123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com",
-        //     "scope":"https://www.googleapis.com/auth/youtube",
-        //     "approval_prompt":"force",
-        //     "access_type":"offline"
-        // };
-        // var options = {
-        //     ux_mode: "redirect",
-        //     redirect_uri: "http://localhost:8080/autoplaylist/callback"
-        // }
-        // this.GoogleAuth.signIn(options);
-        var options = new gapi.auth2.SigninOptionsBuilder(
-            {
-                "redirect_uri": "http://localhost:8080/autoplaylist/callback",
-                "response_type": "code",
-                "client_id": "123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com",
-                "scope": "https://www.googleapis.com/auth/youtube",
-                "approval_prompt": "force",
-                "access_type": "offline",
-                "ux_mode": "redirect"
-            });
-        var googleUser = this.GoogleAuth.currentUser.get();
-        googleUser.grant(options).then(
-            function (success) {
-                console.log(JSON.stringify({ message: "success", value: success }));
-                console.log(window.location.hash);
-            },
-            function (fail) {
-                alert(JSON.stringify({ message: "fail", value: fail }));
-            });
+        //Sign user in after click on auth button.
+        var options = {
+            "redirect_uri": "http://localhost:8080/autoplaylist/callback",
+            "response_type": "code",
+            "client_id": "123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com",
+            "scope": "https://www.googleapis.com/auth/youtube",
+            "approval_prompt": "force",
+            "access_type": "offline"
+        };
+        this.GoogleAuth.signIn(options);
     }
     /**
      * Store the request details. Then check to determine whether the user
@@ -189,16 +183,6 @@ export class LeftContentComponent implements OnInit {
             this.isAuthorized = false;
         }
     }
-    // makeApiCall() {
-    //     gapi.client.load('plus', 'v1', function () {
-    //         var request = gapi.client.plus.people.get({
-    //             'userId': 'me'
-    //         });
-    //         request.execute(function (response) {
-    //             console.log(response);
-    //         });
-    //     });
-    // }
     setSigninStatus() {
         var user = this.GoogleAuth.currentUser.get();
         // this.userNm = user.Zi.
@@ -310,6 +294,40 @@ export class LeftContentComponent implements OnInit {
             err => console.log(err)
         );
     }
+    getListKeys() {
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "get key list"
+        }
+        this._eventService.componentSay(mess);
+    }
+    createMultiPlayList(data) {
+        var url = "http://45.77.247.155:8080/youtube/addMultiPlaylist";
+        var keys = data.keys.split("\n");
+        var body = {
+            "names": keys,
+            "privacy": "public",
+            "description": "Thong test testing",
+            "chanel": this.chanel,
+
+            "searchVideoSetting": {
+                "minResults": 0,
+                "maxResults": 0,
+                "order": "",
+                "publishedAfter": -1,
+                "videoDuration": "",
+                "videoDefinition": "",
+                "eventType": "",
+                "videoType": ""
+            }
+        }
+        this._eventService.post(url, body).subscribe(
+            res => {
+                console.log(res);
+            },
+            err => console.log(err)
+        )
+    }
     auth2: any; // The Sign-In object.
     googleUser: any; // The current user.
     /**
@@ -339,12 +357,12 @@ export class LeftContentComponent implements OnInit {
         document.getElementById("account").addEventListener("click", this.GoogleAuth.signIn);
 
         // Sign in the user if they are currently signed in.
-        // if (this.auth2.isSignedIn.get() == true) {
-        //     this.auth2.signIn();
-        // }
+        if (this.auth2.isSignedIn.get() == true) {
+            this.auth2.signIn();
+        }
 
         // Start with the current live values.
-        //this.refreshValues();
+        this.refreshValues();
     };
     /**
      * Listener method for sign-out live value.
@@ -363,45 +381,9 @@ export class LeftContentComponent implements OnInit {
      */
     userChanged = function (user) {
         console.log('User now: ', user);
-        // this.googleUser = user;
-        // //this.updateGoogleUser();
-        // document.getElementById('curr-user-cell').innerText =
-        //     JSON.stringify(user, undefined, 2);
+        this.googleUser = user;
+        document.getElementById('curr-user-cell').innerText =
+            JSON.stringify(user, undefined, 2);
     };
-    /**
-     * Updates the properties in the Google User table using the current user.
-     */
-    // updateGoogleUser = function () {
-    //     if (this.googleUser) {
-    //       document.getElementById('user-id').innerText = googleUser.getId();
-    //       document.getElementById('user-scopes').innerText =
-    //         googleUser.getGrantedScopes();
-    //       document.getElementById('auth-response').innerText =
-    //         JSON.stringify(googleUser.getAuthResponse(), undefined, 2);
-    //     } else {
-    //       document.getElementById('user-id').innerText = '--';
-    //       document.getElementById('user-scopes').innerText = '--';
-    //       document.getElementById('auth-response').innerText = '--';
-    //     }
-    //   };
-
-    //   /**
-    //    * Retrieves the current user and signed in states from the GoogleAuth
-    //    * object.
-    //    */
-    //   refreshValues = function() {
-    //     if (auth2){
-    //       console.log('Refreshing values...');
-
-    //       googleUser = auth2.currentUser.get();
-
-    //       document.getElementById('curr-user-cell').innerText =
-    //         JSON.stringify(googleUser, undefined, 2);
-    //       document.getElementById('signed-in-cell').innerText =
-    //         auth2.isSignedIn.get();
-
-    //       updateGoogleUser();
-    //     }
-    //   }
 }
 

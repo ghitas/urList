@@ -1,8 +1,7 @@
 <div class="col-12 main-left">
     <h6>Kênh đang sử dụng: {{user}}
-        <a id="btnMaster" class="badge badge-primary text-light">Chuyển kênh</a>
+        <a id="btnMaster" class="badge badge-primary text-light" href="{{urlChanel}}">Chuyển kênh</a>
     </h6>
-    <!-- <button id="account" class="btn btn-info btn-sm">changeAcc</button> -->
     <h6>Tổng số playlist trên kênh:
         <a href="{{userInfo}}"><span class="badge badge-pill badge-dark">134</span></a>
     </h6>
@@ -30,8 +29,7 @@
 
     <p>Chào bạn! Hãy tùy chọn cấu hình (hoặc để mặc định), sau đó nhập các ID video của bạn (không bắt buộc) và danh sách từ
         khóa (bắt đầu) để bắt đầu.</p>
-    <button class="btn btn-success btn-sm mb-2" [ngClass]="disableCreatePlayListBtn ? 'inactive-create-playlist-btn' : 'active-create-playlist-btn'"
-        (click)="createList()">
+    <button (click)="getListKeys()" class="btn btn-success btn-sm mb-2" [ngClass]="disableCreatePlayListBtn ? 'inactive-create-playlist-btn' : 'active-create-playlist-btn'">
         Tạo Playlist
     </button>
     <div class="progress mb-2" *ngIf="onProcess" style="width: 68%;height: 31px;float: right;">
