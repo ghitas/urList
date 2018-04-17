@@ -44,43 +44,43 @@
 
                               <div class="mb-1">
                                     <span>Sắp xếp video theo:</span>
-                                    <select [(ngModel)]="selectedSort" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of sortVideo" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectOrder" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listOrder" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
 
                               <div class="mb-1">
                                     <span>Thời gian đăng video:</span>
-                                    <select [(ngModel)]="selectedUpload" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of uploadTime" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectPubAfter" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listPubAfter" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
 
                               <div class="mb-1">
                                     <span>Thời lượng video:</span>
-                                    <select [(ngModel)]="selectedTime" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of viewTime" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectVideoDur" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listVideoDur" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
 
                               <div class="mb-1">
                                     <span>Chất lượng video:</span>
-                                    <select [(ngModel)]="selectedQuality" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of qualityVideo" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectVideoDef" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listVideoDef" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
 
                               <div class="mb-1">
                                     <span>Live video:</span>
-                                    <select [(ngModel)]="selectedLive" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of liveVideo" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectEventType" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listEventType" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
 
                               <div class="mb-1">
                                     <span>Kiểu video:</span>
-                                    <select [(ngModel)]="selectedStyle" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of styleVideo" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectVideoType" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listVideoType" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
                         </div>
@@ -126,7 +126,7 @@
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="areaKey" class="lined" rows="10" style="width:100%">{{listKeys}}</textarea>
+                              <textarea id="areaKey" class="lined" rows="10">{{listKeys}}</textarea>
                         </div>
                         <!-- <div class="card-footer">
                         </div> -->
@@ -136,7 +136,7 @@
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="areaDesc" class="lined" rows="10" style="width:100%">{{listKeysUsed}}</textarea>
+                              <textarea id="areaDesc" class="lined" rows="10">{{listKeysUsed}}</textarea>
                         </div>
                         <div class="card-footer">
                               <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
@@ -154,7 +154,7 @@
                               
                         </div>
                         <div class="card-body text-dark">
-                              <textarea class="lined" rows="10" style="width:100%"></textarea>
+                              <textarea class="lined" rows="10"></textarea>
                         </div>
                         <div class="card-footer">
                               <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">

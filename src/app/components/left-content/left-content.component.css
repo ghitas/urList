@@ -17,3 +17,22 @@
     border: none;
     box-shadow: 0px 0px 5px grey;
 }
+.link > a{
+    color: #8e579c;
+    text-decoration: none;
+    width: 100%;
+    display: block;
+    padding: 3px;
+    padding-left: 15px;
+    transition: 0.1s;
+}
+.link >a:hover{
+    background: #8687ae;
+    transition-duration: 0.2s;
+    color: white;
+}
+#btnMaster{
+    height: 22px;
+    line-height: 1;
+    font-size:13px;
+}

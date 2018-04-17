@@ -4,3 +4,12 @@
 .btn-success:focus{
   box-shadow: 0 0 0 0.1rem rgba(40,167,69,.5);
 }
+.linedwrap {
+    width: 100%!important;
+    border-radius: 5px;
+    border: 1px solid #b69cb3;
+    margin-top: 5px;
+}
+.lined{
+  width: calc(100% - 60px) !important;
+}

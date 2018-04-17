@@ -24,8 +24,9 @@ export class RightContentComponent implements OnDestroy {
         { name: "Tiếng Việt", key: "vn" },
         { name: "English", key: "en" }
     ];
+
     selectedLang = this.langs[0];
-    sortVideo = [
+    listOrder = [
         { name: "Mức độ liên quan đến từ khóa", key: "relevance" },
         { name: "Thời gian đăng mới nhất", key: "date" },
         { name: "Số view cao tới thấp", key: "viewCount" },
@@ -33,9 +34,9 @@ export class RightContentComponent implements OnDestroy {
         { name: "Đánh giá cao tới thấp", key: "rating" },
         { name: "Theo bảng chữ cái", key: "title" }
     ];
-    selectedSort = this.sortVideo[0];
+    selectOrder = this.listOrder[0];
 
-    uploadTime = [
+    listPubAfter = [
         { name: "Không xác định", key: -1 },
         { name: "Hôm nay", key: 0 },
         { name: "3 ngày gần đây", key: 3 },
@@ -46,37 +47,37 @@ export class RightContentComponent implements OnDestroy {
         { name: "6 tháng gần đây", key: 180 },
         { name: "1 năm gần đây", key: 365 }
     ];
-    selectedUpload = this.uploadTime[0];
+    selectPubAfter = this.listPubAfter[0];
 
-    viewTime = [
+    listVideoDur = [
         { name: "Không giới hạn", key: "any" },
         { name: "Ngắn hơn 4 phút", key: "short" },
         { name: "từ 4 đến 20 phút", key: "medium" },
         { name: "dài hơn 20 phút", key: "long" }
     ];
-    selectedTime = this.viewTime[0];
+    selectVideoDur = this.listVideoDur[0];
 
-    qualityVideo = [
+    listVideoDef = [
         { name: "Mọi chất lượng", key: "any" },
         { name: "HD", key: "high" },
         { name: "Bình thường", key: "standard" }
     ];
-    selectedQuality = this.qualityVideo[0];
+    selectVideoDef = this.listVideoDef[0];
 
-    liveVideo = [
+    listEventType = [
         { name: "Bất kỳ", key: "" },
         { name: "Đã live xong", key: "completed" },
         { name: "Đang live", key: "live" },
         { name: "Sẽ live", key: "upcoming" }
     ];
-    selectedLive = this.liveVideo[0];
+    selectEventType = this.listEventType[0];
 
-    styleVideo = [
+    listVideoType = [
         { name: "Tất cả", key: "any" },
         { name: "Tập phim (episode)", key: "episode" },
         { name: "Full phim (movie)", key: "movie" }
     ];
-    selectedStyle = this.styleVideo[0];
+    selectVideoType = this.listVideoType[0];
     listKeys = "test thu xem\nnhu the nao la duoc\ndi choi ko em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em";
     listKeysUsed = "mieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke";
     idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
@@ -95,12 +96,12 @@ export class RightContentComponent implements OnDestroy {
                     var searchVideoSetting = {
                         "minResults": (<HTMLInputElement>document.getElementById("setV_min_result")).value,
                         "maxResults": (<HTMLInputElement>document.getElementById("setV_max_result")).value,
-                        "order": that.selectedSort.key,
-                        "publishedAfter": that.selectedUpload.key,
-                        "videoDuration": that.selectedTime.key,
-                        "videoDefinition": that.selectedQuality.key,
-                        "eventType": that.selectedLive.key,
-                        "videoType": that.selectedStyle.key
+                        "order": that.selectOrder.key,
+                        "publishedAfter": that.selectPubAfter.key,
+                        "videoDuration": that.selectVideoDur.key,
+                        "videoDefinition": that.selectVideoDef.key,
+                        "eventType": that.selectEventType.key,
+                        "videoType": that.selectVideoType.key
                     }
                     var mes = {
                         talkTo: "leftComponent",
@@ -112,6 +113,9 @@ export class RightContentComponent implements OnDestroy {
                     }
                     _eventService.componentSay(mes);
                 }
+            if (mess.mess === "set cookie") {
+                that.getSetting(mess.chanelId);
+            }
         });
     }
     ngOnInit() {
@@ -120,7 +124,37 @@ export class RightContentComponent implements OnDestroy {
         );
         this.colArea = 50;
     }
-
+    getSetting(chanelId) {
+        if (this.getCookie(chanelId + "order") !== "")
+            this.selectOrder = this.listOrder.filter(subItem => subItem.key === this.getCookie(chanelId + "order"))[0];
+        if (this.getCookie(chanelId + "publishedAfter") !== "")
+            this.selectPubAfter = this.listPubAfter.filter(subItem => subItem.key === Number(this.getCookie(chanelId + "publishedAfter")))[0];
+        if (this.getCookie(chanelId + "videoDuration") !== "")
+            this.selectVideoDur = this.listVideoDur.filter(subItem => subItem.key === this.getCookie(chanelId + "videoDuration"))[0];
+        if (this.getCookie(chanelId + "videoDefinition") !== "")
+            this.selectVideoDef = this.listVideoDef.filter(subItem => subItem.key === this.getCookie(chanelId + "videoDefinition"))[0];
+        if (this.getCookie(chanelId + "eventType") !== "")
+            this.selectEventType = this.listEventType.filter(subItem => subItem.key === this.getCookie(chanelId + "eventType"))[0];
+        if (this.getCookie(chanelId + "videoType") !== "")
+            this.selectVideoType = this.listVideoType.filter(subItem => subItem.key === this.getCookie(chanelId + "videoType"))[0];
+        // this.minResults = this.listOrder.filter(subItem => subItem.key === this.getCookie(chanelId + "order"))[0];
+        // this.maxResults = this.listOrder.filter(subItem => subItem.key === this.getCookie(chanelId + "order"))[0];
+    }
+    getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
     onChangeLang(e) {
         console.log(e);
     }

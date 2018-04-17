@@ -54,8 +54,15 @@ export class LeftContentComponent implements OnDestroy {
     ) {
         this.subs = this._eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "leftComponent") {
-                if (mess.mess === "get key list")
-                    this.createMultiPlayList(mess.data);
+                if (mess.mess === "get key list") {
+                    var set = mess.data.searchVideoSetting;
+                    var searchVideoSetting = "";
+                    var chanelID = "UC6rVB-_0m1hsn9iEp0YUtng"
+                    for (let item in set) {
+                        this.setCookie(chanelID + item, set[item], 20);
+                    }
+                    //this.createMultiPlayList(mess.data);
+                }
             }
         });
         if (window.location.href.indexOf("code=") > 0) {
@@ -85,14 +92,25 @@ export class LeftContentComponent implements OnDestroy {
             "scope=https://www.googleapis.com/auth/youtube&" +
             "approval_prompt=force&" +
             "access_type=offline";
+        this.channelId = "UC6rVB-_0m1hsn9iEp0YUtng";
     }
     ngOnInit() {
-        //this.handleClientLoad();
-        //this.appStart();
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "set cookie",
+            chanelId: this.channelId
+        }
+        this._eventService.componentSay(mess);
     }
     /**
      *  On load, called to load the auth2 library and API client library.
      */
+    setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
     handleClientLoad() {
         var that = this;
         gapi.load('client:auth2', {
