@@ -23,7 +23,7 @@ export class LeftContentComponent implements OnDestroy {
     getInfo: string;
     GoogleAuth: any;
     user: any;
-    channelId: any;
+    chanel: any;
     API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
@@ -75,7 +75,7 @@ export class LeftContentComponent implements OnDestroy {
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 console.log(res);
                 this.user = res.data.channelTitle;
-                this.channelId = res.data.channelId;
+                this.chanel = res.data.channelId;
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
@@ -327,7 +327,6 @@ export class LeftContentComponent implements OnDestroy {
             "privacy": "public",
             "description": "Thong test testing",
             "chanel": "UC6rVB-_0m1hsn9iEp0YUtng",
-
             "searchVideoSetting": data.searchVideoSetting
         }
         console.log(body);
@@ -335,8 +334,8 @@ export class LeftContentComponent implements OnDestroy {
         var that = this;
         this._eventService.post(url, body).subscribe(
             res => {
-                console.log(res);
                 that.onProcess = false;
+                console.log(res);
             },
             err => {
                 console.log(err);
