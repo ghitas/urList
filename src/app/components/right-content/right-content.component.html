@@ -26,7 +26,8 @@
                                     <input type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
                               </div>
                               <div class="mb-1">
-                                    <input type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                                    <input type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng
+                                    đồng
                               </div>
                               <div class="mb-1">
                                     <input type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
@@ -93,12 +94,12 @@
                                     <span>Không chèn video của bạn (có sẽ view chèn sau tại đây)</span>
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radSet" class="radio" value="false" [(ngModel)]="setVideoRadio"> 
+                                    <input type="radio" name="radSet" class="radio" value="false" [(ngModel)]="setVideoRadio">
                                     <span>Chèn video của bạn lúc tạo PLL (tại đây)</span>
                               </div>
                               <div class="mb-1">
                                     <span>Số lượng video của bạn cần thêm</span>
-                                    <input [attr.disabled]="setVideoRadio === 'true'" class="form-control" type="text" placeholder="10"> (max 10)
+                                    <input [attr.disabled]="setVideoRadio === 'true'" class="form-control" type="text" placeholder="10">                                    (max 10)
                               </div>
                               <div class="mb-1">
                                     <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
@@ -106,14 +107,64 @@
                               <div class="mb-1">
                                     <textarea class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
                                     <div>
-                                          <input type="checkbox" class="checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                          <input type="checkbox" class="checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ
+                                          danh sách
                                     </div>
                                     <div>
-                                          <input type="checkbox" class="checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                          <input type="checkbox" class="checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên
+                                          PLL
                                     </div>
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
+                                          <input type="checkbox" class="checkbox" checked> Thêm 1 ID vào đầu PLL (vị trí
+                                          số 1)
                                     </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt tiêu đề</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <div>
+                                          <input type="checkbox" class="checkbox"> Tự thêm từ khóa ngẫu nhiên vào cuối tiêu
+                                          đề PLL
+                                    </div>
+                                    <div>
+                                          <input type="checkbox" class="checkbox"> Tự động thêm <input class="form-control"
+                                                type="text" placeholder="4">số ngẫu nhiên vào cuối tiêu đề
+                                    </div>
+                                    <div>
+                                          <input type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi
+                                          loại từ khóa
+                                    </div>
+                                    <div>
+                                          Ký tự nối tiêu đề:
+                                          <select [(ngModel)]="selectLineTitle" (ngModelChange)="onChangeLang($event)">
+                                                <option *ngFor="let item of listLineTitle" [ngValue]="item"> {{item.name}} </option>
+                                          </select>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt mô tả</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <input type="checkbox" class="checkbox">Tự động thêm vài tiêu đề video tìm thấy vào mô tả
+                              </div>
+                              <div class="mb-1">
+                                    <input onclick="document.getElementById('descible').disabled = true;" type="radio" name="radSet" class="radio" checked>
+                                    <span>Tự động thêm mô tả PLL</span>
+                              </div>
+                              <div class="mb-1">
+                                    <input onclick="document.getElementById('descible').disabled = false;" type="radio" name="radSet" class="radio">
+                                    <span>Nhập mô tả PLL thủ công</span>
+                              </div>
+                              <div class="mb-1">
+                                    <span>Mô tả cho PLL (có thể nhập theo spintax): </span>
+                              </div>
+                              <div class="mb-1">
+                                    <textarea id="descible" placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                         </div>
                   </div>
@@ -151,7 +202,7 @@
                   </div>
                   <div class="card border-secondary mb-3">
                         <div class="card-header">Danh sách từ khóa đã bỏ qua:
-                              
+
                         </div>
                         <div class="card-body text-dark">
                               <textarea class="lined" rows="10"></textarea>

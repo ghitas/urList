@@ -78,6 +78,16 @@ export class RightContentComponent implements OnDestroy {
         { name: "Full phim (movie)", key: "movie" }
     ];
     selectVideoType = this.listVideoType[0];
+
+    listLineTitle = [
+        { name: "Ký tự ngẫu nhiên", key: "any" },
+        { name: "Ký tự gạch dọc |", key: "movie" },
+        { name: "Ký tự tim ♥", key: "movie" },
+        { name: "Ký tự ngã ~", key: "movie" },
+        { name: "Ký tự sao *", key: "movie" },
+        { name: "Không dùng", key: "movie" }
+    ];
+    selectLineTitle = this.listLineTitle[0];
     listKeys = "test thu xem\nnhu the nao la duoc\ndi choi ko em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em";
     listKeysUsed = "mieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke";
     idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
