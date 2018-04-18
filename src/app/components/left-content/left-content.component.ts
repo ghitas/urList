@@ -24,6 +24,7 @@ export class LeftContentComponent implements OnDestroy {
     GoogleAuth: any;
     user: any;
     chanel: any;
+    channelId: any;
     API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
