@@ -1,29 +1,20 @@
 <div class="col-12 main-left">
-<<<<<<< HEAD
     <h6>Kênh đang sử dụng:
-        <span class="badge badge-pill badge-success">chung quay lee</span>
+        <span class="badge badge-pill badge-success">{{user.channelTitle}}</span>
         <a id="btnMaster" class="text-muted" href="{{urlChanel}}">(Chuyển kênh)</a>
-    <h6>Kênh đang sử dụng:
-        <span class="badge badge-pill badge-success">{{user}}</span>
-        <a id="btnMaster" class="text-muted" href="{{urlChanel}}">Chuyển kênh</a>
     </h6>
     <h6>Tổng số playlist trên kênh:
-        <a href="{{userInfo}}"><span class="badge badge-pill badge-dark">134</span></a>
+        <a>
+            <span class="badge badge-pill badge-dark">{{user.playlistNumber}}</span>
+        </a>
     </h6>
     <h6>Serial đang sử dụng:
         <span class="badge badge-pill badge-dark">6asdfafqwwerq</span>
     </h6>
     <h6>Vài playlist mới nhất trên kênh:</h6>
     <div class="new-playlist-content">
-        <h6 class="link"><a>Harry Potter Book 1 Audiobook Part 1</a>
-        </h6>
-        <h6 class="link"><a>Harry Potter Book 4 Part 1 Audible Audiobook</a>
-        </h6>
-        <h6 class="link"><a>Harry Potter Book 1 Part 2</a>
-        </h6>
-        <h6 class="link"><a>Harry Potter Book 1 Part 1 Audiobook</a>
-        </h6>
-        <h6 class="link"><a>Harry Potter Book 1 Listen Online</a>
+        <h6 class="link" *ngFor="let item of user.playList"><a target="_blank" href="https://www.youtube.com/playlists?list={{item.id}}">{{item.title}}</a>
+            <!-- <span class="badge badge-pill badge-dark">46 video</span> -->
         </h6>
     </div>
 
