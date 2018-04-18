@@ -24,7 +24,6 @@ export class RightContentComponent implements OnDestroy {
         { name: "Tiếng Việt", key: "vn" },
         { name: "English", key: "en" }
     ];
-
     selectedLang = this.langs[0];
     listOrder = [
         { name: "Mức độ liên quan đến từ khóa", key: "relevance" },
@@ -88,24 +87,22 @@ export class RightContentComponent implements OnDestroy {
         { name: "Không dùng", key: "movie" }
     ];
     selectLineTitle = this.listLineTitle[0];
-    listKeys = "test thu xem\nnhu the nao la duoc\ndi choi ko em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em\nvui len di em";
+    listKeys = "";
     listKeysUsed = "mieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke";
     idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
 
     setVideoRadio = "true";
 
-    constructor(
-        private _eventService: EventService,
-        private _playListService: PlayListService
-    ) {
+    constructor(private _eventService: EventService,
+        private _playListService: PlayListService) {
         var that = this;
         this.subs = _eventService.componentSaid$.subscribe(mess => {
-            if (mess.talkTo === "rightComponent")
+            if (mess.talkTo === "rightComponent"){
                 if (mess.mess === "get key list") {
                     var key = (<HTMLInputElement>document.getElementById("areaKey")).value;
                     var searchVideoSetting = {
-                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_result")).value,
-                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_result")).value,
+                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_resuld")).value,
+                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_resuld")).value,
                         "order": that.selectOrder.key,
                         "publishedAfter": that.selectPubAfter.key,
                         "videoDuration": that.selectVideoDur.key,
@@ -123,17 +120,20 @@ export class RightContentComponent implements OnDestroy {
                     }
                     _eventService.componentSay(mes);
                 }
-            if (mess.mess === "set cookie") {
-                that.getSetting(mess.chanelId);
+                if (mess.mess === "set cookie") {
+                    that.getSetting(mess.chanelId);
+                }
             }
         });
     }
+
     ngOnInit() {
         $(".lined").linedtextarea(
             { selectedLine: 1 }
         );
         this.colArea = 50;
     }
+
     getSetting(chanelId) {
         if (this.getCookie(chanelId + "order") !== "")
             this.selectOrder = this.listOrder.filter(subItem => subItem.key === this.getCookie(chanelId + "order"))[0];

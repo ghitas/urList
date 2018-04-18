@@ -22,9 +22,16 @@ export class LeftContentComponent implements OnDestroy {
     userNm: string = "unknow";
     getInfo: string;
     GoogleAuth: any;
-    user: any;
+    user = {
+        channelTitle: "",
+        channelId: "",
+        playList: [],
+        playlistNumber: 0
+    };
     chanel: any;
-    channelId: any;
+    channelId: string;
+    samplePLL = [];
+    playlistNumber: number;
     API_KEY = "AIzaSyCzVhP6UZ9jZVbbXHPlqwq6O1NBvsowQAE";
     // Client ID and API key from the Developer Console
     CLIENT_ID = '123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com';
@@ -57,7 +64,6 @@ export class LeftContentComponent implements OnDestroy {
             if (mess.talkTo === "leftComponent") {
                 if (mess.mess === "get key list") {
                     var set = mess.data.searchVideoSetting;
-                    var searchVideoSetting = "";
                     var chanelID = "UC6rVB-_0m1hsn9iEp0YUtng"
                     for (let item in set) {
                         this.setCookie(chanelID + item, set[item], 20);
@@ -75,8 +81,14 @@ export class LeftContentComponent implements OnDestroy {
             window.history.pushState("", "", "/autoplaylist/callback");
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 console.log(res);
-                this.user = res.data.channelTitle;
-                this.chanel = res.data.channelId;
+                this.user = res.data;
+                this.setCookie("channelTitle", res.data.channelTitle, 20);
+                this.setCookie("channelId", res.data.channelId, 20);
+                this.setCookie("playlistNumber", res.data.playlistNumber, 20);
+                res.data.playlist.forEach((index, item) => {
+                    this.setCookie("playlist" + index + "id", item.id, 20);
+                    this.setCookie("playlist" + index + "title", item.title, 20);
+                })
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
@@ -96,22 +108,53 @@ export class LeftContentComponent implements OnDestroy {
         this.channelId = "UC6rVB-_0m1hsn9iEp0YUtng";
     }
     ngOnInit() {
+        //this.handleClientLoad();
+        //this.appStart();
         var mess = {
             talkTo: "rightComponent",
             mess: "set cookie",
             chanelId: this.channelId
         }
         this._eventService.componentSay(mess);
+        if (this.chanel !== null) {
+            this.getCurrentUser();
+        }
     }
-    /**
-     *  On load, called to load the auth2 library and API client library.
-     */
+    getCurrentUser() {
+        this.user.channelId = this.getCookie("channelId");
+        this.user.channelTitle = this.getCookie("channelTitle");
+        this.user.playlistNumber = Number(this.getCookie("playlistNumber"));
+        for (var i = 0; i < 5; i++) {
+            this.user.playList[i] = {
+                id: this.getCookie("playlist" + i + "id"),
+                title: this.getCookie("playlist" + i + "title")
+            }
+        }
+    }
     setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
         var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
+    getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    /**
+     *  On load, called to load the auth2 library and API client library.
+     */
     handleClientLoad() {
         var that = this;
         gapi.load('client:auth2', {
@@ -327,7 +370,7 @@ export class LeftContentComponent implements OnDestroy {
             "names": keys,
             "privacy": "public",
             "description": "Thong test testing",
-            "chanel": "UC6rVB-_0m1hsn9iEp0YUtng",
+            "chanel": this.user.channelId,
             "searchVideoSetting": data.searchVideoSetting
         }
         console.log(body);
