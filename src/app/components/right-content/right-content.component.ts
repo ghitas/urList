@@ -20,6 +20,8 @@ export class RightContentComponent implements OnDestroy {
     usedPlaylistNames: string[] = [];
     message: string = '';
     colArea = 50;
+    radSet = "auto";
+    setVideoRadio = "true";
     langs = [
         { name: "Tiếng Việt", key: "vn" },
         { name: "English", key: "en" }
@@ -91,13 +93,11 @@ export class RightContentComponent implements OnDestroy {
     listKeysUsed = "mieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke\nmieu ta mot hang ke";
     idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
 
-    setVideoRadio = "true";
-
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
         var that = this;
         this.subs = _eventService.componentSaid$.subscribe(mess => {
-            if (mess.talkTo === "rightComponent"){
+            if (mess.talkTo === "rightComponent") {
                 if (mess.mess === "get key list") {
                     var key = (<HTMLInputElement>document.getElementById("areaKey")).value;
                     var searchVideoSetting = {
@@ -131,9 +131,7 @@ export class RightContentComponent implements OnDestroy {
         $(".lined").linedtextarea(
             { selectedLine: 1 }
         );
-        this.colArea = 50;
     }
-
     getSetting(chanelId) {
         if (this.getCookie(chanelId + "order") !== "")
             this.selectOrder = this.listOrder.filter(subItem => subItem.key === this.getCookie(chanelId + "order"))[0];
@@ -162,7 +160,7 @@ export class RightContentComponent implements OnDestroy {
             if (c.indexOf(name) == 0) {
                 return c.substring(name.length, c.length);
             }
-        } 
+        }
         return "";
     }
     onChangeLang(e) {

@@ -119,6 +119,18 @@ export class LeftContentComponent implements OnDestroy {
         if (this.chanel !== null) {
             this.getCurrentUser();
         }
+        this.user = {
+        channelTitle: "",
+        channelId: "",
+        playList: [
+            {id:"unknown",title:"this message "},
+            {id:"unknown",title:"this message just"},
+            {id:"unknown",title:"this message just for test"},
+            {id:"unknown",title:"this message just for"},
+            {id:"unknown",title:"this just for test"}
+        ],
+        playlistNumber: 0
+    };
     }
     getCurrentUser() {
         this.user.channelId = this.getCookie("channelId");

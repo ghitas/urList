@@ -13,9 +13,9 @@
     </h6>
     <h6>Vài playlist mới nhất trên kênh:</h6>
     <div class="new-playlist-content">
-        <h6 class="link" *ngFor="let item of user.playList"><a target="_blank" href="https://www.youtube.com/playlists?list={{item.id}}">{{item.title}}</a>
+        <div class="link" *ngFor="let item of user.playList"><a target="_blank" href="https://www.youtube.com/playlists?list={{item.id}}">{{item.title}}</a></div>
             <!-- <span class="badge badge-pill badge-dark">46 video</span> -->
-        </h6>
+        
     </div>
 
     <p>Chào bạn! Hãy tùy chọn cấu hình (hoặc để mặc định), sau đó nhập các ID video của bạn (không bắt buộc) và danh sách từ
@@ -30,3 +30,4 @@
     </div>
     <div class="success-message">{{message}}</div>
 </div>
+<div class="background"></div>
