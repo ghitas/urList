@@ -90,30 +90,33 @@
                         <div class="card-header">Cài đặt video của bạn</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input type="radio" name="radVideoSet" class="radio" value="true" [(ngModel)]="setVideoRadio">
+                                    <input type="radio" name="radSet" class="radio" value="true" [(ngModel)]="setVideoRadio">
                                     <span>Không chèn video của bạn (có sẽ view chèn sau tại đây)</span>
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radVideoSet" class="radio" value="false" [(ngModel)]="setVideoRadio">
+                                    <input type="radio" name="radSet" class="radio" value="false" [(ngModel)]="setVideoRadio">
                                     <span>Chèn video của bạn lúc tạo PLL (tại đây)</span>
                               </div>
                               <div class="mb-1">
                                     <span>Số lượng video của bạn cần thêm</span>
-                                    <input [disabled]="setVideoRadio == 'true'" class="form-control" type="text" value="10">                                    (max 10)
+                                    <input [attr.disabled]="setVideoRadio === 'true'" class="form-control" type="text" placeholder="10">                                    (max 10)
                               </div>
                               <div class="mb-1">
                                     <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
                               </div>
                               <div class="mb-1">
-                                    <textarea [disabled]="setVideoRadio == 'true'" class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
+                                    <textarea class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                          <input type="checkbox" class="checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ
+                                          danh sách
                                     </div>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                          <input type="checkbox" class="checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên
+                                          PLL
                                     </div>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox" checked>                                          Thêm 1 ID vào đầu PLL (vị trí số 1)
+                                          <input type="checkbox" class="checkbox" checked> Thêm 1 ID vào đầu PLL (vị trí
+                                          số 1)
                                     </div>
                               </div>
                         </div>
@@ -123,12 +126,12 @@
                         <div class="card-body text-dark">
                               <div class="mb-1">
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked="checked"> Tự thêm từ khóa ngẫu
-                                          nhiên vào cuối tiêu đề PLL
+                                          <input type="checkbox" class="checkbox"> Tự thêm từ khóa ngẫu nhiên vào cuối tiêu
+                                          đề PLL
                                     </div>
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked="checked"> Tự động thêm
-                                          <input class="form-control" type="text" value="4"> số ngẫu nhiên vào cuối tiêu đề
+                                          <input type="checkbox" class="checkbox"> Tự động thêm <input class="form-control"
+                                                type="text" placeholder="4">số ngẫu nhiên vào cuối tiêu đề
                                     </div>
                                     <div>
                                           <input type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi
@@ -147,30 +150,21 @@
                         <div class="card-header">Cài đặt mô tả</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input type="checkbox" class="checkbox" checked="checked">Tự động thêm vài tiêu đề video
-                                    tìm thấy vào mô tả
+                                    <input type="checkbox" class="checkbox">Tự động thêm vài tiêu đề video tìm thấy vào mô tả
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radSet" value="auto" class="radio" [(ngModel)]="radSet">
+                                    <input onclick="document.getElementById('descible').disabled = true;" type="radio" name="radSet" class="radio" checked>
                                     <span>Tự động thêm mô tả PLL</span>
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radSet" value="manual" class="radio" [(ngModel)]="radSet">
+                                    <input onclick="document.getElementById('descible').disabled = false;" type="radio" name="radSet" class="radio">
                                     <span>Nhập mô tả PLL thủ công</span>
                               </div>
                               <div class="mb-1">
                                     <span>Mô tả cho PLL (có thể nhập theo spintax): </span>
                               </div>
                               <div class="mb-1">
-                                    <textarea [disabled]="radSet == 'auto'" placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
-                              </div>
-                        </div>
-                  </div>
-                  <div class="card border-secondary mb-3">
-                        <div class="card-header">Reset</div>
-                        <div class="card-body text-dark">
-                              <div class="mb-1">
-                                    <button class="btn btn-secondary">Reset về cấu hình mặc định</button>
+                                    <textarea id="descible" placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                         </div>
                   </div>
@@ -193,12 +187,12 @@
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea disabled id="areaDesc" class="lined" rows="10" style="width:100%">{{listKeysUsed}}</textarea>
+                              <textarea id="areaDesc" class="lined" rows="10" style="width:100%">{{listKeysUsed}}</textarea>
                         </div>
                         <div class="card-footer">
                               <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                          <button onClick="document.getElementById('areaDesc').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã sử dụng</button>
+                                          <button class="btn btn-info btn-sm">Sửa từ khóa đã sử dụng</button>
                                     </div>
                                     <div class="btn-group" role="group" aria-label="Third group">
                                           <button class="btn btn-danger btn-sm">Xóa hết</button>
@@ -211,12 +205,12 @@
 
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="keyPassing" disabled class="lined" rows="10" style="width:100%"></textarea>
+                              <textarea class="lined" rows="10" style="width:100%"></textarea>
                         </div>
                         <div class="card-footer">
                               <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                          <button onClick="document.getElementById('keyPassing').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã bỏ qua</button>
+                                          <button class="btn btn-info btn-sm">Sửa từ khóa đã bỏ qua</button>
                                     </div>
                                     <div class="btn-group" role="group" aria-label="Third group">
                                           <button class="btn btn-danger btn-sm">Xóa hết</button>

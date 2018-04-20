@@ -68,7 +68,7 @@ export class LeftContentComponent implements OnDestroy {
                     for (let item in set) {
                         this.setCookie(chanelID + item, set[item], 20);
                     }
-                    //this.createMultiPlayList(mess.data);
+                    this.createMultiPlayList(mess.data);
                 }
             }
         });
@@ -119,18 +119,6 @@ export class LeftContentComponent implements OnDestroy {
         if (this.chanel !== null) {
             this.getCurrentUser();
         }
-        this.user = {
-        channelTitle: "",
-        channelId: "",
-        playList: [
-            {id:"unknown",title:"this message "},
-            {id:"unknown",title:"this message just"},
-            {id:"unknown",title:"this message just for test"},
-            {id:"unknown",title:"this message just for"},
-            {id:"unknown",title:"this just for test"}
-        ],
-        playlistNumber: 0
-    };
     }
     getCurrentUser() {
         this.user.channelId = this.getCookie("channelId");
