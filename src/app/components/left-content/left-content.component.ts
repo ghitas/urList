@@ -82,13 +82,14 @@ export class LeftContentComponent implements OnDestroy {
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 console.log(res);
                 this.user = res.data;
-                this.setCookie("channelTitle", res.data.channelTitle, 20);
-                this.setCookie("channelId", res.data.channelId, 20);
-                this.setCookie("playlistNumber", res.data.playlistNumber, 20);
-                res.data.playlist.forEach((index, item) => {
-                    this.setCookie("playlist" + index + "id", item.id, 20);
-                    this.setCookie("playlist" + index + "title", item.title, 20);
-                })
+                // this.setCookie("channelTitle", res.data.channelTitle, 20);
+                // this.setCookie("channelId", res.data.channelId, 20);
+                // this.setCookie("playlistNumber", res.data.playlistNumber, 20);
+                // console.log(res.data.playlist);
+                // res.data.playlist.forEach((index, item) => {
+                //     this.setCookie("playlist" + index + "id", item.id, 20);
+                //     this.setCookie("playlist" + index + "title", item.title, 20);
+                // })
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
@@ -116,9 +117,21 @@ export class LeftContentComponent implements OnDestroy {
             chanelId: this.channelId
         }
         this._eventService.componentSay(mess);
-        if (this.chanel !== null) {
-            this.getCurrentUser();
-        }
+        // if (this.chanel !== null) {
+        //     this.getCurrentUser();
+        // }
+        // this.user = {
+        //     channelTitle: "",
+        //     channelId: "",
+        //     playList: [
+        //         { id: "unknown", title: "this message " },
+        //         { id: "unknown", title: "this message just" },
+        //         { id: "unknown", title: "this message just for test" },
+        //         { id: "unknown", title: "this message just for" },
+        //         { id: "unknown", title: "this just for test" }
+        //     ],
+        //     playlistNumber: 0
+        // };
     }
     getCurrentUser() {
         this.user.channelId = this.getCookie("channelId");

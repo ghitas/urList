@@ -1,26 +1,32 @@
 <div class="col-12 main-left">
-    <span>Kênh đang sử dụng:
-        <span class="badge badge-pill badge-success">{{user.channelTitle}}</span>
+    <div class="mt-2">
+        Kênh đang sử dụng:
+        <span>
+            <a class="badge badge-pill badge-success" target="_blank" href="https://www.youtube.com/channel/{{user.channelId}}">{{user.channelTitle}}</a>
+        </span>
         <a id="btnMaster" class="text-muted" href="{{urlChanel}}">(Chuyển kênh)</a>
-    </span>
-    <br>
-    <span>Tổng số playlist trên kênh:
-        <a>
-            <span class="badge badge-pill badge-dark">{{user.playlistNumber}}</span>
-        </a>
-    </span>
-    <br>
-    <span>Serial đang sử dụng:
-        <span class="badge badge-pill badge-dark">6asdfafqwwerq</span>
-    </span>
-    <br>
-    <span>Vài playlist mới nhất trên kênh:</span>
-    <div *ngIf="user.playList.length == 0" class="new-playlist-content">
-        <h6 class="link" *ngFor="let item of user.playList"><a target="_blank" href="https://www.youtube.com/playlists?list={{item.id}}">{{item.title}}</a>
-            <!-- <span class="badge badge-pill badge-dark">46 video</span> -->
-        </h6>
     </div>
-
+    <div class="mt-2">
+        <span>Tổng số playlist trên kênh:
+            <a>
+                <span class="badge badge-pill badge-dark">{{user.playlistNumber}}</span>
+            </a>
+        </span>
+    </div>
+    <div class="mt-2">
+        <span>Serial đang sử dụng:
+            <span class="badge badge-pill badge-dark">6asdfafqwwerq</span>
+        </span>
+        <br>
+    </div>
+    <div class="mt-2">
+        <span>Vài playlist mới nhất trên kênh:</span>
+        <div class="new-playlist-content">
+            <h6 class="link" *ngFor="let item of user.playList">
+                <a target="_blank" href="https://www.youtube.com/playlists?list={{item.id}}">{{item.title}}</a>
+            </h6>
+        </div>
+    </div>
     <p>Chào bạn! Hãy tùy chọn cấu hình (hoặc để mặc định), sau đó nhập các ID video của bạn (không bắt buộc) và danh sách từ
         khóa (bắt đầu) để bắt đầu.</p>
     <button (click)="getListKeys()" class="btn btn-success btn-sm mb-2" [ngClass]="disableCreatePlayListBtn ? 'inactive-create-playlist-btn' : 'active-create-playlist-btn'">
