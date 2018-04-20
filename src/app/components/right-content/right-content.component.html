@@ -123,15 +123,15 @@
                         <div class="card-body text-dark">
                               <div class="mb-1">
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked="checked"> Tự thêm từ khóa ngẫu
+                                          <input id="inRandKey" type="checkbox" class="checkbox" checked="checked"> Tự thêm từ khóa ngẫu
                                           nhiên vào cuối tiêu đề PLL
                                     </div>
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked="checked"> Tự động thêm
-                                          <input class="form-control" type="text" value="4"> số ngẫu nhiên vào cuối tiêu đề
+                                          <input id="inAutoAddKey"  type="checkbox" class="checkbox" checked="checked"> Tự động thêm
+                                          <input id="inAddNumRandom"  class="form-control" type="text" value="4"> số ngẫu nhiên vào cuối tiêu đề
                                     </div>
                                     <div>
-                                          <input type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi
+                                          <input id="inFixDieTitle"  type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi
                                           loại từ khóa
                                     </div>
                                     <div>
@@ -147,22 +147,22 @@
                         <div class="card-header">Cài đặt mô tả</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input type="checkbox" class="checkbox" checked="checked">Tự động thêm vài tiêu đề video
+                                    <input id="inAddmoreTile" type="checkbox" class="checkbox" checked="checked">Tự động thêm vài tiêu đề video
                                     tìm thấy vào mô tả
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radSet" value="auto" class="radio" [(ngModel)]="radSet">
+                                    <input id="inAddDesAuto" type="radio" name="radSet" value="auto" class="radio" [(ngModel)]="radSet">
                                     <span>Tự động thêm mô tả PLL</span>
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radSet" value="manual" class="radio" [(ngModel)]="radSet">
+                                    <input id="inAddDesManual" type="radio" name="radSet" value="manual" class="radio" [(ngModel)]="radSet">
                                     <span>Nhập mô tả PLL thủ công</span>
                               </div>
                               <div class="mb-1">
                                     <span>Mô tả cho PLL (có thể nhập theo spintax): </span>
                               </div>
                               <div class="mb-1">
-                                    <textarea [disabled]="radSet == 'auto'" placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
+                                    <textarea id="areaDescription" [disabled]="radSet == 'auto'" placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                         </div>
                   </div>

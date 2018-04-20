@@ -13,3 +13,8 @@
 .lined{
   width: calc(100% - 60px) !important;
 }
+:disabled{
+  background:white !important;
+  opacity: 0.5;
+  color: gray;
+}

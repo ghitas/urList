@@ -12,11 +12,6 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class EventService {
-  startPlaylist = new Subject<boolean>();
-  startPlaylist$ = this.startPlaylist.asObservable();
-
-  creatingPlaylist = new Subject<boolean>();
-  creatingPlaylist$ = this.creatingPlaylist.asObservable();
 
   public isUserLoggedIn = false;
   public user: string;

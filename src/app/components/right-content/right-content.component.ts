@@ -81,12 +81,13 @@ export class RightContentComponent implements OnDestroy {
     selectVideoType = this.listVideoType[0];
 
     listLineTitle = [
-        { name: "Ký tự ngẫu nhiên", key: "any" },
-        { name: "Ký tự gạch dọc |", key: "movie" },
-        { name: "Ký tự tim ♥", key: "movie" },
-        { name: "Ký tự ngã ~", key: "movie" },
-        { name: "Ký tự sao *", key: "movie" },
-        { name: "Không dùng", key: "movie" }
+        { name: "Ký tự ngẫu nhiên", key: "ngaunhien" },
+        { name: "Ký tự gạch dọc |", key: "doc" },
+        { name: "Ký tự gạch dọc -", key: "ngang" },
+        { name: "Ký tự tim ♥", key: "tim" },
+        { name: "Ký tự ngã ~", key: "nga" },
+        { name: "Ký tự sao *", key: "sao" },
+        { name: "Không dùng", key: "" }
     ];
     selectLineTitle = this.listLineTitle[0];
     listKeys = "";
@@ -110,18 +111,32 @@ export class RightContentComponent implements OnDestroy {
                         "eventType": that.selectEventType.key,
                         "videoType": that.selectVideoType.key
                     }
+                    var titleSetting = {
+                        "isAddRandomKeyWord": (<HTMLInputElement>document.getElementById("inRandKey")).checked,
+                        "isAddRandomNumber": $("#inRandKey").checked,
+                        "number": Number($("#inAddNumRandom").value),
+                        "isNeverDie": $("#inFixDieTitle").checked,
+                        "concatKeyword": that.selectLineTitle
+                    };
+                    var descriptionSetting = {
+                        "isAddRandomVideoTitle": $("#inAddDesAuto").checked,
+                        "isAutoAddDescription": $("#inAddDesManual").checked,
+                        "description": $("#areaDescription").value
+                    }
                     var mes = {
                         talkTo: "leftComponent",
                         mess: "get key list",
                         data: {
                             keys: key,
-                            searchVideoSetting: searchVideoSetting
+                            searchVideoSetting: searchVideoSetting,
+                            titleSetting: titleSetting,
+                            descriptionSetting: descriptionSetting
                         }
                     }
                     _eventService.componentSay(mes);
                 }
                 if (mess.mess === "set cookie") {
-                    that.getSetting(mess.chanelId);
+                    //that.getSetting(mess.chanelId);
                 }
             }
         });
@@ -165,50 +180,6 @@ export class RightContentComponent implements OnDestroy {
     }
     onChangeLang(e) {
         console.log(e);
-    }
-
-    addPlayList() {
-        // disable button create playlist
-        this._eventService.creatingPlaylist.next(true);
-
-        // get valid play list names
-        this.playlistNames = this._getPlaylistNames();
-
-        // create playlists
-        var count: number = 0;
-        if (this.playlistNames.length == 0) {
-            this._eventService.creatingPlaylist.next(false);
-            this.playlistTexts = '';
-        } else {
-            // for (var i = 0; i < this.playlistNames.length; i++) {
-            //     this._playListService.addPlaylist(this.playlistNames[i]).subscribe((res) => {
-
-            //         // count number of play list are created
-            //         if (JSON.parse(res._body).code == 0) {
-            //             count = count + 1;
-            //         }
-
-            //         // after finish reating all play lists, enable button create play list
-            //         if (count == this.playlistNames.length) {
-            //             this._eventService.creatingPlaylist.next(false);
-            //             this.usedPlaylistNames = this.playlistNames;
-            //             this.playlistTexts = '';
-            //         }
-            //     });
-            // }
-        }
-    }
-
-    private _getPlaylistNames() {
-        var rawPlaylistNames = this.playlistTexts.split('\n');
-        var tempPlaylistNames: any[] = [];
-        for (var i = 0; i < rawPlaylistNames.length; i++) {
-            if (rawPlaylistNames[i]) {
-                tempPlaylistNames.push(rawPlaylistNames[i]);
-            }
-        }
-
-        return tempPlaylistNames;
     }
 
 }
