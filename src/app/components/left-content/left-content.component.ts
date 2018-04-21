@@ -48,6 +48,7 @@ export class LeftContentComponent implements OnDestroy {
                     //     this.setCookie(chanelID + item, set[item], 20);
                     // }
                     this.createMultiPlayList(mess.data);
+                    console.log(mess.data);
                 }
             }
         });
@@ -80,27 +81,27 @@ export class LeftContentComponent implements OnDestroy {
             "access_type=offline";
     }
     ngOnInit() {
-        var mess = {
-            talkTo: "rightComponent",
-            mess: "set cookie",
-            chanelId: this.channelId
-        }
-        this._eventService.componentSay(mess);
-        if (this.chanel !== null) {
-            this.getCurrentUser();
-        }
-        this.user = {
-            channelTitle: "",
-            channelId: "",
-            playList: [
-                { id: "unknown", title: "this message " },
-                { id: "unknown", title: "this message just" },
-                { id: "unknown", title: "this message just for test" },
-                { id: "unknown", title: "this message just for" },
-                { id: "unknown", title: "this just for test" }
-            ],
-            playlistNumber: 0
-        };
+        // var mess = {
+        //     talkTo: "rightComponent",
+        //     mess: "set cookie",
+        //     chanelId: this.channelId
+        // }
+        // this._eventService.componentSay(mess);
+        // if (this.chanel !== null) {
+        //     this.getCurrentUser();
+        // }
+        // this.user = {
+        //     channelTitle: "",
+        //     channelId: "",
+        //     playList: [
+        //         { id: "unknown", title: "this message " },
+        //         { id: "unknown", title: "this message just" },
+        //         { id: "unknown", title: "this message just for test" },
+        //         { id: "unknown", title: "this message just for" },
+        //         { id: "unknown", title: "this just for test" }
+        //     ],
+        //     playlistNumber: 0
+        // };
     }
     getListKeys() {
         var mess = {
@@ -150,7 +151,9 @@ export class LeftContentComponent implements OnDestroy {
             "privacy": "public",
             "description": "Thong test testing",
             "chanel": this.user.channelId,
-            "searchVideoSetting": data.searchVideoSetting
+            "searchVideoSetting": data.searchVideoSetting,
+            "descriptionSetting": data.descriptionSetting,
+            "titleSetting": data.titleSetting
         }
         console.log(body);
         this.onProcess = true;
@@ -159,6 +162,11 @@ export class LeftContentComponent implements OnDestroy {
             res => {
                 that.onProcess = false;
                 console.log(res);
+                for (var i = 0; i < res.data.length; i++) {
+                    that.user.playList.unshift(res.data[i]);
+                    if (that.user.playList.length > 5)
+                        that.user.playList.pop();
+                }
             },
             err => {
                 console.log(err);

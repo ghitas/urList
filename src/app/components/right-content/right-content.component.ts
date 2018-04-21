@@ -113,15 +113,15 @@ export class RightContentComponent implements OnDestroy {
                     }
                     var titleSetting = {
                         "isAddRandomKeyWord": (<HTMLInputElement>document.getElementById("inRandKey")).checked,
-                        "isAddRandomNumber": $("#inRandKey").checked,
-                        "number": Number($("#inAddNumRandom").value),
-                        "isNeverDie": $("#inFixDieTitle").checked,
-                        "concatKeyword": that.selectLineTitle
+                        "isAddRandomNumber": $("#inRandKey")[0].checked,
+                        "number": Number($("#inAddNumRandom")[0].value),
+                        "isNeverDie": $("#inFixDieTitle")[0].checked,
+                        "concatKeyword": that.selectLineTitle.key
                     };
                     var descriptionSetting = {
-                        "isAddRandomVideoTitle": $("#inAddDesAuto").checked,
-                        "isAutoAddDescription": $("#inAddDesManual").checked,
-                        "description": $("#areaDescription").value
+                        "isAddRandomVideoTitle": $("#inAddRandTile")[0].checked,
+                        "isAutoAddDescription": $("#inAddDesAuto")[0].checked,
+                        "description": $("#areaDescription")[0].value
                     }
                     var mes = {
                         talkTo: "leftComponent",
