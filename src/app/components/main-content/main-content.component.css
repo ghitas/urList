@@ -1,10 +1,28 @@
 .main{
-    background: linear-gradient(217deg, #9b3fb53b, rgba(253, 254, 255, 0.23) 70.71%), linear-gradient(127deg, #555484c4, #ffffff52 70.71%), linear-gradient(336deg, #150bae40, #af5e4c7d 70.71%);
-    /* background: lightblue url(../../../assets/background.jpg) no-repeat fixed center; */
+    /* background: linear-gradient(270deg, #555584, #885c47, #892a6a); */
+    background: linear-gradient(217deg, #9b3fb53b, rgba(253, 254, 255, 0.23) 70.71%), linear-gradient(127deg, #555484c4, #ffffff52 70.71%), linear-gradient(336deg, #150bae40, #af5e4c7d 70.71%); 
+    /* background-size: 400% 400%; */
+    /* -webkit-animation: Gradient 20s ease infinite;
+    -moz-animation: Gradient 20s ease infinite;
+    animation: Gradient 20s ease infinite; */
     color: black;
     line-height: 18px;
     font-size: 13px;
 }
+  @-webkit-keyframes Gradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @-moz-keyframes Gradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes Gradient {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+  }
 #dashboard {
   animation-duration: 0.3s;
   -webkit-animation-duration: 0.3s;

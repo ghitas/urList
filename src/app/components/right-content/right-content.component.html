@@ -6,31 +6,29 @@
                         <div class="card-body text-dark">
                               <div class="mb-1">
                                     <span>Tùy chọn xuất bản PLL:</span>
-                                    <select>
-                                          <option selected>Công khai</option>
-                                          <option>Không công khai</option>
-                                          <option>Riêng tư</option>
+                                    <select [(ngModel)]="selectPrivacy" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listPrivacy" [ngValue]="item">{{item.name}}</option>
                                     </select>
                               </div>
                               <div class="mb-1">
                                     <span>Ngôn ngữ sử dụng cho playlist:</span>
-                                    <select [(ngModel)]="selectedLang" (ngModelChange)="onChangeLang($event)">
-                                          <option *ngFor="let item of langs" [ngValue]="item"> {{item.name}} </option>
+                                    <select [(ngModel)]="selectLanguage" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listLanguage" [ngValue]="item"> {{item.name}} </option>
                                     </select>
                               </div>
                               <div class="mb-1">
                                     <span>Số lượng playlist trên kênh:</span>
-                                    <input class="form-control" value="50">
+                                    <input id="maxPlaylistNumberPerChannel" class="form-control" value="50">
                               </div>
                               <div class="mb-1">
-                                    <input type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
+                                    <input id="useAllKeyword" type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
                               </div>
                               <div class="mb-1">
-                                    <input type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng
+                                    <input id="skipSensitiveKeyword" type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng
                                     đồng
                               </div>
                               <div class="mb-1">
-                                    <input type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
+                                    <input id="autoChangeChannel" type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
                               </div>
                         </div>
                   </div>
@@ -90,30 +88,30 @@
                         <div class="card-header">Cài đặt video của bạn</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input type="radio" name="radVideoSet" class="radio" value="true" [(ngModel)]="setVideoRadio">
+                                    <input id="noInsertVideo" type="radio" name="radVideoSet" class="radio" value="true" [(ngModel)]="setVideoRadio">
                                     <span>Không chèn video của bạn (có sẽ view chèn sau tại đây)</span>
                               </div>
                               <div class="mb-1">
-                                    <input type="radio" name="radVideoSet" class="radio" value="false" [(ngModel)]="setVideoRadio">
+                                    <input id="yesInsertVideo" type="radio" name="radVideoSet" class="radio" value="false" [(ngModel)]="setVideoRadio">
                                     <span>Chèn video của bạn lúc tạo PLL (tại đây)</span>
                               </div>
                               <div class="mb-1">
                                     <span>Số lượng video của bạn cần thêm</span>
-                                    <input [disabled]="setVideoRadio == 'true'" class="form-control" type="text" value="10">                                    (max 10)
+                                    <input id="videoNumber" [disabled]="setVideoRadio == 'true'" class="form-control" type="text" value="10">                                    (max 10)
                               </div>
                               <div class="mb-1">
                                     <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
                               </div>
                               <div class="mb-1">
-                                    <textarea [disabled]="setVideoRadio == 'true'" class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
+                                    <textarea id="videos" [disabled]="setVideoRadio == 'true'" class="lined" rows="10" style="width:100%">{{idVideo}}</textarea>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                          <input id="autoChooseVideoID" [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Tự chọn ID video của bạn ngẫu nhiên từ danh sách
                                     </div>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                          <input id="addPositionRandom" [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox">                                          Thêm ID vào các vị trí ngẫu nhiên trên PLL
                                     </div>
                                     <div>
-                                          <input [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox" checked>                                          Thêm 1 ID vào đầu PLL (vị trí số 1)
+                                          <input id="insert1ID" [disabled]="setVideoRadio == 'true'" type="checkbox" class="setVdisable checkbox" checked>                                          Thêm 1 ID vào đầu PLL (vị trí số 1)
                                     </div>
                               </div>
                         </div>
@@ -183,7 +181,7 @@
                               <i class="fa fa-question-circle pull-right"></i>
                         </div>
                         <div class="card-body text-dark">
-                              <textarea id="areaKey" class="lined" rows="10" style="width:100%">{{listKeys}}</textarea>
+                              <textarea id="names" class="lined" rows="10" style="width:100%">{{listKeys}}</textarea>
                         </div>
                         <!-- <div class="card-footer">
                         </div> -->

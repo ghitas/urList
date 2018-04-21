@@ -39,15 +39,31 @@ export class LeftContentComponent implements OnDestroy {
         private _eventService: EventService,
         private servicePlaylist: PlayListService,
     ) {
+        var that = this;
         this.subs = this._eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "leftComponent") {
                 if (mess.mess === "get key list") {
-                    // var set = mess.data.searchVideoSetting;
-                    // var chanelID = "UC6rVB-_0m1hsn9iEp0YUtng"
-                    // for (let item in set) {
-                    //     this.setCookie(chanelID + item, set[item], 20);
-                    // }
-                    this.createMultiPlayList(mess.data);
+                    var set = mess.data.searchVideoSetting;
+                    for (let item in set) {
+                        this.setCookie(that.user.channelId + item, set[item], 20);
+                    }
+                    set = mess.data.titleSetting;
+                    for (let item in set) {
+                        this.setCookie(that.user.channelId + item, set[item], 20);
+                    }
+                    set = mess.data.descriptionSetting;
+                    for (let item in set) {
+                        this.setCookie(that.user.channelId + item, set[item], 20);
+                    }
+                    set = mess.data.generalSetting;
+                    for (let item in set) {
+                        this.setCookie(that.user.channelId + item, set[item], 20);
+                    }
+                    set = mess.data.insertVideoSetting;
+                    for (let item in set) {
+                        this.setCookie(that.user.channelId + item, set[item], 20);
+                    }
+                    //this.createMultiPlayList(mess.data);
                     console.log(mess.data);
                 }
             }
@@ -73,7 +89,7 @@ export class LeftContentComponent implements OnDestroy {
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
+            "redirect_uri=http://localhost:8080/callback&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
             "scope=https://www.googleapis.com/auth/youtube&" +
@@ -145,9 +161,8 @@ export class LeftContentComponent implements OnDestroy {
 
     createMultiPlayList(data) {
         var url = "http://45.77.247.155:8080/youtube/addMultiPlaylist";
-        var keys = data.keys.split("\n");
         var body = {
-            "names": keys,
+            "names": data.names,
             "privacy": "public",
             "description": "Thong test testing",
             "chanel": this.user.channelId,

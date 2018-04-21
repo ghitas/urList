@@ -22,11 +22,17 @@ export class RightContentComponent implements OnDestroy {
     colArea = 50;
     radSet = "auto";
     setVideoRadio = "true";
-    langs = [
-        { name: "Tiếng Việt", key: "vn" },
-        { name: "English", key: "en" }
+    listPrivacy = [
+        { name: "Công khai", key: "public" },
+        { name: "Không công khai", key: "unlisted" },
+        { name: "Riêng tư", key: "private" }
     ];
-    selectedLang = this.langs[0];
+    selectPrivacy = this.listPrivacy[0];
+    listLanguage = [
+        { name: "Tiếng Việt", key: "vietnamese" },
+        { name: "English", key: "english" }
+    ];
+    selectLanguage = this.listLanguage[0];
     listOrder = [
         { name: "Mức độ liên quan đến từ khóa", key: "relevance" },
         { name: "Thời gian đăng mới nhất", key: "date" },
@@ -92,7 +98,7 @@ export class RightContentComponent implements OnDestroy {
     selectLineTitle = this.listLineTitle[0];
     listKeys = "";
     listKeysUsed = "";
-    idVideo = "ob3RvLmpwZyIsImdpdmVuX25h\nuZyBxdWF5IiwiZmFtaWx5X25\niLCJsb2NhbGUiOiJ2aSJ9";
+    idVideo = "";
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
@@ -100,10 +106,10 @@ export class RightContentComponent implements OnDestroy {
         this.subs = _eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "rightComponent") {
                 if (mess.mess === "get key list") {
-                    var key = (<HTMLInputElement>document.getElementById("areaKey")).value;
+                    var names = $("#names")[0].value.split("\n");
                     var searchVideoSetting = {
-                        "minResults": (<HTMLInputElement>document.getElementById("setV_min_resuld")).value,
-                        "maxResults": (<HTMLInputElement>document.getElementById("setV_max_resuld")).value,
+                        "minResults": $("#minResults")[0].value,
+                        "maxResults": $("#maxResults")[0].value,
                         "order": that.selectOrder.key,
                         "publishedAfter": that.selectPubAfter.key,
                         "videoDuration": that.selectVideoDur.key,
@@ -112,10 +118,10 @@ export class RightContentComponent implements OnDestroy {
                         "videoType": that.selectVideoType.key
                     }
                     var titleSetting = {
-                        "isAddRandomKeyWord": (<HTMLInputElement>document.getElementById("inRandKey")).checked,
-                        "isAddRandomNumber": $("#inRandKey")[0].checked,
-                        "number": Number($("#inAddNumRandom")[0].value),
-                        "isNeverDie": $("#inFixDieTitle")[0].checked,
+                        "isAddRandomKeyWord": $("#isAddRandomKeyWord")[0].checked,
+                        "isAddRandomNumber": $("#isAddRandomNumber")[0].checked,
+                        "number": Number($("#number")[0].value),
+                        "isNeverDie": $("#isNeverDie")[0].checked,
                         "concatKeyword": that.selectLineTitle.key
                     };
                     var descriptionSetting = {
@@ -123,14 +129,35 @@ export class RightContentComponent implements OnDestroy {
                         "isAutoAddDescription": $("#inAddDesAuto")[0].checked,
                         "description": $("#areaDescription")[0].value
                     }
+                    var generalSetting = {
+                        "privacy": that.selectPrivacy.key,
+                        "language": that.selectLanguage.key,
+                        "maxPlaylistNumberPerChannel": $("#maxPlaylistNumberPerChannel")[0].value,
+                        "useAllKeyword": $("#useAllKeyword")[0].checked,
+                        "skipSensitiveKeyword": $("#skipSensitiveKeyword")[0].checked,
+                        "autoChangeChannel": $("#autoChangeChannel")[0].checked
+
+                    };
+                    var videos = $("#videos")[0].value.split("\n");
+                    var insertVideoSetting = {
+                        "noInsertVideo": $("#noInsertVideo")[0].checked,
+                        "yesInsertVideo": $("#yesInsertVideo")[0].checked,
+                        "videoNumber": $("#videoNumber")[0].value,
+                        "videos": videos,
+                        "autoChooseVideoID": $("#autoChooseVideoID")[0].checked,
+                        "addPositionRandom": $("#addPositionRandom")[0].checked,
+                        "insert1ID": $("#insert1ID")[0].checked
+                    }
                     var mes = {
                         talkTo: "leftComponent",
                         mess: "get key list",
                         data: {
-                            keys: key,
+                            names: names,
                             searchVideoSetting: searchVideoSetting,
                             titleSetting: titleSetting,
-                            descriptionSetting: descriptionSetting
+                            descriptionSetting: descriptionSetting,
+                            generalSetting: generalSetting,
+                            insertVideoSetting: insertVideoSetting
                         }
                     }
                     _eventService.componentSay(mes);
