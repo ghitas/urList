@@ -97,12 +97,12 @@ export class LeftContentComponent implements OnDestroy {
             "access_type=offline";
     }
     ngOnInit() {
-        // var mess = {
-        //     talkTo: "rightComponent",
-        //     mess: "set cookie",
-        //     chanelId: this.channelId
-        // }
-        // this._eventService.componentSay(mess);
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "set cookie",
+            chanelId: this.channelId
+        }
+        this._eventService.componentSay(mess);
         // if (this.chanel !== null) {
         //     this.getCurrentUser();
         // }
