@@ -43,31 +43,24 @@ export class LeftContentComponent implements OnDestroy {
         this.subs = this._eventService.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "leftComponent") {
                 if (mess.mess === "get key list") {
-                    var set = mess.data.searchVideoSetting;
-                    for (let item in set) {
-                        this.setCookie(that.user.channelId + item, set[item], 20);
-                    }
-                    set = mess.data.titleSetting;
-                    for (let item in set) {
-                        this.setCookie(that.user.channelId + item, set[item], 20);
-                    }
-                    set = mess.data.descriptionSetting;
-                    for (let item in set) {
-                        this.setCookie(that.user.channelId + item, set[item], 20);
-                    }
-                    set = mess.data.generalSetting;
-                    for (let item in set) {
-                        this.setCookie(that.user.channelId + item, set[item], 20);
-                    }
-                    set = mess.data.insertVideoSetting;
-                    for (let item in set) {
-                        this.setCookie(that.user.channelId + item, set[item], 20);
-                    }
-                    //this.createMultiPlayList(mess.data);
+                    this.createMultiPlayList(mess.data);
                     console.log(mess.data);
                 }
             }
         });
+        // this.user = {
+        //     channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
+        //     channelTitle: "chung quay lee",
+        //     playList: [
+        //         { id: "unknown", title: "this message " },
+        //         { id: "unknown", title: "this message just" },
+        //         { id: "unknown", title: "this message just for test" },
+        //         { id: "unknown", title: "this message just for" },
+        //         { id: "unknown", title: "this just for test" }
+        //     ],
+        //     playlistNumber: 163
+        // };
+        // this.setCookie("userInfo", JSON.stringify(this.user), 20);
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
@@ -76,20 +69,13 @@ export class LeftContentComponent implements OnDestroy {
             console.log(this.autho);
             window.history.pushState("", "", "/autoplaylist/callback");
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
-                console.log(res);
-                this.user = res.data;
-                // this.setCookie("channelTitle", res.data.channelTitle, 20);
-                // this.setCookie("channelId", res.data.channelId, 20);
-                // this.setCookie("playlistNumber", res.data.playlistNumber, 20);
-                // console.log(res.data.playlist);
-                // res.data.playlist.forEach((index, item) => {
-                //     this.setCookie("playlist" + index + "id", item.id, 20);
-                //     this.setCookie("playlist" + index + "title", item.title, 20);
-                // })
+                that.user = res.data;   
+                that.setCookie("userInfo", JSON.stringify(res.data), 20);
+                console.log(document.cookie);
             }, err => err);
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://localhost:8080/callback&" +
+            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
             "scope=https://www.googleapis.com/auth/youtube&" +
@@ -97,27 +83,20 @@ export class LeftContentComponent implements OnDestroy {
             "access_type=offline";
     }
     ngOnInit() {
+        var userSetting = this.getCookie("userInfo");
+        if (userSetting !== "") {
+            this.user = JSON.parse(this.getCookie("userInfo"));
+            console.log(this.user);
+            //this.findSettingForUser(this.user.channelId);
+        }
+    }
+    findSettingForUser(chanelId){
         var mess = {
             talkTo: "rightComponent",
             mess: "set cookie",
-            chanelId: this.channelId
+            chanelId: chanelId
         }
         this._eventService.componentSay(mess);
-        // if (this.chanel !== null) {
-        //     this.getCurrentUser();
-        // }
-        // this.user = {
-        //     channelTitle: "",
-        //     channelId: "",
-        //     playList: [
-        //         { id: "unknown", title: "this message " },
-        //         { id: "unknown", title: "this message just" },
-        //         { id: "unknown", title: "this message just for test" },
-        //         { id: "unknown", title: "this message just for" },
-        //         { id: "unknown", title: "this just for test" }
-        //     ],
-        //     playlistNumber: 0
-        // };
     }
     getListKeys() {
         var mess = {
@@ -125,17 +104,6 @@ export class LeftContentComponent implements OnDestroy {
             mess: "get key list"
         }
         this._eventService.componentSay(mess);
-    }
-    getCurrentUser() {
-        this.user.channelId = this.getCookie("channelId");
-        this.user.channelTitle = this.getCookie("channelTitle");
-        this.user.playlistNumber = Number(this.getCookie("playlistNumber"));
-        for (var i = 0; i < 5; i++) {
-            this.user.playList[i] = {
-                id: this.getCookie("playlist" + i + "id"),
-                title: this.getCookie("playlist" + i + "title")
-            }
-        }
     }
     setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -182,6 +150,7 @@ export class LeftContentComponent implements OnDestroy {
                     if (that.user.playList.length > 5)
                         that.user.playList.pop();
                 }
+                this.setCookie("userInfo", JSON.stringify(this.user), 20);
             },
             err => {
                 console.log(err);
