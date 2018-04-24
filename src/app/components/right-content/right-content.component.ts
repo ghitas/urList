@@ -1,6 +1,7 @@
 import { EventService } from '../../services/event.service';
 import { PlayListService } from '../../services/playlist.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 declare var jquery: any;
 declare var $: any;
@@ -11,6 +12,7 @@ declare var $: any;
     styleUrls: ['./right-content.component.css']
 })
 export class RightContentComponent implements OnDestroy {
+    chanelId: string;
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
@@ -45,7 +47,15 @@ export class RightContentComponent implements OnDestroy {
     selectConcatKeyword = this.listConcatKeyword[0];
 
     setting: any;
-    minResults: 10;
+    //input setting
+    minResults: any;
+    maxResults: any;
+    videoNumber: any;
+    maxPlaylistNumberPerChannel: any;
+    number: any;
+    //textarea setting
+    videos: any;
+    description: any;
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
@@ -58,13 +68,20 @@ export class RightContentComponent implements OnDestroy {
                     _eventService.componentSay(that.setting);
                 }
                 // if (mess.mess === "set cookie") {
-                //     that.getSetting(mess.chanelId);
+                //     that.chanelId = mess.chanelId;
+                //     that.getChanelId();
                 // }
             }
         });
     }
     mySetting() {
         var names = $("#names")[0].value.split("\n");
+        names.forEach((value, index) => {
+            if (value === "")
+                names.splice(index, 1);
+            else
+                value = value.trim();
+        })
         var searchVideoSetting = {
             "minResults": $("#minResults")[0].value,
             "maxResults": $("#maxResults")[0].value,
@@ -78,7 +95,7 @@ export class RightContentComponent implements OnDestroy {
         var titleSetting = {
             "isAddRandomKeyWord": $("#isAddRandomKeyWord")[0].checked,
             "isAddRandomNumber": $("#isAddRandomNumber")[0].checked,
-            "number": Number($("#number")[0].value),
+            "number": $("#number")[0].value,
             "isNeverDie": $("#isNeverDie")[0].checked,
             "concatKeyword": this.selectConcatKeyword.key
         };
@@ -126,7 +143,7 @@ export class RightContentComponent implements OnDestroy {
         );
         var userSetting = this.getCookie("userSetting");
         if (userSetting !== "") {
-            this.setting = JSON.parse(this.getCookie("userSetting"));
+            this.setting = JSON.parse(userSetting);
             this.getSetting(this.setting);
             console.log(this.setting);
         }
@@ -136,8 +153,8 @@ export class RightContentComponent implements OnDestroy {
         /**
          * searchVideoSetting
          */
-        $("#minResults")[0].value = data.searchVideoSetting.minResults;
-        $("#maxResults")[0].value = data.searchVideoSetting.maxResults;
+        this.minResults = data.searchVideoSetting.minResults;
+        this.maxResults = data.searchVideoSetting.maxResults;
         this.selectOrder = this.listOrder.filter(subItem => subItem.key === data.searchVideoSetting.order)[0];
         this.selectPublishedAfter = this.listPublishedAfter.filter(subItem => subItem.key === data.searchVideoSetting.publishedAfter)[0];
         this.selectVideoDuration = this.listVideoDuration.filter(subItem => subItem.key === data.searchVideoSetting.videoDuration)[0];
@@ -149,7 +166,7 @@ export class RightContentComponent implements OnDestroy {
          */
         $("#isAddRandomKeyWord")[0].checked = data.titleSetting.isAddRandomKeyWord;
         $("#isAddRandomNumber")[0].checked = data.titleSetting.isAddRandomNumber;
-        $("#number")[0].value = data.titleSetting.number;
+        this.number = data.titleSetting.number;
         $("#isNeverDie")[0].checked = data.titleSetting.isNeverDie;
         this.selectConcatKeyword = this.listConcatKeyword.filter(subItem => subItem.key === data.titleSetting.concatKeyword)[0];
         /**
@@ -157,7 +174,7 @@ export class RightContentComponent implements OnDestroy {
          */
         $("#isAddRandomVideoTitle")[0].checked = data.descriptionSetting.isAddRandomVideoTitle;
         $("#isAutoAddDescription")[0].checked = data.descriptionSetting.isAutoAddDescription;
-        $("#description")[0].value = data.descriptionSetting.description;
+        this.description = data.descriptionSetting.description;
         if (data.descriptionSetting.isAutoAddDescription)
             this.setDescriptRadio = "isAutoAddDescription";
         else
@@ -167,7 +184,7 @@ export class RightContentComponent implements OnDestroy {
          */
         this.selectPrivacy = this.listPrivacy.filter(subItem => subItem.key === data.generalSetting.privacy)[0];
         this.selectLanguage = this.listLanguage.filter(subItem => subItem.key === data.generalSetting.language)[0];
-        $("#maxPlaylistNumberPerChannel")[0].value = data.generalSetting.maxPlaylistNumberPerChannel;
+        this.maxPlaylistNumberPerChannel = data.generalSetting.maxPlaylistNumberPerChannel;
         $("#useAllKeyword")[0].checked = data.generalSetting.useAllKeyword;
         $("#skipSensitiveKeyword")[0].checked = data.generalSetting.skipSensitiveKeyword;
         $("#autoChangeChannel")[0].checked = data.generalSetting.autoChangeChannel;
@@ -180,8 +197,8 @@ export class RightContentComponent implements OnDestroy {
             this.setVideoRadio = "noInsertVideo";
         else
             this.setVideoRadio = "yesInsertVideo";
-        $("#videoNumber")[0].value = data.insertVideoSetting.videoNumber;
-        $("#videos")[0].value = data.insertVideoSetting.videos.join("\n");
+        this.videoNumber = data.insertVideoSetting.videoNumber;
+        this.videos = data.insertVideoSetting.videos.join("\n");
         $("#autoChooseVideoID")[0].checked = data.insertVideoSetting.autoChooseVideoID;
         $("#addPositionRandom")[0].checked = data.insertVideoSetting.addPositionRandom;
         $("#insert1ID")[0].checked = data.insertVideoSetting.insert1ID;
@@ -209,9 +226,6 @@ export class RightContentComponent implements OnDestroy {
     }
     onChangeLang(e) {
         console.log(e);
-        /**
-         * change value of radio button
-         */
         var setting = this.mySetting();
         this.setCookie("userSetting", JSON.stringify(setting), 20);
         console.log(document.cookie);
@@ -300,5 +314,12 @@ export class RightContentComponent implements OnDestroy {
         ];
         this.selectConcatKeyword = this.listConcatKeyword[0];
         this.setting = {};
+        this.minResults = 30;
+        this.maxResults = 50;
+        this.videoNumber = 10;
+        this.maxPlaylistNumberPerChannel = 50;
+        this.number = 4;
+        this.videos = "";
+        this.description = "";
     }
 }
