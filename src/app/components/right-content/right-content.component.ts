@@ -45,7 +45,7 @@ export class RightContentComponent implements OnDestroy {
     selectConcatKeyword = this.listConcatKeyword[0];
 
     setting: any;
-    minResults: 10;
+    minResults =  10;
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
