@@ -56,6 +56,8 @@ export class RightContentComponent implements OnDestroy {
     //textarea setting
     videos: any;
     description: any;
+    //tab
+    flagActive: string = 'tab1';
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
@@ -321,5 +323,11 @@ export class RightContentComponent implements OnDestroy {
         this.number = 4;
         this.videos = "";
         this.description = "";
+    }
+    
+    displayTab(tabId) {
+        this.flagActive = tabId;
+        $(".tab").addClass( "hide" ).removeClass( "show" );
+        $("#" + tabId).removeClass( "hide" ).addClass( "show" );
     }
 }

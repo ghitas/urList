@@ -22,13 +22,13 @@
                                           class="form-control">
                               </div>
                               <div class="mb-1">
-                                    <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
+                                    <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox">                                    Tạo playlist liên tục đến hết từ khóa
                               </div>
                               <div class="mb-1">
-                                    <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                                    <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox">                                    Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
                               </div>
                               <div class="mb-1">
-                                    <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
+                                    <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox">                                    Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
                               </div>
                         </div>
                   </div>
@@ -37,7 +37,7 @@
                         <div class="card-body text-dark">
                               <div class="mb-1">
                                     <span>Số lượng video cho mỗi playlist từ:</span>
-                                    <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text"> tới
+                                    <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text">                                    tới
                                     <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxResults" id="maxResults" class="form-control" type="text">
                               </div>
 
@@ -110,15 +110,18 @@
                                           class="lined" rows="10" style="width:100%"></textarea>
                                     <div>
                                           <input (change)="onChangeLang($event)" id="autoChooseVideoID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
-                                                class="setVdisable checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                                class="setVdisable checkbox"> Tự chọn
+                                          ID video của bạn ngẫu nhiên từ danh sách
                                     </div>
                                     <div>
                                           <input (change)="onChangeLang($event)" id="addPositionRandom" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
-                                                class="setVdisable checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                                class="setVdisable checkbox"> Thêm ID
+                                          vào các vị trí ngẫu nhiên trên PLL
                                     </div>
                                     <div>
                                           <input (change)="onChangeLang($event)" id="insert1ID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox" class="setVdisable checkbox"
-                                                checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
+                                                checked> Thêm 1 ID vào đầu PLL (vị trí
+                                          số 1)
                                     </div>
                               </div>
                         </div>
@@ -128,14 +131,15 @@
                         <div class="card-body text-dark">
                               <div class="mb-1">
                                     <div>
-                                          <input (change)="onChangeLang($event)" id="isAddRandomKeyWord" type="checkbox" class="checkbox" checked="checked"> Tự thêm từ khóa ngẫu nhiên vào cuối tiêu đề PLL
+                                          <input (change)="onChangeLang($event)" id="isAddRandomKeyWord" type="checkbox" class="checkbox" checked="checked">                                          Tự thêm từ khóa ngẫu nhiên vào cuối tiêu đề PLL
                                     </div>
                                     <div>
-                                          <input (change)="onChangeLang($event)" id="isAddRandomNumber" type="checkbox" class="checkbox" checked="checked"> Tự động thêm
-                                          <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="number" id="number" class="form-control" type="text" value="4"> số ngẫu nhiên vào cuối tiêu đề
+                                          <input (change)="onChangeLang($event)" id="isAddRandomNumber" type="checkbox" class="checkbox" checked="checked">                                          Tự động thêm
+                                          <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="number" id="number" class="form-control" type="text" value="4">                                          số ngẫu nhiên vào cuối tiêu đề
                                     </div>
                                     <div>
-                                          <input (change)="onChangeLang($event)" id="isNeverDie" type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi loại từ khóa
+                                          <input (change)="onChangeLang($event)" id="isNeverDie" type="checkbox" class="checkbox" checked>Chỉnh
+                                          tiêu đề chống die cho mọi loại từ khóa
                                     </div>
                                     <div>
                                           Ký tự nối tiêu đề:
@@ -150,7 +154,8 @@
                         <div class="card-header">Cài đặt mô tả</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <input (change)="onChangeLang($event)" id="isAddRandomVideoTitle" type="checkbox" class="checkbox" checked="checked">Tự động thêm vài tiêu đề video tìm thấy vào mô tả
+                                    <input (change)="onChangeLang($event)" id="isAddRandomVideoTitle" type="checkbox" class="checkbox" checked="checked">Tự
+                                    động thêm vài tiêu đề video tìm thấy vào mô tả
                               </div>
                               <div class="mb-1">
                                     <input (ngModelChange)="onChangeLang($event)" id="isAutoAddDescription" type="radio" name="setDescriptRadio" value="isAutoAddDescription"
@@ -183,35 +188,48 @@
 
             <!-- right part  -->
             <div class="right-part col-12 col-sm-12 col-md-6">
-                  <div class="card border-secondary mb-3">
-                        <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):
-                              <i class="fa fa-question-circle pull-right"></i>
-                        </div>
-                        <div class="card-body text-dark">
-                              <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
-                        </div>
-                        <!-- <div class="card-footer">
-                        </div> -->
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab1'}" (click)="displayTab('tab1')">Left</button>
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab2'}" (click)="displayTab('tab2')">Middle</button>
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab3'}" (click)="displayTab('tab3')">Right</button>
                   </div>
-                  <div class="card border-secondary mb-3">
-                        <div class="card-header">Danh sách từ khóa đã sử dụng:
-                              <i class="fa fa-question-circle pull-right"></i>
+                  <div id="tab1" class="tab show animated fadeIn">
+                        tab1 is me!!
+                        <div class="card border-secondary mb-3">
+                              <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):
+                                    <i class="fa fa-question-circle pull-right"></i>
+                              </div>
+                              <div class="card-body text-dark">
+                                    <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
+                              </div>
+                              <!-- <div class="card-footer">
+                        </div> -->
                         </div>
-                        <div class="card-body text-dark">
-                              <textarea disabled id="areaDesc" class="lined" rows="10" style="width:100%"></textarea>
-                        </div>
-                        <div class="card-footer">
-                              <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                          <button onClick="document.getElementById('areaDesc').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã sử dụng</button>
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Third group">
-                                          <button class="btn btn-danger btn-sm">Xóa hết</button>
+                  </div>
+                  <div id="tab2" class="tab">
+                        tab2 is me!!
+                        <div class="card border-secondary mb-3">
+                              <div class="card-header">Danh sách từ khóa đã sử dụng:
+                                    <i class="fa fa-question-circle pull-right"></i>
+                              </div>
+                              <div class="card-body text-dark">
+                                    <textarea disabled id="areaDesc" class="lined" rows="10" style="width:100%"></textarea>
+                              </div>
+                              <div class="card-footer">
+                                    <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
+                                          <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                                <button onClick="document.getElementById('areaDesc').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã sử dụng</button>
+                                          </div>
+                                          <div class="btn-group" role="group" aria-label="Third group">
+                                                <button class="btn btn-danger btn-sm">Xóa hết</button>
+                                          </div>
                                     </div>
                               </div>
                         </div>
                   </div>
-                  <div class="card border-secondary mb-3">
+                  <div id="tab3" class="tab hide">
+                        tab3 is me!!
+                        <div class="card border-secondary mb-3">
                         <div class="card-header">Danh sách từ khóa đã bỏ qua:
 
                         </div>
@@ -230,6 +248,10 @@
                         </div>
 
                   </div>
+                  </div>
+
+
+                  
             </div>
       </div>
 </div>
