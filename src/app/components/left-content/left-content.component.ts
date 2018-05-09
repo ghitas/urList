@@ -44,10 +44,9 @@ export class LeftContentComponent implements OnDestroy {
             if (mess.talkTo === "leftComponent") {
                 if (mess.mess === "get key list") {
                     this.createMultiPlayList(mess.data);
-                    console.log(mess.data);
                 }
             }
-        });
+        }, err => console.log(err));
         // this.user = {
         //     channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
         //     channelTitle: "chung quay lee",
@@ -70,7 +69,18 @@ export class LeftContentComponent implements OnDestroy {
             window.history.pushState("", "", "/autoplaylist/callback");
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 that.user = res.data;
-                that.setCookie("userInfo", JSON.stringify(res.data), 20);
+                var playList = [];
+                res.data.playList.forEach(element => {
+                    if (element !== null) {
+                        playList.push({
+                            "id": element.id,
+                            "title": element.title,
+                            "videoNumber": element.videoNumber
+                        });
+                    }
+                });
+                that.user.playList = playList;
+                that.setCookie("userInfo", JSON.stringify(that.user), 20);
                 console.log(document.cookie);
             }, err => {
                 this.user = {

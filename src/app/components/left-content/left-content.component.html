@@ -22,7 +22,7 @@
         <span>Vài playlist mới nhất trên kênh:</span>
         <div class="new-playlist-content">
             <h6 class="link" *ngFor="let item of user.playList">
-                <a target="_blank" href="https://www.youtube.com/playlist?list={{item.id}}">{{item.title}}</a>
+                <a *ngIf="item" target="_blank" href="https://www.youtube.com/playlist?list={{item.id}}">{{item.title}}</a>
             </h6>
         </div>
     </div>
