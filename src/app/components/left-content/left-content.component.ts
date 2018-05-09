@@ -69,10 +69,24 @@ export class LeftContentComponent implements OnDestroy {
             console.log(this.autho);
             window.history.pushState("", "", "/autoplaylist/callback");
             this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
-                that.user = res.data;   
+                that.user = res.data;
                 that.setCookie("userInfo", JSON.stringify(res.data), 20);
                 console.log(document.cookie);
-            }, err => err);
+            }, err => {
+                this.user = {
+                    channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
+                    channelTitle: "chung quay lee",
+                    playList: [
+                        { id: "unknown", title: "this message " },
+                        { id: "unknown", title: "this message just" },
+                        { id: "unknown", title: "this message just for test" },
+                        { id: "unknown", title: "this message just for" },
+                        { id: "unknown", title: "this just for test" }
+                    ],
+                    playlistNumber: 163
+                };
+                this.setCookie("userInfo", JSON.stringify(this.user), 20);
+            });
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
             "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
@@ -90,7 +104,7 @@ export class LeftContentComponent implements OnDestroy {
             //this.findSettingForUser(this.user.channelId);
         }
     }
-    findSettingForUser(chanelId){
+    findSettingForUser(chanelId) {
         var mess = {
             talkTo: "rightComponent",
             mess: "set cookie",
