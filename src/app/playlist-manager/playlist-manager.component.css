@@ -1,3 +1,11 @@
+.title{
+    height: 70px;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-top: 0.3em;
+    background: linear-gradient(to right,#535584 0%,#b8368c 100%);
+    color: white;
+}
 .card{
     border: none;
     box-shadow: 0px 0px 10px #7b5776;
@@ -53,41 +61,4 @@ input[type=number]::-webkit-outer-spin-button {
 .btn{
     border: none;
     box-shadow: 0px 0px 5px grey;
-}
-<<<<<<< HEAD
-.show{
-    display: block;
-=======
-.tab{
-  animation-duration: 0.3s;
->>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
-}
-.hide{
-    display: none;
-}
-<<<<<<< HEAD
-.btnTab{
-    margin-bottom: 10px;
-}
-.btnTab > button{
-    margin-top: 3px;
-    transition-duration: 0.1s;
-}
-.btnTab > button:hover{
-    background-color: #a7b3ab;
-    color: white;
-}
-.btnActive{
-    background-color: #68a660;
-    color: white;
-    box-shadow: 0px 0px 5px #495057;
-}
-.btnTab > button.btnActive:hover{
-    background-color: #669e5e;
-    color: white;
-    box-shadow: 0px 0px 5px #495057;
-=======
-.show{
-    display: block;
->>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
 }

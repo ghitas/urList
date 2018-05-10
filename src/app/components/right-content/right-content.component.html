@@ -1,6 +1,7 @@
 <div class="container-fluid">
       <div class="row">
             <div class="left-part col-12 col-sm-12 col-md-6">
+<<<<<<< HEAD
                   <div class="btnTab">
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet1'}" (click)="tabControl('set','tabSet1')">Cài đặt chung</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet2'}" (click)="tabControl('set','tabSet2')">Cài đặt tìm kiếm video</button>
@@ -50,6 +51,47 @@
                                           <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text"> tới
                                           <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxResults" id="maxResults" class="form-control" type="text">
                                     </div>
+=======
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt chung</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <span>Tùy chọn xuất bản PLL:</span>
+                                    <select [(ngModel)]="selectPrivacy" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listPrivacy" [ngValue]="item">{{item.name}}</option>
+                                    </select>
+                              </div>
+                              <div class="mb-1">
+                                    <span>Ngôn ngữ sử dụng cho playlist:</span>
+                                    <select [(ngModel)]="selectLanguage" (ngModelChange)="onChangeLang($event)">
+                                          <option *ngFor="let item of listLanguage" [ngValue]="item"> {{item.name}} </option>
+                                    </select>
+                              </div>
+                              <div class="mb-1">
+                                    <span>Số lượng playlist trên kênh:</span>
+                                    <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxPlaylistNumberPerChannel" id="maxPlaylistNumberPerChannel"
+                                          class="form-control">
+                              </div>
+                              <div class="mb-1">
+                                    <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox">                                    Tạo playlist liên tục đến hết từ khóa
+                              </div>
+                              <div class="mb-1">
+                                    <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox">                                    Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                              </div>
+                              <div class="mb-1">
+                                    <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox">                                    Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
+                              </div>
+                        </div>
+                  </div>
+                  <div id="r_config" class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt tìm kiếm video</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <span>Số lượng video cho mỗi playlist từ:</span>
+                                    <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text">                                    tới
+                                    <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxResults" id="maxResults" class="form-control" type="text">
+                              </div>
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
 
                                     <div class="mb-1">
                                           <span>Sắp xếp video theo:</span>
@@ -95,6 +137,7 @@
                               </div>
                         </div>
                   </div>
+<<<<<<< HEAD
                   <div id="tabSet3" [ngClass]="{'show':flagSetTab === 'tabSet3','hide':flagSetTab !== 'tabSet3'}">
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Cài đặt video của bạn</div>
@@ -132,10 +175,51 @@
                                                 <input (change)="onChangeLang($event)" id="insert1ID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox" class="setVdisable checkbox"
                                                       checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
                                           </div>
+=======
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt video của bạn</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <input (ngModelChange)="onChangeLang($event)" id="noInsertVideo" type="radio" name="radVideoSet" class="radio" value="noInsertVideo"
+                                          [(ngModel)]="setVideoRadio">
+                                    <span>Không chèn video của bạn (có sẽ view chèn sau tại đây)</span>
+                              </div>
+                              <div class="mb-1">
+                                    <input (ngModelChange)="onChangeLang($event)" id="yesInsertVideo" type="radio" name="radVideoSet" class="radio" value="yesInsertVideo"
+                                          [(ngModel)]="setVideoRadio">
+                                    <span>Chèn video của bạn lúc tạo PLL (tại đây)</span>
+                              </div>
+                              <div class="mb-1">
+                                    <span>Số lượng video của bạn cần thêm</span>
+                                    <input (ngModelChange)="onChangeLang($event)" id="videoNumber" [disabled]="setVideoRadio == 'noInsertVideo'" class="form-control"
+                                          type="text" [(ngModel)]="videoNumber"> (max 10)
+                              </div>
+                              <div class="mb-1">
+                                    <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
+                              </div>
+                              <div class="mb-1">
+                                    <textarea (ngModelChange)="onChangeLang($event)" id="videos" [disabled]="setVideoRadio == 'noInsertVideo'" [(ngModel)]="videos"
+                                          class="lined" rows="10" style="width:100%"></textarea>
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="autoChooseVideoID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
+                                                class="setVdisable checkbox"> Tự chọn
+                                          ID video của bạn ngẫu nhiên từ danh sách
+                                    </div>
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="addPositionRandom" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
+                                                class="setVdisable checkbox"> Thêm ID
+                                          vào các vị trí ngẫu nhiên trên PLL
+                                    </div>
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="insert1ID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox" class="setVdisable checkbox"
+                                                checked> Thêm 1 ID vào đầu PLL (vị trí
+                                          số 1)
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
                                     </div>
                               </div>
                         </div>
                   </div>
+<<<<<<< HEAD
                   <div id="tabSet4" [ngClass]="{'show':flagSetTab === 'tabSet4','hide':flagSetTab !== 'tabSet4'}">
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Cài đặt tiêu đề</div>
@@ -157,10 +241,33 @@
                                                       <option *ngFor="let item of listConcatKeyword" [ngValue]="item"> {{item.name}} </option>
                                                 </select>
                                           </div>
+=======
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt tiêu đề</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="isAddRandomKeyWord" type="checkbox" class="checkbox" checked="checked">                                          Tự thêm từ khóa ngẫu nhiên vào cuối tiêu đề PLL
+                                    </div>
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="isAddRandomNumber" type="checkbox" class="checkbox" checked="checked">                                          Tự động thêm
+                                          <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="number" id="number" class="form-control" type="text" value="4">                                          số ngẫu nhiên vào cuối tiêu đề
+                                    </div>
+                                    <div>
+                                          <input (change)="onChangeLang($event)" id="isNeverDie" type="checkbox" class="checkbox" checked>Chỉnh
+                                          tiêu đề chống die cho mọi loại từ khóa
+                                    </div>
+                                    <div>
+                                          Ký tự nối tiêu đề:
+                                          <select [(ngModel)]="selectConcatKeyword" (ngModelChange)="onChangeLang($event)">
+                                                <option *ngFor="let item of listConcatKeyword" [ngValue]="item"> {{item.name}} </option>
+                                          </select>
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
                                     </div>
                               </div>
                         </div>
                   </div>
+<<<<<<< HEAD
                   <div id="tabSet5" [ngClass]="{'show':flagSetTab === 'tabSet5','hide':flagSetTab !== 'tabSet5'}">
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Cài đặt mô tả</div>
@@ -185,6 +292,31 @@
                                           <textarea (ngModelChange)="onChangeLang($event)" [(ngModel)]="description" id="description" [disabled]="setDescriptRadio == 'isAutoAddDescription'"
                                                 placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
                                     </div>
+=======
+                  <div class="card border-secondary mb-3">
+                        <div class="card-header">Cài đặt mô tả</div>
+                        <div class="card-body text-dark">
+                              <div class="mb-1">
+                                    <input (change)="onChangeLang($event)" id="isAddRandomVideoTitle" type="checkbox" class="checkbox" checked="checked">Tự
+                                    động thêm vài tiêu đề video tìm thấy vào mô tả
+                              </div>
+                              <div class="mb-1">
+                                    <input (ngModelChange)="onChangeLang($event)" id="isAutoAddDescription" type="radio" name="setDescriptRadio" value="isAutoAddDescription"
+                                          class="radio" [(ngModel)]="setDescriptRadio">
+                                    <span>Tự động thêm mô tả PLL</span>
+                              </div>
+                              <div class="mb-1">
+                                    <input (ngModelChange)="onChangeLang($event)" type="radio" name="setDescriptRadio" value="isManualAddDescription" class="radio"
+                                          [(ngModel)]="setDescriptRadio">
+                                    <span>Nhập mô tả PLL thủ công</span>
+                              </div>
+                              <div class="mb-1">
+                                    <span>Mô tả cho PLL (có thể nhập theo spintax): </span>
+                              </div>
+                              <div class="mb-1">
+                                    <textarea (ngModelChange)="onChangeLang($event)" [(ngModel)]="description" id="description" [disabled]="setDescriptRadio == 'isAutoAddDescription'"
+                                          placeholder="Nhập mô tả vào đây" class="lined" rows="10" style="width:100%"></textarea>
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
                               </div>
                         </div>
                   </div>
@@ -200,12 +332,22 @@
 
             <!-- right part  -->
             <div class="right-part col-12 col-sm-12 col-md-6">
+<<<<<<< HEAD
                   <div class="btnTab">
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">Từ khóa</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey2'}" (click)="tabControl('key','tabKey2')">Từ khóa đã sử dụng</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Từ khóa đã bỏ qua</button>
                   </div>
                   <div id="tabKey1" [ngClass]="{'show':flagKeyTab === 'tabKey1','hide':flagKeyTab !== 'tabKey1'}">
+=======
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab1'}" (click)="displayTab('tab1')">Left</button>
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab2'}" (click)="displayTab('tab2')">Middle</button>
+                        <button type="button" class="btn btn-sm" [ngClass]="{'btn-success': flagActive === 'tab3'}" (click)="displayTab('tab3')">Right</button>
+                  </div>
+                  <div id="tab1" class="tab show animated fadeIn">
+                        tab1 is me!!
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):
                                     <i class="fa fa-question-circle pull-right"></i>
@@ -213,9 +355,18 @@
                               <div class="card-body text-dark">
                                     <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
+<<<<<<< HEAD
                         </div>
                   </div>
                   <div id="tabKey2" [ngClass]="{'show':flagKeyTab === 'tabKey2','hide':flagKeyTab !== 'tabKey2'}">
+=======
+                              <!-- <div class="card-footer">
+                        </div> -->
+                        </div>
+                  </div>
+                  <div id="tab2" class="tab">
+                        tab2 is me!!
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Danh sách từ khóa đã sử dụng:
                                     <i class="fa fa-question-circle pull-right"></i>
@@ -235,9 +386,16 @@
                               </div>
                         </div>
                   </div>
+<<<<<<< HEAD
                   <div id="tabKey3" [ngClass]="{'show':flagKeyTab === 'tabKey3','hide':flagKeyTab !== 'tabKey3'}">
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Danh sách từ khóa đã bỏ qua:
+=======
+                  <div id="tab3" class="tab hide">
+                        tab3 is me!!
+                        <div class="card border-secondary mb-3">
+                        <div class="card-header">Danh sách từ khóa đã bỏ qua:
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
 
                               </div>
                               <div class="card-body text-dark">
@@ -256,6 +414,10 @@
 
                         </div>
                   </div>
+                  </div>
+
+
+                  
             </div>
       </div>
 </div>

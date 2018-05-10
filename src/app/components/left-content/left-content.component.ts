@@ -68,8 +68,26 @@ export class LeftContentComponent implements OnDestroy {
                 });
                 that.user.playList = playList;
                 that.setCookie("userInfo", JSON.stringify(that.user), 20);
+<<<<<<< HEAD
             }, err => {
                 that.handleError("Can't get user info");
+=======
+                console.log(document.cookie);
+            }, err => {
+                this.user = {
+                    channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
+                    channelTitle: "chung quay lee",
+                    playList: [
+                        { id: "unknown", title: "this message " },
+                        { id: "unknown", title: "this message just" },
+                        { id: "unknown", title: "this message just for test" },
+                        { id: "unknown", title: "this message just for" },
+                        { id: "unknown", title: "this just for test" }
+                    ],
+                    playlistNumber: 163
+                };
+                this.setCookie("userInfo", JSON.stringify(this.user), 20);
+>>>>>>> 4e20143e7aea045571cd620360b8aa6d47fa44a6
             });
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
