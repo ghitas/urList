@@ -47,19 +47,6 @@ export class LeftContentComponent implements OnDestroy {
                 }
             }
         }, err => console.log(err));
-        // this.user = {
-        //     channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
-        //     channelTitle: "chung quay lee",
-        //     playList: [
-        //         { id: "unknown", title: "this message " },
-        //         { id: "unknown", title: "this message just" },
-        //         { id: "unknown", title: "this message just for test" },
-        //         { id: "unknown", title: "this message just for" },
-        //         { id: "unknown", title: "this just for test" }
-        //     ],
-        //     playlistNumber: 163
-        // };
-        // this.setCookie("userInfo", JSON.stringify(this.user), 20);
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
@@ -67,7 +54,7 @@ export class LeftContentComponent implements OnDestroy {
             this.autho += "#";
             console.log(this.autho);
             window.history.pushState("", "", "/autoplaylist/callback");
-            this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
+            this._eventService.post("http://45.77.247.155:8081/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 that.user = res.data;
                 var playList = [];
                 res.data.playList.forEach(element => {
@@ -81,11 +68,12 @@ export class LeftContentComponent implements OnDestroy {
                 });
                 that.user.playList = playList;
                 that.setCookie("userInfo", JSON.stringify(that.user), 20);
-                console.log(document.cookie);
-            }, err => err);
+            }, err => {
+                that.handleError("Can't get user info");
+            });
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
+            "redirect_uri=http://fasty2b.com:8080/autoplaylist/dashboard&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
             "scope=https://www.googleapis.com/auth/youtube&" +
@@ -138,7 +126,7 @@ export class LeftContentComponent implements OnDestroy {
     }
 
     createMultiPlayList(data) {
-        var url = "http://45.77.247.155:8080/youtube/addMultiPlaylist";
+        var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
         var body = {
             "names": data.names,
             "privacy": "public",
@@ -167,6 +155,14 @@ export class LeftContentComponent implements OnDestroy {
                 that.onProcess = false;
             }
         )
+    }
+
+    handleError(error: string){
+        var mess = {
+            talkTo: "dialog",
+            data: error
+        }
+        this._eventService.componentSay(mess);
     }
 }
 
