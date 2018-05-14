@@ -18,7 +18,7 @@ export class RightContentComponent implements OnDestroy {
     }
     subs = new Subscription;
     setVideoRadio = "noInsertVideo";
-    setDescriptRadio = "isAutoAddDescription";
+    setDescriptRadio = "isManualAddDescription";
     listPrivacy = [];
     selectPrivacy = this.listPrivacy[0];
 
@@ -251,7 +251,7 @@ export class RightContentComponent implements OnDestroy {
             { name: "Tiếng Việt", key: "vietnamese" },
             { name: "English", key: "english" }
         ];
-        this.selectLanguage = this.listLanguage[1];
+        this.selectLanguage = this.listLanguage[0];
 
         this.listOrder = [
             { name: "Mức độ liên quan đến từ khóa", key: "relevance" },

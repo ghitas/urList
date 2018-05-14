@@ -30,13 +30,13 @@
                                                 class="form-control">
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" class="checkbox" checked>                                          Tạo playlist liên tục đến hết từ khóa
+                                          <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox">                                          Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                                          <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox">                                          Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
+                                          <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
                                     </div>
                               </div>
                         </div>
@@ -47,7 +47,7 @@
                               <div class="card-body text-dark">
                                     <div class="mb-1">
                                           <span>Số lượng video cho mỗi playlist từ:</span>
-                                          <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text">                                          tới
+                                          <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="minResults" id="minResults" class="form-control" type="text"> tới
                                           <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxResults" id="maxResults" class="form-control" type="text">
                                     </div>
 
@@ -112,7 +112,7 @@
                                     <div class="mb-1">
                                           <span>Số lượng video của bạn cần thêm</span>
                                           <input (ngModelChange)="onChangeLang($event)" id="videoNumber" [disabled]="setVideoRadio == 'noInsertVideo'" class="form-control"
-                                                type="text" [(ngModel)]="videoNumber">                                          (max 10)
+                                                type="text" [(ngModel)]="videoNumber"> (max 10)
                                     </div>
                                     <div class="mb-1">
                                           <span>ID video của bạn, mỗi id mỗi hàng (Lấy ID)</span>
@@ -122,15 +122,15 @@
                                                 class="lined" rows="10" style="width:100%"></textarea>
                                           <div>
                                                 <input (change)="onChangeLang($event)" id="autoChooseVideoID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
-                                                      class="setVdisable checkbox">                                                Tự chọn ID video của bạn ngẫu nhiên từ danh sách
+                                                      class="setVdisable checkbox"> Tự chọn ID video của bạn ngẫu nhiên từ danh sách
                                           </div>
                                           <div>
                                                 <input (change)="onChangeLang($event)" id="addPositionRandom" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox"
-                                                      class="setVdisable checkbox">                                                Thêm ID vào các vị trí ngẫu nhiên trên PLL
+                                                      class="setVdisable checkbox"> Thêm ID vào các vị trí ngẫu nhiên trên PLL
                                           </div>
                                           <div>
-                                                <input (change)="onChangeLang($event)" id="insert1ID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox" class="setVdisable checkbox"> Thêm 1 ID vào đầu
-                                                PLL (vị trí số 1)
+                                                <input (change)="onChangeLang($event)" id="insert1ID" [disabled]="setVideoRadio == 'noInsertVideo'" type="checkbox" class="setVdisable checkbox"
+                                                      checked> Thêm 1 ID vào đầu PLL (vị trí số 1)
                                           </div>
                                     </div>
                               </div>
@@ -142,15 +142,14 @@
                               <div class="card-body text-dark">
                                     <div class="mb-1">
                                           <div>
-                                                <input (change)="onChangeLang($event)" id="isAddRandomKeyWord" type="checkbox" class="checkbox" checked="checked">                                                Tự thêm từ khóa ngẫu nhiên vào cuối tiêu đề PLL
+                                                <input (change)="onChangeLang($event)" id="isAddRandomKeyWord" type="checkbox" class="checkbox" checked="checked"> Tự thêm từ khóa ngẫu nhiên vào cuối tiêu đề PLL
                                           </div>
                                           <div>
-                                                <input (change)="onChangeLang($event)" id="isAddRandomNumber" type="checkbox" class="checkbox" checked="checked">                                                Tự động thêm
-                                                <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="number" id="number" class="form-control" type="text" value="4">                                                số ngẫu nhiên vào cuối tiêu đề
+                                                <input (change)="onChangeLang($event)" id="isAddRandomNumber" type="checkbox" class="checkbox" checked="checked"> Tự động thêm
+                                                <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="number" id="number" class="form-control" type="text" value="4"> số ngẫu nhiên vào cuối tiêu đề
                                           </div>
                                           <div>
-                                                <input (change)="onChangeLang($event)" id="isNeverDie" type="checkbox" class="checkbox" checked>Chỉnh
-                                                tiêu đề chống die cho mọi loại từ khóa
+                                                <input (change)="onChangeLang($event)" id="isNeverDie" type="checkbox" class="checkbox" checked>Chỉnh tiêu đề chống die cho mọi loại từ khóa
                                           </div>
                                           <div>
                                                 Ký tự nối tiêu đề:
@@ -167,8 +166,7 @@
                               <div class="card-header">Cài đặt mô tả</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="isAddRandomVideoTitle" type="checkbox" class="checkbox" checked="checked">Tự
-                                          động thêm vài tiêu đề video tìm thấy vào mô tả
+                                          <input (change)="onChangeLang($event)" id="isAddRandomVideoTitle" type="checkbox" class="checkbox" checked="checked">Tự động thêm vài tiêu đề video tìm thấy vào mô tả
                                     </div>
                                     <div class="mb-1">
                                           <input (ngModelChange)="onChangeLang($event)" id="isAutoAddDescription" type="radio" name="setDescriptRadio" value="isAutoAddDescription"
@@ -194,7 +192,7 @@
                         <div class="card-header">Reset</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <button (click)="btnResetDefaultSetting()" class="btn btn-secondary">Sử dụng cấu hình mặc định</button>
+                                    <button (click)="btnResetDefaultSetting()" class="btn btn-secondary">Reset về cấu hình mặc định</button>
                               </div>
                         </div>
                   </div>
@@ -203,9 +201,9 @@
             <!-- right part  -->
             <div class="right-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
-                        <!-- <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">Từ khóa</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">Từ khóa</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey2'}" (click)="tabControl('key','tabKey2')">Từ khóa đã sử dụng</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Từ khóa đã bỏ qua</button> -->
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Từ khóa đã bỏ qua</button>
                   </div>
                   <div id="tabKey1" [ngClass]="{'show':flagKeyTab === 'tabKey1','hide':flagKeyTab !== 'tabKey1'}">
                         <div class="card border-secondary mb-3">
@@ -213,11 +211,11 @@
                                     <i class="fa fa-question-circle pull-right"></i>
                               </div>
                               <div class="card-body text-dark">
-                                    <textarea id="names" class="lined" rows="20" style="width:100%"></textarea>
+                                    <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                         </div>
                   </div>
-                  <!-- <div id="tabKey2" [ngClass]="{'show':flagKeyTab === 'tabKey2','hide':flagKeyTab !== 'tabKey2'}">
+                  <div id="tabKey2" [ngClass]="{'show':flagKeyTab === 'tabKey2','hide':flagKeyTab !== 'tabKey2'}">
                         <div class="card border-secondary mb-3">
                               <div class="card-header">Danh sách từ khóa đã sử dụng:
                                     <i class="fa fa-question-circle pull-right"></i>
@@ -257,7 +255,7 @@
                               </div>
 
                         </div>
-                  </div> -->
+                  </div>
             </div>
       </div>
 </div>

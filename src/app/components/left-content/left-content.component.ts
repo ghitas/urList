@@ -126,10 +126,18 @@ export class LeftContentComponent implements OnDestroy {
     }
 
     createMultiPlayList(data) {
-        /**
-         * this code use for test
-         */
-        this.user = {"channelId":"UCz7R8tm_OXURNojRS7g0v3g","channelTitle":"nguyen phuong","playlistNumber":10,"playList":[{"id":"PLTDiZ2RBV545Tz5mId7Z_ThnpCI5ULW13","title":"Gửi Tuổi Thanh Xuân★AAA★1046","videoNumber":10},{"id":"PLTDiZ2RBV547HP3cndicumnRBty98uSQu","title":"Cô gái năm ấy chúng ta cùng theo đuổi★AAA★8485","videoNumber":17},{"id":"PLTDiZ2RBV546O59eyxwSN--EPOpMD2dcW","title":"Điều tuyệt vời nhất của chúng ta★AAA★0265","videoNumber":14},{"id":"PLTDiZ2RBV547cDtAtVUZJEA6PAeFKqUgL","title":"Bí mật không thể nói★AAA★8532","videoNumber":10},{"id":"PLTDiZ2RBV5451M3ZX6vuZk0ymt3nTeYXS","title":"Children of Men★AAA★2044","videoNumber":13},{"id":"PLTDiZ2RBV546D-a0WWztFIxqiFZSLTYSM","title":"The Act of Killing★AAA★0881★AAA★4396","videoNumber":0},{"id":"PLTDiZ2RBV544HE8WEImldUXi5huwRUcVO","title":"The Act of Killing★AAA★0881","videoNumber":0},{"id":"PLTDiZ2RBV544T74_69TX0Qpk8m2Usvzt6","title":"Gửi Tuổi Thanh Xuân★AAA★5435","videoNumber":0},{"id":"PLTDiZ2RBV544U3HWr7Q79UfSXMOeNDmHR","title":"Cô gái năm ấy chúng ta cùng theo đuổi★AAA★1100","videoNumber":0},{"id":"PLTDiZ2RBV545XfBuJuvqEQd7CEicUL5x5","title":"Holy Motors★AAA★2875","videoNumber":0}]};
+        var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
+        var body = {
+            "names": data.names,
+            "privacy": "public",
+            "description": "Thong test testing",
+            "chanel": this.user.channelId,
+            "searchVideoSetting": data.searchVideoSetting,
+            "descriptionSetting": data.descriptionSetting,
+            "titleSetting": data.titleSetting
+        }
+        console.log(body);
+        this.onProcess = true;
         var that = this;
         // end test
         (function loop(l) {
