@@ -16,6 +16,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthuguardGuard } from './authuguard.guard';
 import { AppModalComponent } from './app-modal/app-modal.component';
+import { PlaylistManagerComponent } from'./playlist-manager/playlist-manager.component';
 
 const appRoutes: Routes = [
   {
@@ -26,6 +27,11 @@ const appRoutes: Routes = [
     path: 'dashboard',
     canActivate: [AuthuguardGuard],
     component: MainContentComponent
+  },
+  {
+    path: 'manager',
+    canActivate: [AuthuguardGuard],
+    component: PlaylistManagerComponent
   },
   {
     path: '',
@@ -47,6 +53,7 @@ const appRoutes: Routes = [
     AppComponent, ToolBarComponent,
     MainContentComponent, LeftContentComponent,
     RightContentComponent,
+    PlaylistManagerComponent,
 
     // Directives
     PlaceholderDirective,

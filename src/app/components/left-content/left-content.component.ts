@@ -16,10 +16,10 @@ export class LeftContentComponent implements OnDestroy {
     disableCreatePlayListBtn: boolean = false;
     route: string;
     autho: string;
-    onProcess: boolean = false;
+    onProcess = false;
     urlChanel: string;
     userInfo: string;
-    userNm: string = "unknow";
+    userNm = "unknow";
     GoogleAuth: any;
     user = {
         channelTitle: "",
@@ -47,19 +47,6 @@ export class LeftContentComponent implements OnDestroy {
                 }
             }
         }, err => console.log(err));
-        // this.user = {
-        //     channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
-        //     channelTitle: "chung quay lee",
-        //     playList: [
-        //         { id: "unknown", title: "this message " },
-        //         { id: "unknown", title: "this message just" },
-        //         { id: "unknown", title: "this message just for test" },
-        //         { id: "unknown", title: "this message just for" },
-        //         { id: "unknown", title: "this just for test" }
-        //     ],
-        //     playlistNumber: 163
-        // };
-        // this.setCookie("userInfo", JSON.stringify(this.user), 20);
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
@@ -67,7 +54,7 @@ export class LeftContentComponent implements OnDestroy {
             this.autho += "#";
             console.log(this.autho);
             window.history.pushState("", "", "/autoplaylist/callback");
-            this._eventService.post("http://45.77.247.155:8080/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
+            this._eventService.post("http://45.77.247.155:8081/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
                 that.user = res.data;
                 var playList = [];
                 res.data.playList.forEach(element => {
@@ -81,25 +68,12 @@ export class LeftContentComponent implements OnDestroy {
                 });
                 that.user.playList = playList;
                 that.setCookie("userInfo", JSON.stringify(that.user), 20);
-                console.log(document.cookie);
             }, err => {
-                this.user = {
-                    channelId: "UC6rVB-_0m1hsn9iEp0YUtng",
-                    channelTitle: "chung quay lee",
-                    playList: [
-                        { id: "unknown", title: "this message " },
-                        { id: "unknown", title: "this message just" },
-                        { id: "unknown", title: "this message just for test" },
-                        { id: "unknown", title: "this message just for" },
-                        { id: "unknown", title: "this just for test" }
-                    ],
-                    playlistNumber: 163
-                };
-                this.setCookie("userInfo", JSON.stringify(this.user), 20);
+                that.handleError("Can't get user info");
             });
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
-            "redirect_uri=http://test.tokybook.com:8081/autoplaylist/callback&" +
+            "redirect_uri=http://fasty2b.com:8080/autoplaylist/dashboard&" +
             "response_type=code&" +
             "client_id=123107836641-klotifbmelp7qb7hhvhv2f9josg0aihl.apps.googleusercontent.com&" +
             "scope=https://www.googleapis.com/auth/youtube&" +
@@ -152,35 +126,66 @@ export class LeftContentComponent implements OnDestroy {
     }
 
     createMultiPlayList(data) {
-        var url = "http://45.77.247.155:8080/youtube/addMultiPlaylist";
-        var body = {
-            "names": data.names,
-            "privacy": "public",
-            "description": "Thong test testing",
-            "chanel": this.user.channelId,
-            "searchVideoSetting": data.searchVideoSetting,
-            "descriptionSetting": data.descriptionSetting,
-            "titleSetting": data.titleSetting
-        }
-        console.log(body);
-        this.onProcess = true;
+        /**
+         * this code use for test
+         */
+        this.user = {"channelId":"UCz7R8tm_OXURNojRS7g0v3g","channelTitle":"nguyen phuong","playlistNumber":10,"playList":[{"id":"PLTDiZ2RBV545Tz5mId7Z_ThnpCI5ULW13","title":"Gửi Tuổi Thanh Xuân★AAA★1046","videoNumber":10},{"id":"PLTDiZ2RBV547HP3cndicumnRBty98uSQu","title":"Cô gái năm ấy chúng ta cùng theo đuổi★AAA★8485","videoNumber":17},{"id":"PLTDiZ2RBV546O59eyxwSN--EPOpMD2dcW","title":"Điều tuyệt vời nhất của chúng ta★AAA★0265","videoNumber":14},{"id":"PLTDiZ2RBV547cDtAtVUZJEA6PAeFKqUgL","title":"Bí mật không thể nói★AAA★8532","videoNumber":10},{"id":"PLTDiZ2RBV5451M3ZX6vuZk0ymt3nTeYXS","title":"Children of Men★AAA★2044","videoNumber":13},{"id":"PLTDiZ2RBV546D-a0WWztFIxqiFZSLTYSM","title":"The Act of Killing★AAA★0881★AAA★4396","videoNumber":0},{"id":"PLTDiZ2RBV544HE8WEImldUXi5huwRUcVO","title":"The Act of Killing★AAA★0881","videoNumber":0},{"id":"PLTDiZ2RBV544T74_69TX0Qpk8m2Usvzt6","title":"Gửi Tuổi Thanh Xuân★AAA★5435","videoNumber":0},{"id":"PLTDiZ2RBV544U3HWr7Q79UfSXMOeNDmHR","title":"Cô gái năm ấy chúng ta cùng theo đuổi★AAA★1100","videoNumber":0},{"id":"PLTDiZ2RBV545XfBuJuvqEQd7CEicUL5x5","title":"Holy Motors★AAA★2875","videoNumber":0}]};
         var that = this;
-        this._eventService.post(url, body).subscribe(
-            res => {
-                that.onProcess = false;
-                console.log(res);
-                for (var i = 0; i < res.data.length; i++) {
-                    that.user.playList.unshift(res.data[i]);
-                    if (that.user.playList.length > 5)
-                        that.user.playList.pop();
+        // end test
+        (function loop(l) {
+            const promise = new Promise((resolve, reject) => {
+                var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
+                var body = {
+                    "names": [data.names[l]],
+                    "privacy": "public",
+                    "chanel": that.user.channelId,
+                    "searchVideoSetting": data.searchVideoSetting,
+                    "descriptionSetting": data.descriptionSetting,
+                    "titleSetting": data.titleSetting
                 }
-                this.setCookie("userInfo", JSON.stringify(this.user), 20);
-            },
-            err => {
-                console.log(err);
-                that.onProcess = false;
+                that.onProcess = true;
+                that._eventService.post(url, body).subscribe(
+                    res => {
+                        that.onProcess = false;
+                        console.log(res);
+                        if(res.code === 403){
+                            that.handleError("Vượt quá số lượng pll được phép tạo trong ngày");
+                            reject();
+                        }else{
+                            for (var i = 0; i < res.data.length; i++) {
+                                that.user.playList.unshift(res.data[i]);
+                                if (that.user.playList.length > 5)
+                                    that.user.playList.pop();
+                            }
+                            that.setCookie("userInfo", JSON.stringify(that.user), 20);
+                            resolve();
+                        }
+                        
+                    },
+                    err => {
+                        console.log(err);
+                        that.onProcess = false;
+                        reject();
+                    }
+                )
+            }).then(() => {
+                if(l < data.names.length - 1){
+                    document.getElementById("processBar").style.width = (l+1)/data.names.length*100 + 20 + "%";
+                    loop(l + 1);
+                }
+            }).catch(err => console.log("create pll err recieve promise"));
+        })(0);
+    }
+
+    handleError(error: string) {
+        var mess = {
+            talkTo: "dialog",
+            data: {
+                title: "Warning",
+                content: error
             }
-        )
+        }
+        this._eventService.componentSay(mess);
     }
 }
 

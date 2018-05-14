@@ -24,7 +24,7 @@ export class EventService {
   setUserLoggedIn(id, pass) {
     this.isUserLoggedIn = false;
     var data = { "userId": id, "password": pass };
-    this.post("http://test.tokybook.com:8080/youtube/login", data).subscribe((res) => {
+    this.post("http://fasty2b.com:8081/youtube/login", data).subscribe((res) => {
       if (res.code === 0) {
         this.isUserLoggedIn = true;
         localStorage.setItem("autho","yes");
@@ -35,8 +35,7 @@ export class EventService {
       }else{
         this.isUserLoggedIn = false;
         localStorage.clear();
-        console.log('teo');
-        this.showPopup("thong bao", "invalid username or password", true,"Yes","No","del");
+        this.showPopup("Thông báo", "username hoặc password không chính xác", true,"Yes","No","del");
       }
     }, (err) => err);
   }

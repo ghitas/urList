@@ -18,3 +18,10 @@
   opacity: 0.5;
   color: gray;
 }
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+body {
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed;
+}

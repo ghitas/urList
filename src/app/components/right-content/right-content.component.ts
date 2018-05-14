@@ -18,7 +18,7 @@ export class RightContentComponent implements OnDestroy {
     }
     subs = new Subscription;
     setVideoRadio = "noInsertVideo";
-    setDescriptRadio = "isManualAddDescription";
+    setDescriptRadio = "isAutoAddDescription";
     listPrivacy = [];
     selectPrivacy = this.listPrivacy[0];
 
@@ -56,8 +56,9 @@ export class RightContentComponent implements OnDestroy {
     //textarea setting
     videos: any;
     description: any;
-    //tab
-    flagActive: string = 'tab1';
+    //tab control
+    flagKeyTab: string = 'tabKey1';
+    flagSetTab: string = "tabSet1";
 
     constructor(private _eventService: EventService,
         private _playListService: PlayListService) {
@@ -250,7 +251,7 @@ export class RightContentComponent implements OnDestroy {
             { name: "Tiếng Việt", key: "vietnamese" },
             { name: "English", key: "english" }
         ];
-        this.selectLanguage = this.listLanguage[0];
+        this.selectLanguage = this.listLanguage[1];
 
         this.listOrder = [
             { name: "Mức độ liên quan đến từ khóa", key: "relevance" },
@@ -324,10 +325,10 @@ export class RightContentComponent implements OnDestroy {
         this.videos = "";
         this.description = "";
     }
-    
-    displayTab(tabId) {
-        this.flagActive = tabId;
-        $(".tab").addClass( "hide" ).removeClass( "show" );
-        $("#" + tabId).removeClass( "hide" ).addClass( "show" );
+    tabControl(loc, tabId): void {
+        if (loc === 'key')
+            this.flagKeyTab = tabId;
+        if (loc === 'set')
+            this.flagSetTab = tabId;
     }
 }

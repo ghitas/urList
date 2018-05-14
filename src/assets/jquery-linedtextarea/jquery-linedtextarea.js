@@ -84,7 +84,7 @@
 			if ( opts.selectedLine != -1 && !isNaN(opts.selectedLine) ){
 				var fontSize = parseInt( textarea.height() / (lineNo-2) );
 				var position = parseInt( fontSize * opts.selectedLine ) - (textarea.height()/2);
-				textarea[0].scrollTop = position;
+				//textarea[0].scrollTop = position;
 			}
 
 			
