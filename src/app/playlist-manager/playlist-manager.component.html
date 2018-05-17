@@ -6,10 +6,10 @@
       <div class="mb-1">
         <div class="col-8">
           <span>Chọn kênh đã kết nối:</span>
-          <select [(ngModel)]="selectPLL" (ngModelChange)="onChangeLang($event)">
+          <select [(ngModel)]="selectPLL">
             <option *ngFor="let item of listPLL" [ngValue]="item"> {{item}}</option>
           </select>
-          <button class="btn btn-success btn-sm">Xem playlist</button>
+          <button class="btn btn-success btn-sm" (click)="viewPlaylist()">Xem playlist</button>
           <span>(Hãy <a href="#">bấm vào đây</a> nếu cần nối kênh mới)</span>
           <div class="mb-1">
             <input type="checkbox">
@@ -18,10 +18,8 @@
         </div>
         <div class="col-3" style="float:right;">
           Số lượng hiện thị:
-          <select>
-            <option selected>50</option>
-            <option>50</option>
-            <option>50</option>
+          <select [(ngModel)]="countView">
+            <option *ngFor="let item of listCount" [ngValue]="item">{{item}}</option>
           </select>
         </div>
       </div>
@@ -90,48 +88,24 @@
           <th scope="col">Số view cũ</th>
           <th scope="col">View mới</th>
           <th scope="col">Tăng</th>
-          <th scope="col">Số video</th>
+          <th scope="col" (click)="sort('countVideo')">Số video</th>
           <th scope="col">Ngày cập nhật</th>
           <th scope="col">Link</th>
           <th scope="col"><input type="checkbox">Chọn</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><input type="checkbox"> @mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><input type="checkbox"> @mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td><input type="checkbox"> @mdo</td>
+        <tr *ngFor="let item of listVideo; let i = index" (click)="selectVideo(item,i,$event)" [ngClass]="{'btn-success':item.check === true}">
+          <th scope="row">{{i+1}}</th>
+          <td><img src="{{item.thumbnails}}" alt="avatar[{{i}}]"></td>
+          <td>{{item.title | uppercase}}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{item.itemCount}}</td>
+          <td>{{item.dateUpdate | date:"shortDate"}}</td>
+          <td><a target="_blank" href="https://www.youtube.com/playlist?list={{item.link}}">youtube</a></td>
+          <td><input type="checkbox"></td>
         </tr>
       </tbody>
     </table>

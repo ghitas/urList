@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 
 
 @Injectable()
-export class EventService {
-
+export class EventService{
   public isUserLoggedIn = false;
   public user: string;
   public pass: string;
@@ -44,6 +43,9 @@ export class EventService {
     return this.isUserLoggedIn;
   }
 
+  get(url: string): Observable<any>{
+      return this.http.get(url);
+  }
   post(url: string, json: any): Observable<any> {
     let headers = new Headers();
     headers.append("Content-Type", "application/json;charset=UTF-8");
