@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { PlayListService } from '../services/playlist.service';
+declare var $: any;
 
 @Component({
   selector: 'app-playlist-manager',
@@ -20,11 +21,15 @@ export class PlaylistManagerComponent implements OnInit {
 
   listVideo = [];
   prevClick: number;
+  flagCheckAll: boolean = false;
   constructor(
     private service: EventService
   ) { }
 
   ngOnInit() {
+    $(".lined").linedtextarea(
+      { selectedLine: 1 }
+    );
   }
 
   viewPlaylist() {
@@ -57,6 +62,13 @@ export class PlaylistManagerComponent implements OnInit {
     console.log(index);
     item.check = !item.check;
     if ($event.shiftKey) {
+      if (window.getSelection) {
+        if (window.getSelection().empty) {  // Chrome
+          window.getSelection().empty();
+        } else if (window.getSelection().removeAllRanges) {  // Firefox
+          window.getSelection().removeAllRanges();
+        }
+      }
       if (index <= this.prevClick) {
         for (var i = index; i < this.prevClick; i++) {
           this.listVideo[i].check = this.listVideo[this.prevClick].check;
@@ -70,6 +82,17 @@ export class PlaylistManagerComponent implements OnInit {
     this.prevClick = index;
   }
 
+  cboxCheckAll(){
+    if(this.flagCheckAll){
+      this.listVideo.forEach(item => {
+        item.check = true;
+      });
+    }else{
+      this.listVideo.forEach(item => {
+        item.check = false;
+      });
+    }
+  }
   sort(option: string) {
     switch (option) {
       case "countVideo":

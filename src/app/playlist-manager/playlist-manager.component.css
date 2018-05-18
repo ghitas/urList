@@ -58,7 +58,70 @@ input[type=number]::-webkit-outer-spin-button {
     appearance: none;
     margin: 0; 
 }
+input[type=checkbox],input[type=radio]{
+    display: block;
+    float: left;
+    margin-top: 6px;
+    margin-right: 5px;
+}
 .btn{
     border: none;
     box-shadow: 0px 0px 5px grey;
+}
+#btnViewPll{
+    margin-top: -5px;
+    font-weight: bold;
+    padding: 1px 7px;
+}
+a{
+    color:inherit;
+}
+table thead tr th{
+    vertical-align: bottom;
+    text-align: center;
+    padding: 4px 0px;
+    background: #5a4b87;
+    border-right: 1px solid white;
+    border-top: none;
+    border-bottom: none;
+    color: white;
+}
+table tbody tr td{
+    border-right: 1px solid gainsboro;
+    vertical-align: middle;
+}
+table tbody tr{
+    background: white;
+    color: #25112d;
+}
+.active:hover{
+    background: #94b9b6 !important;
+    color: white !important;
+}
+.active{
+    background: #688b88 !important;
+    color: white !important;
+}
+table tbody tr td>img{
+    width: 50px;
+}
+table{
+    border-left: 1px solid white;
+    box-shadow: 0px 0px 10px #7b5776;
+    border-radius: 4px;
+    overflow: hidden;
+}
+table tbody tr td:nth-child(2){
+    padding: 2px;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+}
+table thead tr th:nth-last-child(1){
+    padding-left:10px;
+    border-right: none;
+    width: 85px;
+}
+table tr th:nth-last-child(1)>input{
+    margin-right: -13px;
 }
