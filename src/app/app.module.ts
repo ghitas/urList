@@ -16,7 +16,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { FooterComponent } from './footer/footer.component';
 import { AuthuguardGuard } from './authuguard.guard';
 import { AppModalComponent } from './app-modal/app-modal.component';
-import { PlaylistManagerComponent } from'./playlist-manager/playlist-manager.component';
+import { PlaylistManagerComponent } from './playlist-manager/playlist-manager.component';
+// import ngx-translate and the http loader
+// import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+// import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   {
@@ -38,17 +42,28 @@ const appRoutes: Routes = [
     component: LoginFormComponent
   }
 ]
+// export function createTranslateLoader(http: HttpClient) {
+//   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+// }
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes)
+    // HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    // TranslateModule.forRoot({
+    //   loader: {
+    //     provide: TranslateLoader,
+    //     useFactory: (createTranslateLoader),
+    //     deps: [HttpClient]
+    //   }
+    // })
   ],
 
   declarations: [
-    
+
     // Components
     AppComponent, ToolBarComponent,
     MainContentComponent, LeftContentComponent,
@@ -72,3 +87,5 @@ const appRoutes: Routes = [
   providers: [PlayListService, EventService, AuthuguardGuard],
 })
 export class AppModule { }
+
+

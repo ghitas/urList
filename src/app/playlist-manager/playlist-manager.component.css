@@ -94,6 +94,9 @@ table tbody tr{
     background: white;
     color: #25112d;
 }
+table button{
+    padding: 0px 5px;
+}
 .active:hover{
     background: #94b9b6 !important;
     color: white !important;
@@ -118,10 +121,5 @@ table tbody tr td:nth-child(2){
     text-align: center;
 }
 table thead tr th:nth-last-child(1){
-    padding-left:10px;
     border-right: none;
-    width: 85px;
-}
-table tr th:nth-last-child(1)>input{
-    margin-right: -13px;
 }

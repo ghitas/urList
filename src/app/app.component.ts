@@ -1,4 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
+// import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -10,9 +11,10 @@ export class AppComponent {
         title: "Thông báo",
         body: "Nội dung"
     }
-    constructor() { }
-
-    ngOnInit() { }
-    showModal(){
+    constructor(
+        // private translate: TranslateService
+    ) {
+        // translate.setDefaultLang('en');
     }
+    ngOnInit() { }
 }

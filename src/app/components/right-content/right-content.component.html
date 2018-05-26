@@ -1,5 +1,9 @@
 <div class="container-fluid">
       <div class="row">
+            <div class="col-12 col-sm-12 col-md-4 pt-3 content-left">
+                  <left-content></left-content>
+            </div>
+            <div class="col-md-8">
             <div class="left-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet1'}" (click)="tabControl('set','tabSet1')">Cài đặt chung</button>
@@ -221,12 +225,12 @@
                                     <i class="fa fa-question-circle pull-right"></i>
                               </div>
                               <div class="card-body text-dark">
-                                    <textarea disabled id="areaDesc" class="lined" rows="10" style="width:100%"></textarea>
+                                    <textarea disabled id="keyUsing" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                               <div class="card-footer">
                                     <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
                                           <div class="btn-group mr-2" role="group" aria-label="Second group">
-                                                <button onClick="document.getElementById('areaDesc').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã sử dụng</button>
+                                                <button onClick="document.getElementById('keyUsing').disabled = false;" class="btn btn-success btn-sm">Sửa từ khóa đã sử dụng</button>
                                           </div>
                                           <div class="btn-group" role="group" aria-label="Third group">
                                                 <button class="btn btn-danger btn-sm">Xóa hết</button>
@@ -257,5 +261,6 @@
                         </div>
                   </div>
             </div>
+      </div>
       </div>
 </div>

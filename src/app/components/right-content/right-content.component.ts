@@ -70,12 +70,24 @@ export class RightContentComponent implements OnDestroy {
                     that.setting = that.mySetting();
                     _eventService.componentSay(that.setting);
                 }
+                if (mess.mess === "successKey") {
+                    that.moveKeyWord(mess.key, "keyUsing");
+                }
+                if (mess.mess === "failKey") {
+                    that.moveKeyWord(mess.key, "keyPassing");
+                }
                 // if (mess.mess === "set cookie") {
                 //     that.chanelId = mess.chanelId;
                 //     that.getChanelId();
                 // }
             }
         });
+    }
+    moveKeyWord(key: string, des: string) {
+        $("#" + des)[0].value += (key + "\n");
+        var names = $("#names")[0].value.split("\n");
+        names.shift();
+        $("#names")[0].value = names.join("\n");
     }
     mySetting() {
         var names = $("#names")[0].value.split("\n");

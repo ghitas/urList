@@ -12,14 +12,15 @@ declare var gapi: any;
     styleUrls: ['./left-content.component.css']
 })
 export class LeftContentComponent implements OnDestroy {
+    username: string;
     message: string = '';
     disableCreatePlayListBtn: boolean = false;
     route: string;
     autho: string;
-    onProcess = false;
+    onProcess: boolean = false;
     urlChanel: string;
     userInfo: string;
-    userNm = "unknow";
+    userNm: string = "unknow";
     GoogleAuth: any;
     user = {
         channelTitle: "",
@@ -31,6 +32,8 @@ export class LeftContentComponent implements OnDestroy {
     channelId: string;
     samplePLL = [];
     playlistNumber: number;
+    listChannel = [];
+    selectChannel = this.listChannel[0];
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
@@ -47,14 +50,29 @@ export class LeftContentComponent implements OnDestroy {
                 }
             }
         }, err => console.log(err));
+        /**
+         * get list channel of user
+         */
+        this._eventService.get(this._eventService.nm_domain + this._eventService.nm_getAllChannel + "?userId=" + this.username).subscribe(res => { 
+            console.log(res);
+            this.listChannel = JSON.parse(res._body).data;
+            that.setCookie("userChannel", res._body, 20);
+        }, err => {
+            this.handleError("Can't list channel");
+        });
+
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
             this.autho = "4/" + this.autho;
             this.autho += "#";
+            this.username = localStorage.getItem("user");
             console.log(this.autho);
-            window.history.pushState("", "", "/autoplaylist/callback");
-            this._eventService.post("http://45.77.247.155:8081/youtube/getUserInfor", { "authCode": this.autho }).subscribe(res => {
+            window.history.pushState("", "", "/autoplaylist/dashboard");
+            this._eventService.post(this._eventService.nm_domain + this._eventService.nm_getUserInfor, {
+                "authCode": this.autho,
+                "userId": this.username
+            }).subscribe(res => {
                 that.user = res.data;
                 var playList = [];
                 res.data.playList.forEach(element => {
@@ -97,11 +115,14 @@ export class LeftContentComponent implements OnDestroy {
         this._eventService.componentSay(mess);
     }
     getListKeys() {
-        var mess = {
-            talkTo: "rightComponent",
-            mess: "get key list"
-        }
-        this._eventService.componentSay(mess);
+        // var mess = {
+        //     talkTo: "rightComponent",
+        //     mess: "get key list"
+        // }
+        // this._eventService.componentSay(mess);
+        var data = this._eventService.getRightSetting();
+        console.log(data);
+        // this.createMultiPlayList(data);
     }
     setCookie(cname, cvalue, exdays) {
         var d = new Date();
@@ -126,23 +147,22 @@ export class LeftContentComponent implements OnDestroy {
     }
 
     createMultiPlayList(data) {
-        var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
-        var body = {
-            "names": data.names,
-            "privacy": "public",
-            "description": "Thong test testing",
-            "chanel": this.user.channelId,
-            "searchVideoSetting": data.searchVideoSetting,
-            "descriptionSetting": data.descriptionSetting,
-            "titleSetting": data.titleSetting
-        }
-        console.log(body);
-        this.onProcess = true;
+        // var url = this._eventService.nm_domain + this._eventService.nm_createPlaylist;
+        // var body = {
+        //     "names": data.names,
+        //     "privacy": "public",
+        //     "description": "Thong test testing",
+        //     "chanel": this.user.channelId,
+        //     "searchVideoSetting": data.searchVideoSetting,
+        //     "descriptionSetting": data.descriptionSetting,
+        //     "titleSetting": data.titleSetting
+        // }
+        // console.log(body);
+        // this.onProcess = true;
         var that = this;
-        // end test
         (function loop(l) {
             const promise = new Promise((resolve, reject) => {
-                var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
+                var url = that._eventService.nm_domain + that._eventService.nm_createPlaylist;
                 var body = {
                     "names": [data.names[l]],
                     "privacy": "public",
@@ -156,19 +176,20 @@ export class LeftContentComponent implements OnDestroy {
                     res => {
                         that.onProcess = false;
                         console.log(res);
-                        if(res.code === 403){
-                            that.handleError("Vượt quá số lượng pll được phép tạo trong ngày");
+                        if (res.code === 403) {
+                            that.handleError("Vượt quá số lượng 10pll được tạo trong ngày");
                             reject();
-                        }else{
+                        } else {
                             for (var i = 0; i < res.data.length; i++) {
                                 that.user.playList.unshift(res.data[i]);
                                 if (that.user.playList.length > 5)
                                     that.user.playList.pop();
                             }
                             that.setCookie("userInfo", JSON.stringify(that.user), 20);
+                            that.moveKeyWord(data.names[l],"successKey");
                             resolve();
                         }
-                        
+
                     },
                     err => {
                         console.log(err);
@@ -177,21 +198,46 @@ export class LeftContentComponent implements OnDestroy {
                     }
                 )
             }).then(() => {
-                if(l < data.names.length - 1){
-                    document.getElementById("processBar").style.width = (l+1)/data.names.length*100 + 20 + "%";
+                if (l < data.names.length - 1) {
+                    document.getElementById("processBar").style.width = (l + 1) / data.names.length * 100 + 20 + "%";
                     loop(l + 1);
                 }
             }).catch(err => console.log("create pll err recieve promise"));
         })(0);
     }
 
+    moveKeyWord(key, ctrl){
+        var mess = {
+            talkTo: "rightComponent",
+            mess: ctrl,
+            key: key
+        }
+        this._eventService.componentSay(mess);
+    }
+
+    btnLineChannel(){
+        var that = this;
+        (function loop(k) {
+            const promise = new Promise((resolve, reject) => {
+                that.user.channelId = that.listChannel[k].channelId;
+                that.getListKeys();//bug here
+                resolve();
+            }).then(() => {
+                if (k < that.listChannel.length) {
+                    loop(k + 1);
+                }
+            }).catch(err => console.log("line channel is error"));
+        })(0);
+    }
+
     handleError(error: string) {
         var mess = {
             talkTo: "dialog",
-            data: {
-                title: "Warning",
-                content: error
-            }
+            data:
+                {
+                    title: "Warning",
+                    content: error
+                }
         }
         this._eventService.componentSay(mess);
     }

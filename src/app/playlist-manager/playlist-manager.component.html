@@ -7,8 +7,8 @@
         <div class="mb-1">
           <div class="col-9" style="float: left;">
             <span>Chọn kênh đã kết nối:</span>
-            <select [(ngModel)]="selectPLL">
-              <option *ngFor="let item of listPLL" [ngValue]="item"> {{item}}</option>
+            <select [(ngModel)]="selectPLL" value="selectPLL.channelId" (ngModelChange)="selectOnChange($event)">
+              <option *ngFor="let item of listPLL" [ngValue]="item"> {{item.channelId}}</option>
             </select>
             <button id="btnViewPll" class="btn btn-success" (click)="viewPlaylist()">Xem playlist</button>
             <span>(Hãy <a href="#">bấm vào đây</a> nếu cần nối kênh mới)</span>
@@ -86,34 +86,36 @@
 
   <div class="row">
     <div class="mb-3 col-12">
-      <div class="card">
+      <div class="card" style="margin-bottom: 0px;">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Ảnh bìa</th>
-              <th scope="col">Tên PLL</th>
-              <th scope="col">Số view cũ</th>
-              <th scope="col">View mới</th>
-              <th scope="col">Tăng</th>
-              <th scope="col" (click)="sort('countVideo')">Số video</th>
-              <th scope="col">Ngày cập nhật</th>
-              <th scope="col">Link</th>
-              <th scope="col"><input type="checkbox" id="cboxAll" [(ngModel)]="flagCheckAll" (change)="cboxCheckAll()">Chọn</th>
+              <th>#</th>
+              <th>Ảnh bìa</th>
+              <th>Tên PLL</th>
+              <th>Số view cũ</th>
+              <th>View mới</th>
+              <th>Tăng</th>
+              <th (click)="sort('countVideo')">Số video</th>
+              <th>Ngày cập nhật</th>
+              <th>Link</th>
+              <th><input style="float: inherit;display:inherit;" type="checkbox" id="cboxAll" [(ngModel)]="flagCheckAll" (change)="cboxCheckAll()"></th>
+              <th><button class="btn btn-default btn-sm" (click)="btnDelAll()"><i class="fa fa-trash"></i></button></th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of listVideo; let i = index" (click)="selectVideo(item,i,$event)" [ngClass]="{'active':item.check === true}">
-              <td scope="row">{{i+1}}</td>
-              <td><img src="{{item.thumbnails}}" alt="avatar[{{i}}]"></td>
-              <td>{{item.title | uppercase}}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>{{item.itemCount}}</td>
-              <td>{{item.dateUpdate | date:"shortDate"}}</td>
-              <td><a target="_blank" href="https://www.youtube.com/playlist?list={{item.link}}">youtube</a></td>
-              <td><input type="checkbox" [ngModel]="item.check"></td>
+            <tr *ngFor="let item of listVideo; let i = index" [ngClass]="{'active':item.check === true}">
+              <td (click)="selectVideo(item,i,$event)">{{i+1}}</td>
+              <td (click)="selectVideo(item,i,$event)"><img src="{{item.thumbnails}}" alt="avatar[{{i}}]"></td>
+              <td (click)="selectVideo(item,i,$event)">{{item.title | uppercase}}</td>
+              <td (click)="selectVideo(item,i,$event)"></td>
+              <td (click)="selectVideo(item,i,$event)"></td>
+              <td (click)="selectVideo(item,i,$event)"></td>
+              <td (click)="selectVideo(item,i,$event)">{{item.itemCount}}</td>
+              <td (click)="selectVideo(item,i,$event)">{{item.dateUpdate | date:"shortDate"}}</td>
+              <td (click)="selectVideo(item,i,$event)"><a target="_blank" href="https://www.youtube.com/playlist?list={{item.link}}">youtube</a></td>
+              <td (click)="selectVideo(item,i,$event)"><input type="checkbox" [ngModel]="item.check"></td>
+              <td><button class="btn btn-default btn-sm" (click)="delPlaylist(item,i)"><i class="fa fa-trash"></i></button></td>
             </tr>
           </tbody>
         </table>

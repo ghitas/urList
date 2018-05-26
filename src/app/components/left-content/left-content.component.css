@@ -9,6 +9,7 @@
 .main-left{
     padding-top: 7px;
     padding-bottom: 7px;
+    margin-left: 10px;
     border-radius: 5px;
     z-index: 1;
 }
@@ -113,4 +114,9 @@
 }
 .badge{
     font-size: 12px;
+}
+select{
+    color: #495057;
+    border-radius: 0.25em;
+    border: 1px solid #ced4da;
 }

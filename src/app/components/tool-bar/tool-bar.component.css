@@ -30,3 +30,13 @@
 .cursor{
     cursor: pointer;
 }
+select{
+    float:right;
+    color: #495057;
+    border-radius: 0.25em;
+    border: 1px solid #ced4da;
+    height: 23px;
+    font-size: 12px;
+    margin-top: 6px;
+    margin-right: 20px;
+}

@@ -30,11 +30,18 @@ export class PlaylistManagerComponent implements OnInit {
     $(".lined").linedtextarea(
       { selectedLine: 1 }
     );
+    var listPLL = this.service.getCookie("userChannel");
+    if (listPLL !== "") {
+      this.listPLL = JSON.parse(this.service.getCookie("userChannel")).data;
+      this.selectPLL = this.listPLL[0];
+    }
   }
-
+  selectOnChange(e){
+    this.selectPLL = e.channelId;
+  }
   viewPlaylist() {
     this.listVideo = [];
-    this.service.get("http://FastY2B.com:8081/youtube/getPlaylistsListByChannelId?channelId=" + this.selectPLL + "&maxResults=" + this.countView).subscribe(res => {
+    this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL + "&maxResults=" + this.countView).subscribe(res => {
       console.log(JSON.parse(res._body));
       var listData = JSON.parse(res._body);
       if (listData.code === 400) {
@@ -82,16 +89,61 @@ export class PlaylistManagerComponent implements OnInit {
     this.prevClick = index;
   }
 
-  cboxCheckAll(){
-    if(this.flagCheckAll){
+  cboxCheckAll() {
+    if (this.flagCheckAll) {
       this.listVideo.forEach(item => {
         item.check = true;
       });
-    }else{
+    } else {
       this.listVideo.forEach(item => {
         item.check = false;
       });
     }
+  }
+  btnDelAll() {
+    var delList = [];
+    this.listVideo.forEach((item, index) => {
+      if (item.check) {
+        delList.push({
+          item: item,
+          index: index
+        });
+      }
+    });
+    delList.sort(function (a, b) {
+      return Number(b.index) - Number(a.index);
+    });
+    var that = this;
+    (function loop(l) {
+      const promise = new Promise((resolve, reject) => {
+        var url = that.service.nm_domain + that.service.nm_delPlaylist + "?channelId=" + that.selectPLL + "&playlistId=" + delList[l].item.link;
+        that.service.delete(url).subscribe(res => {
+          console.log(res);
+          resolve();
+        },
+          err => {
+            console.log(err);
+            reject();
+          }
+        )
+      }).then(() => {
+        if (l < delList.length) {
+          that.listVideo.splice(delList[l].index, 1);
+          loop(l + 1);
+        }
+      }).catch(err => console.log("can't delete"));
+    })(0);
+  }
+  delPlaylist(item, index) {
+    console.log(item);
+    var url = this.service.nm_domain + this.service.nm_delPlaylist + "?channelId=" + this.selectPLL + "&playlistId=" + item.link;
+    this.service.delete(url).subscribe(res => {
+      console.log(res);
+      this.listVideo.splice(index, 1);
+    }
+      , err => {
+        this.handleError("Can't delete");
+      });
   }
   sort(option: string) {
     switch (option) {
