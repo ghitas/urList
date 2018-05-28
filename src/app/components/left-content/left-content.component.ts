@@ -34,6 +34,7 @@ export class LeftContentComponent implements OnDestroy {
     playlistNumber: number;
     listChannel = [];
     selectChannel = this.listChannel[0];
+    schedulerStartTime: string = "2018-05-26 16:35:00";
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
@@ -53,7 +54,7 @@ export class LeftContentComponent implements OnDestroy {
         /**
          * get list channel of user
          */
-        this._eventService.get(this._eventService.nm_domain + this._eventService.nm_getAllChannel + "?userId=" + this.username).subscribe(res => { 
+        this._eventService.get(this._eventService.nm_domain + this._eventService.nm_getAllChannel + "?userId=" + this.username).subscribe(res => {
             console.log(res);
             this.listChannel = JSON.parse(res._body).data;
             that.setCookie("userChannel", res._body, 20);
@@ -145,7 +146,71 @@ export class LeftContentComponent implements OnDestroy {
         }
         return "";
     }
-
+    btnLineChannel() {
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "line channel"
+        }
+        this._eventService.componentSay(mess);
+    }
+    // createPlaylistMultiChannel(data){
+    //     this.listChannel.forEach(element => {
+    //         this.createMultiPlayList(data, element.channelId);
+    //     });
+    // };
+    createPlaylistMultiChannel(data) {
+        var that = this;
+        (function loop(k) {
+            const promised = new Promise((resolved, rejected) => {
+                (function loop(l) {
+                    const promise = new Promise((resolve, reject) => {
+                        var url = "http://45.77.247.155:8081/youtube/addMultiPlaylist";
+                        var body = {
+                            "names": [data.names[l]],
+                            "privacy": "public",
+                            "chanel": that.listChannel[k].channelId,
+                            "searchVideoSetting": data.searchVideoSetting,
+                            "descriptionSetting": data.descriptionSetting,
+                            "titleSetting": data.titleSetting
+                        }
+                        that.onProcess = true;
+                        that._eventService.post(url, body).subscribe(
+                            res => {
+                                that.onProcess = false;
+                                console.log(res);
+                                if (res.code === 403) {
+                                    that.handleError("Vượt quá số lượng pll được phép tạo trong ngày");
+                                    reject();
+                                } else {
+                                    for (var i = 0; i < res.data.length; i++) {
+                                        that.user.playList.unshift(res.data[i]);
+                                        if (that.user.playList.length > 5)
+                                            that.user.playList.pop();
+                                    }
+                                    that.setCookie("userInfo", JSON.stringify(that.user), 20);
+                                    resolve();
+                                }
+                            },
+                            err => {
+                                console.log(err);
+                                that.onProcess = false;
+                                reject();
+                            }
+                        )
+                    }).then(() => {
+                        if (l < data.names.length - 1) {
+                            document.getElementById("processBar").style.width = (l + 1) / data.names.length * 100 + 20 + "%";
+                            loop(l + 1);
+                        }
+                    }).catch(err => console.log("create pll err recieve promise"));
+                })(0);
+            }).then(() => {
+                if (k < that.listChannel.length - 1) {
+                    loop(k + 1);
+                }
+            }).catch(err => console.log("line channel err recieve promise"));
+        })(0);
+    }
     createMultiPlayList(data) {
         // var url = this._eventService.nm_domain + this._eventService.nm_createPlaylist;
         // var body = {
@@ -186,7 +251,7 @@ export class LeftContentComponent implements OnDestroy {
                                     that.user.playList.pop();
                             }
                             that.setCookie("userInfo", JSON.stringify(that.user), 20);
-                            that.moveKeyWord(data.names[l],"successKey");
+                            that.moveKeyWord(data.names[l], "successKey");
                             resolve();
                         }
 
@@ -206,28 +271,16 @@ export class LeftContentComponent implements OnDestroy {
         })(0);
     }
 
-    moveKeyWord(key, ctrl){
+    btnScheduler() {
+
+    }
+    moveKeyWord(key, ctrl) {
         var mess = {
             talkTo: "rightComponent",
             mess: ctrl,
             key: key
         }
         this._eventService.componentSay(mess);
-    }
-
-    btnLineChannel(){
-        var that = this;
-        (function loop(k) {
-            const promise = new Promise((resolve, reject) => {
-                that.user.channelId = that.listChannel[k].channelId;
-                that.getListKeys();//bug here
-                resolve();
-            }).then(() => {
-                if (k < that.listChannel.length) {
-                    loop(k + 1);
-                }
-            }).catch(err => console.log("line channel is error"));
-        })(0);
     }
 
     handleError(error: string) {

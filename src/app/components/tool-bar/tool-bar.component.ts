@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
-// import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'tool-bar',
@@ -21,7 +21,7 @@ export class ToolBarComponent implements OnInit {
     constructor(
         private router: Router, 
         private service: EventService,
-        // private translate: TranslateService
+        private translate: TranslateService
     ) { }
     btnLoggout(): void {
         localStorage.clear();
@@ -30,7 +30,7 @@ export class ToolBarComponent implements OnInit {
         this.router.navigate(["/"]);
         this.username = this.service.user;
     }
-    // changeLang(lang) {
-    //     this.translate.use(lang.key);
-    // }
+    changeLang(lang) {
+        this.translate.use(lang.key);
+    }
 }

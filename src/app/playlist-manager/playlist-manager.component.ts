@@ -9,11 +9,7 @@ declare var $: any;
   styleUrls: ['./playlist-manager.component.css']
 })
 export class PlaylistManagerComponent implements OnInit {
-  listPLL = [
-    "UC6rVB-_0m1hsn9iEp0YUtng",
-    "Audiobook Harry Potter (12dsdzcseUdseE)",
-    "Audiobook Harry Potter (12dsdzcseUdseE)"
-  ]
+  listPLL = []
   selectPLL = this.listPLL[0];
 
   listCount = ["25", "50", "100", "1000"];
@@ -22,6 +18,7 @@ export class PlaylistManagerComponent implements OnInit {
   listVideo = [];
   prevClick: number;
   flagCheckAll: boolean = false;
+
   constructor(
     private service: EventService
   ) { }
@@ -36,30 +33,33 @@ export class PlaylistManagerComponent implements OnInit {
       this.selectPLL = this.listPLL[0];
     }
   }
-  selectOnChange(e){
-    this.selectPLL = e.channelId;
+
+  changePlaylist(e) {
+    this.selectPLL = e;
   }
   viewPlaylist() {
     this.listVideo = [];
-    this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL + "&maxResults=" + this.countView).subscribe(res => {
+    this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL.channelId + "&maxResults=" + this.countView).subscribe(res => {
       console.log(JSON.parse(res._body));
       var listData = JSON.parse(res._body);
-      if (listData.code === 400) {
-        this.handleError(JSON.parse(listData.message).message);
+      if (listData.code === 0) {
+        listData = listData.data.items;
+        listData.forEach(item => {
+          this.listVideo.push({
+            thumbnails: item.snippet.thumbnails.default.url,
+            title: item.snippet.title,
+            itemCount: item.contentDetails.itemCount,
+            dateUpdate: new Date(item.snippet.publishedAt.value),
+            link: item.id,
+            check: false
+          });
+        });
+        console.log(this.listVideo);
+      } else {
+        this.handleError(listData.message);
         return;
       }
-      listData = listData.data.items;
-      listData.forEach(item => {
-        this.listVideo.push({
-          thumbnails: item.snippet.thumbnails.default.url,
-          title: item.snippet.title,
-          itemCount: item.contentDetails.itemCount,
-          dateUpdate: new Date(item.snippet.publishedAt.value),
-          link: item.id,
-          check: false
-        });
-      });
-      console.log(this.listVideo);
+
     }, err => {
       this.handleError("Can't get playlist");
     });
@@ -170,3 +170,8 @@ export class PlaylistManagerComponent implements OnInit {
   }
 
 }
+
+
+
+// WEBPACK FOOTER //
+// ./src/app/playlist-manager/playlist-manager.component.ts

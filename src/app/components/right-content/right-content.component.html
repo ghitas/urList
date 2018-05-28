@@ -1,9 +1,5 @@
 <div class="container-fluid">
       <div class="row">
-            <div class="col-12 col-sm-12 col-md-4 pt-3 content-left">
-                  <left-content></left-content>
-            </div>
-            <div class="col-md-8">
             <div class="left-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet1'}" (click)="tabControl('set','tabSet1')">Cài đặt chung</button>
@@ -211,9 +207,7 @@
                   </div>
                   <div id="tabKey1" [ngClass]="{'show':flagKeyTab === 'tabKey1','hide':flagKeyTab !== 'tabKey1'}">
                         <div class="card border-secondary mb-3">
-                              <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):
-                                    <i class="fa fa-question-circle pull-right"></i>
-                              </div>
+                              <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):</div>
                               <div class="card-body text-dark">
                                     <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
@@ -221,9 +215,7 @@
                   </div>
                   <div id="tabKey2" [ngClass]="{'show':flagKeyTab === 'tabKey2','hide':flagKeyTab !== 'tabKey2'}">
                         <div class="card border-secondary mb-3">
-                              <div class="card-header">Danh sách từ khóa đã sử dụng:
-                                    <i class="fa fa-question-circle pull-right"></i>
-                              </div>
+                              <div class="card-header">Danh sách từ khóa đã sử dụng:</div>
                               <div class="card-body text-dark">
                                     <textarea disabled id="keyUsing" class="lined" rows="10" style="width:100%"></textarea>
                               </div>
@@ -260,7 +252,7 @@
 
                         </div>
                   </div>
-            </div>
+            
       </div>
       </div>
 </div>

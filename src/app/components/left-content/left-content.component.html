@@ -14,12 +14,25 @@
         </span>
     </div>
     <div class="mt-2">
-        <span>Danh sách kênh đang sử dụng:<a *ngFor="let item of listChannel" target="_blank" href="https://www.youtube.com/channel/{{user.channelId}}">{{item.channelTitle}}, </a></span>
+        <span>Danh sách kênh đang sử dụng:
+            <a *ngFor="let item of listChannel" target="_blank" href="https://www.youtube.com/channel/{{user.channelId}}">{{item.channelTitle}}, </a>
+        </span>
         <!-- <select [(ngModel)]="selectChannel" (ngModelChange)="onChangeLang($event)">
             <option *ngFor="let item of listChannel" [ngValue]="item">{{item.name}}</option>
         </select> -->
         <br>
     </div>
+    <!-- <div class="input-group mt-2" style="height: 31px;">
+        <div class="input-group-prepend">
+            <span class="input-group-text" style="height: 31px;
+            padding-top: 4px;
+            font-size: 15px;">Scheduler</span>
+        </div>
+        <input type="text" [(ngModel)]="schedulerStartTime" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="btnScheduler()">Save scheduler</button>
+        </div>
+    </div> -->
     <div class="mt-2">
         <span>Serial đang sử dụng:
             <span class="badge badge-pill badge-dark">6asdfafqwwerq</span>
