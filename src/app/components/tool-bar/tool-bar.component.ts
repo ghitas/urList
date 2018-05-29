@@ -14,7 +14,7 @@ export class ToolBarComponent implements OnInit {
         {'key':'en','name': 'EN'},
         {'key':'vn','name': 'VN'}
     ]
-    selectedLang = this.language[0];
+    selectedLang = this.language[1];
     ngOnInit(): void {
         this.username = localStorage.getItem("user");
     }

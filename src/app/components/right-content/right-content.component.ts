@@ -68,7 +68,12 @@ export class RightContentComponent implements OnDestroy {
             if (mess.talkTo === "rightComponent") {
                 if (mess.mess === "get key list") {
                     that.setting = that.mySetting();
-                    _eventService.componentSay(that.setting);
+                    var mes = {
+                        talkTo: "leftComponent",
+                        mess: "get key list",
+                        data: that.setting
+                    }
+                    _eventService.componentSay(mes);
                 }
                 if (mess.mess === "successKey") {
                     that.moveKeyWord(mess.key, "keyUsing");
@@ -76,10 +81,15 @@ export class RightContentComponent implements OnDestroy {
                 if (mess.mess === "failKey") {
                     that.moveKeyWord(mess.key, "keyPassing");
                 }
-                // if (mess.mess === "set cookie") {
-                //     that.chanelId = mess.chanelId;
-                //     that.getChanelId();
-                // }
+                if (mess.mess === "scheduler call setting") {
+                    that.setting = that.mySetting();
+                    var mes = {
+                        talkTo: "leftComponent",
+                        mess: "scheduler call setting",
+                        data: that.setting
+                    }
+                    _eventService.componentSay(mes);
+                }
             }
         });
     }
@@ -138,19 +148,16 @@ export class RightContentComponent implements OnDestroy {
             "addPositionRandom": $("#addPositionRandom")[0].checked,
             "insert1ID": $("#insert1ID")[0].checked
         }
-        var mes = {
-            talkTo: "leftComponent",
-            mess: "get key list",
-            data: {
-                names: names,
-                searchVideoSetting: searchVideoSetting,
-                titleSetting: titleSetting,
-                descriptionSetting: descriptionSetting,
-                generalSetting: generalSetting,
-                insertVideoSetting: insertVideoSetting
-            }
+
+        var data = {
+            names: names,
+            searchVideoSetting: searchVideoSetting,
+            titleSetting: titleSetting,
+            descriptionSetting: descriptionSetting,
+            generalSetting: generalSetting,
+            insertVideoSetting: insertVideoSetting
         }
-        return mes;
+        return data;
     }
     ngOnInit() {
         $(".lined").linedtextarea(
@@ -164,7 +171,6 @@ export class RightContentComponent implements OnDestroy {
         }
     }
     getSetting(data) {
-        data = data.data;
         /**
          * searchVideoSetting
          */
@@ -253,14 +259,14 @@ export class RightContentComponent implements OnDestroy {
         this.setVideoRadio = "noInsertVideo";
         this.setDescriptRadio = "isManualAddDescription";
         this.listPrivacy = [
-            { name: "Công khai", key: "public" },
-            { name: "Không công khai", key: "unlisted" },
-            { name: "Riêng tư", key: "private" }
+            { name: "Public", key: "public" },
+            { name: "Unpublic", key: "unlisted" },
+            { name: "Private", key: "private" }
         ];
         this.selectPrivacy = this.listPrivacy[0];
 
         this.listLanguage = [
-            { name: "Tiếng Việt", key: "vietnamese" },
+            { name: "Vietnames", key: "vietnamese" },
             { name: "English", key: "english" }
         ];
         this.selectLanguage = this.listLanguage[0];

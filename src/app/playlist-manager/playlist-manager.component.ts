@@ -116,7 +116,7 @@ export class PlaylistManagerComponent implements OnInit {
     var that = this;
     (function loop(l) {
       const promise = new Promise((resolve, reject) => {
-        var url = that.service.nm_domain + that.service.nm_delPlaylist + "?channelId=" + that.selectPLL + "&playlistId=" + delList[l].item.link;
+        var url = that.service.nm_domain + that.service.nm_delPlaylist + "?channelId=" + that.selectPLL.channelId + "&playlistId=" + delList[l].item.link;
         that.service.delete(url).subscribe(res => {
           console.log(res);
           resolve();
@@ -129,14 +129,15 @@ export class PlaylistManagerComponent implements OnInit {
       }).then(() => {
         if (l < delList.length) {
           that.listVideo.splice(delList[l].index, 1);
-          loop(l + 1);
+          if (l < delList.length - 1)
+            loop(l + 1);
         }
-      }).catch(err => console.log("can't delete"));
+      }).catch(err => that.handleError("Can't delete"));
     })(0);
   }
   delPlaylist(item, index) {
     console.log(item);
-    var url = this.service.nm_domain + this.service.nm_delPlaylist + "?channelId=" + this.selectPLL + "&playlistId=" + item.link;
+    var url = this.service.nm_domain + this.service.nm_delPlaylist + "?channelId=" + this.selectPLL.channelId + "&playlistId=" + item.link;
     this.service.delete(url).subscribe(res => {
       console.log(res);
       this.listVideo.splice(index, 1);

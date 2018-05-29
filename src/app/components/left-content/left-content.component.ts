@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { EventService } from '../../services/event.service';
 import { PlayListService } from '../../services/playlist.service';
 import { Subscription } from 'rxjs';
+import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 declare var $: any;
 declare var gapi: any;
 
@@ -12,6 +13,20 @@ declare var gapi: any;
     styleUrls: ['./left-content.component.css']
 })
 export class LeftContentComponent implements OnDestroy {
+    schedulerActive: boolean = false;
+    myOptions: INgxMyDpOptions = {
+        // other options...
+        dateFormat: 'yyyy-mm-dd 1:00:00',
+    };
+
+    // Initialized to specific date (09.10.2018)
+    inputDateSche: any = { date: { year: 2018, month: 10, day: 9 } };
+
+    // optional date changed callback
+    onDateChanged(event: IMyDateModel): void {
+        // date selected
+        console.log(event);
+    }
     username: string;
     message: string = '';
     disableCreatePlayListBtn: boolean = false;
@@ -34,34 +49,25 @@ export class LeftContentComponent implements OnDestroy {
     playlistNumber: number;
     listChannel = [];
     selectChannel = this.listChannel[0];
-    schedulerStartTime: string = "2018-05-26 16:35:00";
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
     subs = new Subscription;
     constructor(
-        private _eventService: EventService,
+        private service: EventService,
         private servicePlaylist: PlayListService,
     ) {
         var that = this;
-        this.subs = this._eventService.componentSaid$.subscribe(mess => {
+        this.subs = this.service.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "leftComponent") {
                 if (mess.mess === "get key list") {
                     this.createMultiPlayList(mess.data);
                 }
+                if (mess.mess === "scheduler call setting") {
+                    this.setScheduler(mess.data);
+                }
             }
         }, err => console.log(err));
-        /**
-         * get list channel of user
-         */
-        this._eventService.get(this._eventService.nm_domain + this._eventService.nm_getAllChannel + "?userId=" + this.username).subscribe(res => {
-            console.log(res);
-            this.listChannel = JSON.parse(res._body).data;
-            that.setCookie("userChannel", res._body, 20);
-        }, err => {
-            this.handleError("Can't list channel");
-        });
-
         if (window.location.href.indexOf("code=") > 0) {
             this.autho = window.location.href.split("code=")[1];
             this.autho = this.autho.slice(4, this.autho.length);
@@ -70,7 +76,7 @@ export class LeftContentComponent implements OnDestroy {
             this.username = localStorage.getItem("user");
             console.log(this.autho);
             window.history.pushState("", "", "/autoplaylist/dashboard");
-            this._eventService.post(this._eventService.nm_domain + this._eventService.nm_getUserInfor, {
+            this.service.post(this.service.nm_domain + this.service.nm_getUserInfor, {
                 "authCode": this.autho,
                 "userId": this.username
             }).subscribe(res => {
@@ -89,6 +95,16 @@ export class LeftContentComponent implements OnDestroy {
                 that.setCookie("userInfo", JSON.stringify(that.user), 20);
             }, err => {
                 that.handleError("Can't get user info");
+            });
+            /**
+             * get list channel of user
+             */
+            this.service.get(this.service.nm_domain + this.service.nm_getAllChannel + "?userId=" + this.username).subscribe(res => {
+                console.log(res);
+                that.listChannel = JSON.parse(res._body).data;
+                that.setCookie("userChannel", res._body, 20);
+            }, err => {
+                this.handleError("Can't list channel");
             });
         }
         this.urlChanel = "https://accounts.google.com/o/oauth2/auth?" +
@@ -113,16 +129,16 @@ export class LeftContentComponent implements OnDestroy {
             mess: "set cookie",
             chanelId: chanelId
         }
-        this._eventService.componentSay(mess);
+        this.service.componentSay(mess);
     }
     getListKeys() {
-        // var mess = {
-        //     talkTo: "rightComponent",
-        //     mess: "get key list"
-        // }
-        // this._eventService.componentSay(mess);
-        var data = this._eventService.getRightSetting();
-        console.log(data);
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "get key list"
+        }
+        this.service.componentSay(mess);
+        // var data = this.service.getRightSetting();
+        // console.log(data);
         // this.createMultiPlayList(data);
     }
     setCookie(cname, cvalue, exdays) {
@@ -151,7 +167,7 @@ export class LeftContentComponent implements OnDestroy {
             talkTo: "rightComponent",
             mess: "line channel"
         }
-        this._eventService.componentSay(mess);
+        this.service.componentSay(mess);
     }
     // createPlaylistMultiChannel(data){
     //     this.listChannel.forEach(element => {
@@ -174,14 +190,11 @@ export class LeftContentComponent implements OnDestroy {
                             "titleSetting": data.titleSetting
                         }
                         that.onProcess = true;
-                        that._eventService.post(url, body).subscribe(
+                        that.service.post(url, body).subscribe(
                             res => {
                                 that.onProcess = false;
                                 console.log(res);
-                                if (res.code === 403) {
-                                    that.handleError("Vượt quá số lượng pll được phép tạo trong ngày");
-                                    reject();
-                                } else {
+                                if (res.code === 0) {
                                     for (var i = 0; i < res.data.length; i++) {
                                         that.user.playList.unshift(res.data[i]);
                                         if (that.user.playList.length > 5)
@@ -189,6 +202,9 @@ export class LeftContentComponent implements OnDestroy {
                                     }
                                     that.setCookie("userInfo", JSON.stringify(that.user), 20);
                                     resolve();
+                                } else {
+                                    that.handleError(res.message);
+                                    reject();
                                 }
                             },
                             err => {
@@ -212,7 +228,7 @@ export class LeftContentComponent implements OnDestroy {
         })(0);
     }
     createMultiPlayList(data) {
-        // var url = this._eventService.nm_domain + this._eventService.nm_createPlaylist;
+        // var url = this.service.nm_domain + this.service.nm_createPlaylist;
         // var body = {
         //     "names": data.names,
         //     "privacy": "public",
@@ -227,7 +243,7 @@ export class LeftContentComponent implements OnDestroy {
         var that = this;
         (function loop(l) {
             const promise = new Promise((resolve, reject) => {
-                var url = that._eventService.nm_domain + that._eventService.nm_createPlaylist;
+                var url = that.service.nm_domain + that.service.nm_createPlaylist;
                 var body = {
                     "names": [data.names[l]],
                     "privacy": "public",
@@ -237,14 +253,11 @@ export class LeftContentComponent implements OnDestroy {
                     "titleSetting": data.titleSetting
                 }
                 that.onProcess = true;
-                that._eventService.post(url, body).subscribe(
+                that.service.post(url, body).subscribe(
                     res => {
                         that.onProcess = false;
                         console.log(res);
-                        if (res.code === 403) {
-                            that.handleError("Vượt quá số lượng 10pll được tạo trong ngày");
-                            reject();
-                        } else {
+                        if (res.code === 0) {
                             for (var i = 0; i < res.data.length; i++) {
                                 that.user.playList.unshift(res.data[i]);
                                 if (that.user.playList.length > 5)
@@ -253,8 +266,10 @@ export class LeftContentComponent implements OnDestroy {
                             that.setCookie("userInfo", JSON.stringify(that.user), 20);
                             that.moveKeyWord(data.names[l], "successKey");
                             resolve();
+                        } else {
+                            that.handleError(res.message);
+                            reject();
                         }
-
                     },
                     err => {
                         console.log(err);
@@ -271,16 +286,45 @@ export class LeftContentComponent implements OnDestroy {
         })(0);
     }
 
-    btnScheduler() {
-
+    btnSaveScheduler() {
+        var mess = {
+            talkTo: "rightComponent",
+            mess: "scheduler call setting"
+        }
+        this.service.componentSay(mess);
     }
+    setScheduler(data: any): any {
+        var that = this;
+        var url = that.service.nm_domain + that.service.nm_setSchedulerData;
+        var body = {
+            "names": data.names,
+            "privacy" : "public",
+            "scheduler":{
+                "schedulerStartTime": this.inputDateSche.formatted,
+                "active": this.schedulerActive
+            },
+            "chanel": that.user.channelId,
+            "searchVideoSetting": data.searchVideoSetting,
+            "descriptionSetting": data.descriptionSetting,
+            "titleSetting": data.titleSetting
+        }
+        that.service.post(url, body).subscribe(
+            res => {
+                that.handleError(res.message);
+            },
+            err => {
+                that.handleError(err.message);
+            }
+        )
+    }
+
     moveKeyWord(key, ctrl) {
         var mess = {
             talkTo: "rightComponent",
             mess: ctrl,
             key: key
         }
-        this._eventService.componentSay(mess);
+        this.service.componentSay(mess);
     }
 
     handleError(error: string) {
@@ -292,7 +336,7 @@ export class LeftContentComponent implements OnDestroy {
                     content: error
                 }
         }
-        this._eventService.componentSay(mess);
+        this.service.componentSay(mess);
     }
 }
 

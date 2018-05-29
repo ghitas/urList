@@ -1,13 +1,13 @@
 <div class="col-12 main-left">
     <div class="mt-2">
-        <span>Kênh đang sử dụng:
+        <span>{{"Current Channel"|translate}}:
             <a class="badge badge-pill badge-success" target="_blank" href="https://www.youtube.com/channel/{{user.channelId}}">{{user.channelTitle}}</a>
         </span>
         <a id="btnMaster" class="text-dark" href="{{urlChanel}}">(Chuyển kênh)</a>
         <button class="btn btn-default btn-sm" (click)="btnLineChannel()" style="float: right;padding: 0px 5px;">Nối kênh</button>
     </div>
     <div class="mt-2">
-        <span>Tổng số playlist trên kênh:
+        <span>{{"Total of playlists"|translate}}:
             <a>
                 <span class="badge badge-pill badge-dark">{{user.playlistNumber}}</span>
             </a>
@@ -22,25 +22,30 @@
         </select> -->
         <br>
     </div>
-    <!-- <div class="input-group mt-2" style="height: 31px;">
-        <div class="input-group-prepend">
-            <span class="input-group-text" style="height: 31px;
-            padding-top: 4px;
-            font-size: 15px;">Scheduler</span>
-        </div>
-        <input type="text" [(ngModel)]="schedulerStartTime" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group mt-2" style="height: 31px;">
+        <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="inputDateSche"
+            [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
+
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn-sm" (click)="dp.toggleCalendar()">
+                <i class="fa fa-calendar"></i>
+            </button>
+            <button type="button" class="btn btn-default btn-sm" (click)="dp.clearDate()">
+                <i class="fa fa-remove"></i>
+            </button>
+        </span>
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="btnScheduler()">Save scheduler</button>
+            <button class="btn btn-outline-secondary btn-sm" type="button" (click)="btnSaveScheduler()">Save scheduler</button>
         </div>
-    </div> -->
+    </div>
     <div class="mt-2">
-        <span>Serial đang sử dụng:
+        <span>{{"Current serial"|translate}}:
             <span class="badge badge-pill badge-dark">6asdfafqwwerq</span>
         </span>
         <br>
     </div>
     <div class="mt-2">
-        <span>Vài playlist mới nhất trên kênh:</span>
+        <span>{{"Latest playlists"|translate}}:</span>
         <div class="new-playlist-content">
             <h6 class="link" *ngFor="let item of user.playList">
                 <a *ngIf="item" target="_blank" href="https://www.youtube.com/playlist?list={{item.id}}">{{item.title}}
@@ -49,8 +54,7 @@
             </h6>
         </div>
     </div>
-    <p>Chào bạn! Hãy tùy chọn cấu hình (hoặc để mặc định), sau đó nhập các ID video của bạn (không bắt buộc) và danh sách từ
-        khóa (bắt đầu) để bắt đầu.</p>
+    <p>{{"Create playlist"|translate}}</p>
     <button (click)="getListKeys()" class="btn btn-success btn-sm mb-2" [ngClass]="disableCreatePlayListBtn ? 'inactive-create-playlist-btn' : 'active-create-playlist-btn'">
         Tạo Playlist
     </button>

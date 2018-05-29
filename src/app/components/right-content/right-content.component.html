@@ -10,33 +10,33 @@
                   </div>
                   <div id="tabSet1" [ngClass]="{'show':flagSetTab === 'tabSet1','hide':flagSetTab !== 'tabSet1'}">
                         <div class="card border-secondary mb-3">
-                              <div class="card-header">Cài đặt chung</div>
+                              <div class="card-header">{{"General settings"|translate}}</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
-                                          <span>Tùy chọn xuất bản PLL:</span>
+                                          <span>{{"PLL published option"|translate}}:</span>
                                           <select [(ngModel)]="selectPrivacy" (ngModelChange)="onChangeLang($event)">
-                                                <option *ngFor="let item of listPrivacy" [ngValue]="item">{{item.name}}</option>
+                                                <option *ngFor="let item of listPrivacy" [ngValue]="item">{{item.name | translate}}</option>
                                           </select>
                                     </div>
                                     <div class="mb-1">
-                                          <span>Ngôn ngữ sử dụng cho playlist:</span>
+                                          <span>{{"Language"|translate}}:</span>
                                           <select [(ngModel)]="selectLanguage" (ngModelChange)="onChangeLang($event)">
-                                                <option *ngFor="let item of listLanguage" [ngValue]="item"> {{item.name}} </option>
+                                                <option *ngFor="let item of listLanguage" [ngValue]="item"> {{item.name | translate}} </option>
                                           </select>
                                     </div>
                                     <div class="mb-1">
-                                          <span>Số lượng playlist trên kênh:</span>
+                                          <span>{{"Number of playlists"|translate}}:</span>
                                           <input (ngModelChange)="onChangeLang($event)" [(ngModel)]="maxPlaylistNumberPerChannel" id="maxPlaylistNumberPerChannel"
                                                 class="form-control">
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox"> Tạo playlist liên tục đến hết từ khóa
+                                          <input (change)="onChangeLang($event)" id="useAllKeyword" type="checkbox" checked class="checkbox">{{"Create playlists continuously until running out of keywords"|translate}}
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox"> Bỏ qua key dễ bị xóa PLL do nguyên tắc cộng đồng
+                                          <input (change)="onChangeLang($event)" id="skipSensitiveKeyword" type="checkbox" class="checkbox">{{"Skip vulnerable PLL keywords for public regulations"|translate}}
                                     </div>
                                     <div class="mb-1">
-                                          <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox"> Tự động chuyển kênh khi đủ 100 pll/ngày/kênh
+                                          <input (change)="onChangeLang($event)" id="autoChangeChannel" type="checkbox" class="checkbox">{{"Auto switch channel when having enough 100 PPL/day/channel" | translate}}
                                     </div>
                               </div>
                         </div>
@@ -192,7 +192,7 @@
                         <div class="card-header">Reset</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
-                                    <button (click)="btnResetDefaultSetting()" class="btn btn-secondary">Reset về cấu hình mặc định</button>
+                                    <button (click)="btnResetDefaultSetting()" class="btn btn-secondary">{{"Reset back to default"|translate}}</button>
                               </div>
                         </div>
                   </div>
@@ -201,7 +201,7 @@
             <!-- right part  -->
             <div class="right-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">Từ khóa</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">{{"Playlist Keywords"|translate}}</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey2'}" (click)="tabControl('key','tabKey2')">Từ khóa đã sử dụng</button>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Từ khóa đã bỏ qua</button>
                   </div>

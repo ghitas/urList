@@ -24,6 +24,7 @@ export class EventService {
   public nm_getAllChannel = "/youtube/getAllChannelByUserId";
   public nm_getUserInfor = "/youtube/getUserInfor";
   public nm_createPlaylist = "/youtube/addMultiPlaylist";
+  public nm_setSchedulerData = "/youtube/setSchedulerData";
 
   constructor(private http: Http, private router: Router) {
     this.isUserLoggedIn = false;

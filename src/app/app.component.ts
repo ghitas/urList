@@ -1,5 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
-// import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-root',
@@ -12,9 +12,9 @@ export class AppComponent {
         body: "Nội dung"
     }
     constructor(
-        // private translate: TranslateService
+        private translate: TranslateService
     ) {
-        // translate.setDefaultLang('en');
+        translate.setDefaultLang('vn');
     }
     ngOnInit() { }
 }
