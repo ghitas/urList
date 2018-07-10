@@ -75,6 +75,15 @@ export class RightContentComponent implements OnDestroy {
                     }
                     _eventService.componentSay(mes);
                 }
+                if (mess.mess === "line channel") {
+                    that.setting = that.mySetting();
+                    var mes = {
+                        talkTo: "leftComponent",
+                        mess: "line channel",
+                        data: that.setting
+                    }
+                    _eventService.componentSay(mes);
+                }
                 if (mess.mess === "successKey") {
                     that.moveKeyWord(mess.key, "keyUsing");
                 }
@@ -86,6 +95,15 @@ export class RightContentComponent implements OnDestroy {
                     var mes = {
                         talkTo: "leftComponent",
                         mess: "scheduler call setting",
+                        data: that.setting
+                    }
+                    _eventService.componentSay(mes);
+                }
+                if(mess.mess === "set end Date"){
+                    that.setting = that.mySetting();
+                    var mes = {
+                        talkTo: "leftComponent",
+                        mess: "set end Date",
                         data: that.setting
                     }
                     _eventService.componentSay(mes);

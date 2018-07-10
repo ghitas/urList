@@ -1,4 +1,5 @@
-<div class="container-fluid title">Xem và cập nhật Playlist</div>
+
+<tool-bar></tool-bar>
 <div class="container-fluid">
   <dir class="col-12">
     <div class="card border-secondary">
@@ -35,7 +36,7 @@
         <div class="card-header">Cài đặt update playlist</div>
         <div class="card-body text-dark">
           <div class="col-6 mb-1" style="float:left;">
-            <textarea (ngModelChange)="onChangeLang($event)" id="videos" [disabled]="setVideoRadio == 'noInsertVideo'" [(ngModel)]="videos"
+            <textarea id="videos"
               class="lined" rows="10" style="width:100%"></textarea>
             <div>
               <div>
@@ -68,7 +69,8 @@
           </div>
           <div class="col-6 mb-1" style="float: left; text-align: right;">
             <button class="btn btn-success btn-sm">Update playlist</button>
-            <textarea (ngModelChange)="onChangeLang($event)" id="videos" [disabled]="setVideoRadio == 'noInsertVideo'" [(ngModel)]="videos"
+            <button class="btn btn-success btn-sm">Làm mới playlist</button>
+            <textarea
               class="lined" rows="21" style="width:100%"></textarea>
           </div>
         </div>
@@ -98,12 +100,10 @@
               <th>#</th>
               <th>Ảnh bìa</th>
               <th>Tên PLL</th>
-              <th>Số view cũ</th>
-              <th>View mới</th>
-              <th>Tăng</th>
+              <th (click)="sort('view')">View hiện tại</th>
+              <th>View trong 30 ngày</th>
               <th (click)="sort('countVideo')">Số video</th>
-              <th>Ngày cập nhật</th>
-              <th>Link</th>
+              <th>Ngày tạo</th>
               <th>
                 <input style="float: inherit;display:inherit;" type="checkbox" id="cboxAll" [(ngModel)]="flagCheckAll" (change)="cboxCheckAll()">
               </th>
@@ -120,15 +120,13 @@
               <td (click)="selectVideo(item,i,$event)">
                 <img src="{{item.thumbnails}}" alt="avatar[{{i}}]">
               </td>
-              <td (click)="selectVideo(item,i,$event)">{{item.title | uppercase}}</td>
-              <td (click)="selectVideo(item,i,$event)"></td>
-              <td (click)="selectVideo(item,i,$event)"></td>
+              <td (click)="selectVideo(item,i,$event)">
+                <a target="_blank" href="https://www.youtube.com/playlist?list={{item.link}}">{{item.title | uppercase}}</a>
+              </td>
+              <td (click)="selectVideo(item,i,$event)">{{item.view}}</td>
               <td (click)="selectVideo(item,i,$event)"></td>
               <td (click)="selectVideo(item,i,$event)">{{item.itemCount}}</td>
               <td (click)="selectVideo(item,i,$event)">{{item.dateUpdate | date:"shortDate"}}</td>
-              <td (click)="selectVideo(item,i,$event)">
-                <a target="_blank" href="https://www.youtube.com/playlist?list={{item.link}}">youtube</a>
-              </td>
               <td (click)="selectVideo(item,i,$event)">
                 <input type="checkbox" [ngModel]="item.check">
               </td>
@@ -136,11 +134,17 @@
                 <button class="btn btn-default btn-sm" (click)="delPlaylist(item,i)">
                   <i class="fa fa-trash"></i>
                 </button>
+                <button class="btn btn-default btn-sm" (click)="editPlaylist(item,i)">
+                  <i class="fa fa-edit"></i>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <button *ngIf="prevPageToken" (click)="btnPrevPageList()" class="btn btn-sm btn-default">
+        <</button>
+          <button *ngIf="nextPageToken" (click)="btnNextPageList()" class="btn btn-sm btn-default" style="float:right">></button>
     </div>
   </div>
 </div>

@@ -1,9 +1,10 @@
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{dialog.title}}</h5>
-                <button type="button" class="close p-0 m-0" data-dismiss="modal" style="width: 30px; height: 30px; border-radius: 10px;" aria-label="Close">
+                <button type="button" class="close p-0 m-0" data-dismiss="modal" style="width: 30px; height: 30px; border-radius: 10px;"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -11,8 +12,81 @@
                 <p>{{dialog.content}}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                <button *ngIf="!dialog.btnYN" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button *ngIf="dialog.btnYN" type="button" class="btn btn-primary" (click)="btnYes()">Ok</button>
+                <button *ngIf="dialog.btnYN" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditPlaylist">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title" id="exampleModalLabel">Edit playlist</span>
+                <button type="button" class="close p-0 m-0" data-dismiss="modal" style="width: 30px; height: 30px; border-radius: 10px;"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Title: </span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="playlist.title">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend" style="align-items: normal;">
+                        <span class="input-group-text">Description: </span>
+                    </div>
+                    <textarea [(ngModel)]="playlist.description" rows="10" class="form-control" aria-label="With textarea"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{playListService.modalInfo.title}}</h5>
+                <button type="button" class="close p-0 m-0" data-dismiss="modal" style="width: 30px; height: 30px; border-radius: 10px;"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{playListService.modalInfo.content}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{playListService.modalConfirm.title}}</h5>
+                <button type="button" class="close p-0 m-0" data-dismiss="modal" style="width: 30px; height: 30px; border-radius: 10px;"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{playListService.modalConfirm.content}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="playListService.modalConfirm.accept()">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
             </div>
         </div>
     </div>

@@ -22,6 +22,10 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RequestOptions, XHRBackend } from '@angular/http';
+import { HttpService } from './services/http.service';
+import { APP_BASE_HREF } from '@angular/common';
 
 const appRoutes: Routes = [
   {
@@ -45,6 +49,9 @@ const appRoutes: Routes = [
 ]
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+export function httpInterceptor(backend: XHRBackend, options: RequestOptions) {
+  return new HttpService(backend, options);
 }
 
 @NgModule({
@@ -86,7 +93,13 @@ export function createTranslateLoader(http: HttpClient) {
 
   bootstrap: [AppComponent],
 
-  providers: [PlayListService, EventService, AuthuguardGuard],
+  providers: [PlayListService, EventService, AuthuguardGuard,
+    {
+      provide: Http,
+      useFactory: httpInterceptor,
+      deps: [XHRBackend, RequestOptions]
+    }
+  ]
 })
 export class AppModule { }
 

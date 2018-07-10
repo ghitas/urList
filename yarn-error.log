@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install jquery --save
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @angular/material @angular/cdk
 
 PATH: 
-  C:\Users\thanh\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\thanh\bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;E:\Work\apache-maven-3.5.3\bin;C:\Program Files\Java\jdk1.8.0_161;E:\Work\apache-maven-3.5.3;C:\Program Files\PuTTY;C:\Program Files\Microsoft VS Code\bin;C:\Users\thanh\AppData\Roaming\npm;C:\Users\thanh\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+  C:\Users\Hp\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Hp\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\Skype\Phone;C:\apache-maven-3.5.3\bin;C:\Program Files\Java\jdk1.8.0_171\bin;C:\Program Files\PuTTY;C:\Users\Hp\AppData\Local\Microsoft\WindowsApps;C:\Users\Hp\AppData\Roaming\npm;C:\Users\Hp\AppData\Local\Yarn\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
   1.5.1
@@ -45,9 +45,15 @@ npm manifest:
       "@angular/platform-server": "^4.4.4",
       "@angular/router": "^4.4.4",
       "@angular/upgrade": "^4.4.4",
+      "@ngx-translate/core": "^7.1.0",
+      "@ngx-translate/http-loader": "^1.1.0",
       "angular-in-memory-web-api": "~0.5.0",
+      "angular4-datepicker": "^1.0.1",
       "bootstrap": "^4.0.0-beta.3",
       "core-js": "^2.5.1",
+      "jquery": "^3.3.1",
+      "ngx-mydatepicker": "^2.4.5",
+      "popper.js": "^1.14.1",
       "rxjs": "^5.5.4",
       "web-animations-js": "^2.3.1",
       "zone.js": "^0.8.20"
@@ -3245,6 +3251,10 @@ Lockfile:
     version "2.2.0"
     resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
   
+  jquery@^3.3.1:
+    version "3.3.1"
+    resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+  
   js-base64@^2.1.8:
     version "2.4.3"
     resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
@@ -4383,6 +4393,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/pkg-dir/-/pkg-dir-2.0.0.tgz#f6d5d1109e19d63edf428e0bd57e12777615334b"
     dependencies:
       find-up "^2.1.0"
+  
+  popper.js@^1.14.1:
+    version "1.14.1"
+    resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.14.1.tgz#b8815e5cda6f62fc2042e47618649f75866e6753"
   
   portfinder@^1.0.9, portfinder@~1.0.12:
     version "1.0.13"
@@ -6374,10 +6388,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.8.20.tgz#a218c48db09464b19ff6fc8f0d4bb5b1046e185d"
 
 Trace: 
-  Error: `install` has been replaced with `add` to add new dependencies. Run "yarn add jquery" instead.
-      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at Object.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:21987:13)
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
-      at <anonymous>
+  Error: connect ETIMEDOUT 104.18.95.96:443
+      at Object._errnoException (util.js:1022:11)
+      at _exceptionWithHostPort (util.js:1044:20)
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1198:14)

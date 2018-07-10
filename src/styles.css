@@ -23,6 +23,6 @@
     margin-right: 0px !important;
 }
 body {
-  /* background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cbccc8)) fixed; */
-  background: linear-gradient(217deg, #9b3fb53b, rgba(253, 254, 255, 0.23) 70.71%), linear-gradient(127deg, #555484c4, #ffffff52 70.71%), linear-gradient(336deg, #150bae40, #af5e4c7d 70.71%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#a056a5), to(#c5c5c4)) fixed;
+  /* background: linear-gradient(217deg, #9b3fb53b, rgba(253, 254, 255, 0.23) 70.71%), linear-gradient(127deg, #555484c4, #ffffff52 70.71%), linear-gradient(336deg, #150bae40, #af5e4c7d 70.71%); */
 }

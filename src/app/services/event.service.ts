@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, Request, RequestMethod } from '@angular/http';
-import { RightContentComponent } from '../components/right-content/right-content.component';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Subject } from 'rxjs/Subject';

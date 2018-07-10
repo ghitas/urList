@@ -18,6 +18,11 @@ export class PlaylistManagerComponent implements OnInit {
   listVideo = [];
   prevClick: number;
   flagCheckAll: boolean = false;
+  flagIcreaseVideo = false;
+  flagIcreaseView = false;
+  prevPageToken: string;
+  nextPageToken: string;
+  pageToken: string = "";
 
   constructor(
     private service: EventService
@@ -39,22 +44,29 @@ export class PlaylistManagerComponent implements OnInit {
   }
   viewPlaylist() {
     this.listVideo = [];
-    this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL.channelId + "&maxResults=" + this.countView).subscribe(res => {
+    debugger;
+    this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL.channelId + "&maxResults=" + this.countView + "&pageToken=" + this.pageToken).subscribe(res => {
       console.log(JSON.parse(res._body));
       var listData = JSON.parse(res._body);
+      if (!listData) return;
+      if (listData.data["prevPageToken"] !== null)
+        this.prevPageToken = listData.data.prevPageToken;
+      if (listData.data["nextPageToken"] !== null)
+        this.nextPageToken = listData.data.nextPageToken;
       if (listData.code === 0) {
         listData = listData.data.items;
         listData.forEach(item => {
           this.listVideo.push({
             thumbnails: item.snippet.thumbnails.default.url,
             title: item.snippet.title,
+            description: item.snippet.description,
             itemCount: item.contentDetails.itemCount,
             dateUpdate: new Date(item.snippet.publishedAt.value),
             link: item.id,
-            check: false
+            check: false,
+            view: Number(item.etag.substring(1, item.etag.length - 1))
           });
         });
-        console.log(this.listVideo);
       } else {
         this.handleError(listData.message);
         return;
@@ -146,17 +158,52 @@ export class PlaylistManagerComponent implements OnInit {
         this.handleError("Can't delete");
       });
   }
+
+  editPlaylist(item, index) {
+    var mess = {
+      talkTo: "dialog",
+      mess: "edit playlist",
+      data: item
+    }
+    this.service.componentSay(mess);
+  }
+
   sort(option: string) {
     switch (option) {
       case "countVideo":
-        this.listVideo.sort(function (a, b) {
-          return Number(a.itemCount) - Number(b.itemCount);
-        });
+        this.flagIcreaseVideo = !this.flagIcreaseVideo;
+        if (this.flagIcreaseVideo)
+          this.listVideo.sort(function (a, b) {
+            return Number(a.itemCount) - Number(b.itemCount);
+          });
+        else
+          this.listVideo.sort(function (b, a) {
+            return Number(a.itemCount) - Number(b.itemCount);
+          });
         break;
-
+      case "view":
+        this.flagIcreaseView = !this.flagIcreaseView;
+        if (this.flagIcreaseView)
+          this.listVideo.sort(function (a, b) {
+            return Number(a.view) - Number(b.view);
+          });
+        else
+          this.listVideo.sort(function (b, a) {
+            return Number(a.view) - Number(b.view);
+          });
+        break;
       default:
         break;
     }
+  }
+
+  btnPrevPageList() {
+    this.pageToken = this.prevPageToken;
+    this.viewPlaylist();
+  }
+  btnNextPageList() {
+    this.pageToken = this.nextPageToken;
+    this.viewPlaylist();
   }
 
   handleError(error: string) {
