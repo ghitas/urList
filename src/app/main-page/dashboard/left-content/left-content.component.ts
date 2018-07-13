@@ -1,12 +1,8 @@
-import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { EventService } from '../../services/event.service';
-import { PlayListService } from '../../services/playlist.service';
+import { Component, OnDestroy } from '@angular/core';
+import { EventService } from '../../../services/event.service';
 import { Subscription } from 'rxjs';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 import { Observable } from 'rxjs/Observable';
-declare var $: any;
-declare var gapi: any;
 
 @Component({
     selector: 'left-content',
@@ -31,7 +27,6 @@ export class LeftContentComponent implements OnDestroy {
     username: string;
     message: string = '';
     disableCreatePlayListBtn: boolean = false;
-    route: string;
     autho: string;
     onProcess: boolean = false;
     urlChanel: string;
@@ -49,17 +44,18 @@ export class LeftContentComponent implements OnDestroy {
     samplePLL = [];
     playlistNumber: number;
     listChannel = [];
+    // schedule variable
     selectChannel = this.listChannel[0];
     listPllPerDay = [2, 4, 6, 8, 10];
     selectPllPerDay = this.listPllPerDay[4];
     scheduleEndDay = new Date().toLocaleDateString();
+
     ngOnDestroy(): void {
         this.subs.unsubscribe();
     }
     subs = new Subscription;
     constructor(
-        private service: EventService,
-        private servicePlaylist: PlayListService,
+        private service: EventService
     ) {
         var that = this;
         this.username = localStorage.getItem("user");
@@ -84,9 +80,6 @@ export class LeftContentComponent implements OnDestroy {
                     }
                     if (mess.mess === "line channel") {
                         this.createPlaylistMultiChannel(mess.data);
-                    }
-                    if (mess.mess === "set end Date") {
-                        this.setEndDateSchedule(mess.data);
                     }
                 }
             }
@@ -116,9 +109,9 @@ export class LeftContentComponent implements OnDestroy {
                 //bỏ mục vài pll mới tạo
                 //that.user.playList = playList;
                 var user = {
-                    channelId:that.user.channelId,
-                    channelTitle:that.user.channelTitle,
-                    playlistNumber:that.user.playlistNumber
+                    channelId: that.user.channelId,
+                    channelTitle: that.user.channelTitle,
+                    playlistNumber: that.user.playlistNumber
                 }
                 that.setCookie("userInfo", JSON.stringify(user), 20);
             }, err => {
@@ -136,7 +129,6 @@ export class LeftContentComponent implements OnDestroy {
          * get list channel of user
          */
         this.service.get(this.service.nm_domain + this.service.nm_getAllChannel + "?userId=" + this.username).subscribe(res => {
-            console.log(res);
             that.listChannel = JSON.parse(res._body).data;
             that.setCookie("userChannel", res._body, 20);
         }, err => {
@@ -331,6 +323,12 @@ export class LeftContentComponent implements OnDestroy {
     }
 
     setScheduler(data: any): any {
+        //calculate the end of day for scheduler
+        var day = new Date();
+        var plus = data.names.length / this.selectPllPerDay;
+        day.setDate(day.getDate() + plus);
+        this.scheduleEndDay = day.toLocaleDateString();
+        // save scheduler
         var that = this;
         var url = this.service.nm_domain + this.service.nm_setSchedulerData;
         var body = {
@@ -339,7 +337,8 @@ export class LeftContentComponent implements OnDestroy {
             "scheduler": {
                 "schedulerStartTime": this.inputDateSche.formatted,
                 "active": this.schedulerActive,
-                "keyPerDay": this.selectPllPerDay
+                "keyPerDay": this.selectPllPerDay,
+                "userId": this.username
             },
             "chanel": this.user.channelId,
             "searchVideoSetting": data.searchVideoSetting,
@@ -355,22 +354,7 @@ export class LeftContentComponent implements OnDestroy {
             }
         )
     }
-
-
-    selectCountPll(item) {
-        var mess = {
-            talkTo: "rightComponent",
-            mess: "set end Date"
-        }
-        this.service.componentSay(mess);
-    }
-    setEndDateSchedule(data) {
-        var day = new Date();
-        var plus = data.names.length / this.selectPllPerDay;
-        day.setDate(day.getDate() + plus);
-        this.scheduleEndDay = day.toLocaleDateString();
-    }
-
+    
     moveKeyWord(key, ctrl) {
         var mess = {
             talkTo: "rightComponent",
@@ -384,40 +368,11 @@ export class LeftContentComponent implements OnDestroy {
         var mess = {
             talkTo: "dialog",
             data:
-                {
-                    title: "Warning",
-                    content: error
-                }
+            {
+                title: "Warning",
+                content: error
+            }
         }
         this.service.componentSay(mess);
     }
 }
-// Create an Observable that will start listening to geolocation updates
-// when a consumer subscribes.
-const locations = new Observable((observer) => {
-    // Get the next and error callbacks. These will be passed in when
-    // the consumer subscribes.
-    const { next, error } = observer;
-    // let watchId;
-
-    // Simple geolocation API check provides values to publish
-    // if ('geolocation' in navigator) {
-    //     watchId = navigator.geolocation.watchPosition(next, error);
-    // } else {
-    //     error('Geolocation not available');
-    // }
-
-    // When the consumer unsubscribes, clean up data ready for next subscription.
-    return { unsubscribe() { console.log("teo") } };
-});
-
-// Call subscribe() to start listening for updates.
-const locationsSubscription = locations.subscribe({
-    next(position) { console.log('Current Position: ', position); },
-    error(msg) { console.log('Error Getting Location: ', msg); }
-});
-
-// Stop listening for location after 10 seconds
-setTimeout(() => {
-    locationsSubscription.unsubscribe();
-}, 10000);

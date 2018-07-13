@@ -201,6 +201,14 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
+"@ngx-translate/core@^7.1.0":
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-7.2.2.tgz#e70069d5ef8e837ea336e6890773786f5efb5de5"
+
+"@ngx-translate/http-loader@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-1.1.0.tgz#a293260cea6f61784a6ff9c55a4973ea9778dce2"
+
 "@schematics/angular@0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.3.2.tgz#be209a032a3e4577992d94fbaa14bd4bfde485e2"
@@ -343,6 +351,10 @@ amdefine@>=0.0.4:
 angular-in-memory-web-api@~0.5.0:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/angular-in-memory-web-api/-/angular-in-memory-web-api-0.5.4.tgz#85af913e0403ead9755bdb2e0835a41a51b658b0"
+
+angular4-datepicker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/angular4-datepicker/-/angular4-datepicker-1.0.1.tgz#d017407f979c0bdfed6b863a4107c6c1969b3c75"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -3789,6 +3801,10 @@ neo-async@^2.5.0:
 next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ngx-mydatepicker@^2.4.5:
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/ngx-mydatepicker/-/ngx-mydatepicker-2.4.6.tgz#281f3d37f9f02369b91cc2ba28fd0fe4c29d4e76"
 
 no-case@^2.2.0:
   version "2.3.2"

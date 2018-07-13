@@ -6,10 +6,10 @@
     background: linear-gradient(to right,#535584 0%,#b8368c 100%);
     color: white;
 }
-.card{
+/* .card{
     border: none;
     box-shadow: 0px 0px 10px #7b5776;
-}
+} */
 .card-header{
     padding: .25rem 1.25rem;
     margin-bottom: 0;
@@ -66,7 +66,7 @@ input[type=checkbox],input[type=radio]{
 }
 .btn{
     border: none;
-    box-shadow: 0px 0px 5px grey;
+    /* box-shadow: 0px 0px 5px grey; */
 }
 #btnViewPll{
     margin-top: -5px;
@@ -111,9 +111,7 @@ table tbody tr td>img{
 }
 table{
     border-left: 1px solid white;
-    box-shadow: 0px 0px 10px #7b5776;
     border-radius: 4px;
-    overflow: hidden;
 }
 table tbody tr td:nth-child(2){
     padding: 2px;

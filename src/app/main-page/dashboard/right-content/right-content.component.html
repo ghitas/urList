@@ -2,14 +2,15 @@
       <div class="row">
             <div class="left-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet1'}" (click)="tabControl('set','tabSet1')">Cài đặt chung</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet2'}" (click)="tabControl('set','tabSet2')">Cài đặt tìm kiếm video</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet3'}" (click)="tabControl('set','tabSet3')">Cài đặt video</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet4'}" (click)="tabControl('set','tabSet4')">Cài đặt tiêu đề</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet5'}" (click)="tabControl('set','tabSet5')">Cài đặt mô tả</button>
+                        <span>Setting: </span>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet1'}" (click)="tabControl('set','tabSet1')">Chung</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet2'}" (click)="tabControl('set','tabSet2')">Tìm kiếm</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet3'}" (click)="tabControl('set','tabSet3')">Video</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet4'}" (click)="tabControl('set','tabSet4')">Tiêu đề</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagSetTab === 'tabSet5'}" (click)="tabControl('set','tabSet5')">Mô tả</button>
                   </div>
                   <div id="tabSet1" [ngClass]="{'show':flagSetTab === 'tabSet1','hide':flagSetTab !== 'tabSet1'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">{{"General settings"|translate}}</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
@@ -42,7 +43,7 @@
                         </div>
                   </div>
                   <div id="tabSet2" [ngClass]="{'show':flagSetTab === 'tabSet2','hide':flagSetTab !== 'tabSet2'}">
-                        <div id="r_config" class="card border-secondary mb-3">
+                        <div id="r_config" class="card  mb-3">
                               <div class="card-header">Cài đặt tìm kiếm video</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
@@ -96,7 +97,7 @@
                         </div>
                   </div>
                   <div id="tabSet3" [ngClass]="{'show':flagSetTab === 'tabSet3','hide':flagSetTab !== 'tabSet3'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Cài đặt video của bạn</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
@@ -137,7 +138,7 @@
                         </div>
                   </div>
                   <div id="tabSet4" [ngClass]="{'show':flagSetTab === 'tabSet4','hide':flagSetTab !== 'tabSet4'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Cài đặt tiêu đề</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
@@ -162,7 +163,7 @@
                         </div>
                   </div>
                   <div id="tabSet5" [ngClass]="{'show':flagSetTab === 'tabSet5','hide':flagSetTab !== 'tabSet5'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Cài đặt mô tả</div>
                               <div class="card-body text-dark">
                                     <div class="mb-1">
@@ -188,7 +189,7 @@
                               </div>
                         </div>
                   </div>
-                  <div class="card border-secondary mb-3">
+                  <div class="card  mb-3">
                         <div class="card-header">Reset</div>
                         <div class="card-body text-dark">
                               <div class="mb-1">
@@ -201,12 +202,13 @@
             <!-- right part  -->
             <div class="right-part col-12 col-sm-12 col-md-6">
                   <div class="btnTab">
+                        <span>Tu khoa: </span>
                         <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey1'}" (click)="tabControl('key','tabKey1')">{{"Playlist Keywords"|translate}}</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey2'}" (click)="tabControl('key','tabKey2')">Từ khóa đã sử dụng</button>
-                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Từ khóa đã bỏ qua</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey2'}" (click)="tabControl('key','tabKey2')">Dã sử dụng</button>
+                        <button type="button" class="btn btn-sm btn-default" [ngClass]="{'btnActive':flagKeyTab === 'tabKey3'}" (click)="tabControl('key','tabKey3')">Dã bỏ qua</button>
                   </div>
                   <div id="tabKey1" [ngClass]="{'show':flagKeyTab === 'tabKey1','hide':flagKeyTab !== 'tabKey1'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Từ khóa cho playlist (1 từ khóa tạo 1 PLL):</div>
                               <div class="card-body text-dark">
                                     <textarea id="names" class="lined" rows="10" style="width:100%"></textarea>
@@ -214,7 +216,7 @@
                         </div>
                   </div>
                   <div id="tabKey2" [ngClass]="{'show':flagKeyTab === 'tabKey2','hide':flagKeyTab !== 'tabKey2'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Danh sách từ khóa đã sử dụng:</div>
                               <div class="card-body text-dark">
                                     <textarea disabled id="keyUsing" class="lined" rows="10" style="width:100%"></textarea>
@@ -232,12 +234,12 @@
                         </div>
                   </div>
                   <div id="tabKey3" [ngClass]="{'show':flagKeyTab === 'tabKey3','hide':flagKeyTab !== 'tabKey3'}">
-                        <div class="card border-secondary mb-3">
+                        <div class="card  mb-3">
                               <div class="card-header">Danh sách từ khóa đã bỏ qua:
 
                               </div>
                               <div class="card-body text-dark">
-                                    <textarea id="keyPassing" disabled class="lined" rows="10" style="width:100%"></textarea>
+                                    <textarea (ngModelChange)="doSomething($event)" id="keyPassing" disabled class="lined" rows="10" style="width:100%"></textarea>
                               </div>
                               <div class="card-footer">
                                     <div class="btn-toolbar justify-content-end" role="toolbar" aria-label="Toolbar with button groups">
@@ -252,7 +254,7 @@
 
                         </div>
                   </div>
-            
-      </div>
+
+            </div>
       </div>
 </div>

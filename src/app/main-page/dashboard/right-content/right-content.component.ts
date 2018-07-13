@@ -1,9 +1,6 @@
-import { EventService } from '../../services/event.service';
-import { PlayListService } from '../../services/playlist.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { EventService } from '../../../services/event.service';
+import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-declare var jquery: any;
 declare var $: any;
 
 @Component({
@@ -60,11 +57,10 @@ export class RightContentComponent implements OnDestroy {
     flagKeyTab: string = 'tabKey1';
     flagSetTab: string = "tabSet1";
 
-    constructor(private _eventService: EventService,
-        private _playListService: PlayListService) {
+    constructor(private service: EventService) {
         this.initSetting();
         var that = this;
-        this.subs = _eventService.componentSaid$.subscribe(mess => {
+        this.subs = service.componentSaid$.subscribe(mess => {
             if (mess.talkTo === "rightComponent") {
                 if (mess.mess === "get key list") {
                     that.setting = that.mySetting();
@@ -73,7 +69,7 @@ export class RightContentComponent implements OnDestroy {
                         mess: "get key list",
                         data: that.setting
                     }
-                    _eventService.componentSay(mes);
+                    service.componentSay(mes);
                 }
                 if (mess.mess === "line channel") {
                     that.setting = that.mySetting();
@@ -82,7 +78,7 @@ export class RightContentComponent implements OnDestroy {
                         mess: "line channel",
                         data: that.setting
                     }
-                    _eventService.componentSay(mes);
+                    service.componentSay(mes);
                 }
                 if (mess.mess === "successKey") {
                     that.moveKeyWord(mess.key, "keyUsing");
@@ -97,19 +93,13 @@ export class RightContentComponent implements OnDestroy {
                         mess: "scheduler call setting",
                         data: that.setting
                     }
-                    _eventService.componentSay(mes);
-                }
-                if(mess.mess === "set end Date"){
-                    that.setting = that.mySetting();
-                    var mes = {
-                        talkTo: "leftComponent",
-                        mess: "set end Date",
-                        data: that.setting
-                    }
-                    _eventService.componentSay(mes);
+                    service.componentSay(mes);
                 }
             }
         });
+    }
+    doSomething(e){
+        console.log(e);
     }
     moveKeyWord(key: string, des: string) {
         $("#" + des)[0].value += (key + "\n");

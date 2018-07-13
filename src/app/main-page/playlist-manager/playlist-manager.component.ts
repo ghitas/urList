@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../services/event.service';
-import { PlayListService } from '../services/playlist.service';
+import { EventService } from '../../services/event.service';
 declare var $: any;
 
 @Component({
@@ -43,10 +42,7 @@ export class PlaylistManagerComponent implements OnInit {
     this.selectPLL = e;
   }
   viewPlaylist() {
-    this.listVideo = [];
-    debugger;
     this.service.get(this.service.nm_domain + this.service.nm_viewPlaylist + "?channelId=" + this.selectPLL.channelId + "&maxResults=" + this.countView + "&pageToken=" + this.pageToken).subscribe(res => {
-      console.log(JSON.parse(res._body));
       var listData = JSON.parse(res._body);
       if (!listData) return;
       if (listData.data["prevPageToken"] !== null)
@@ -54,6 +50,7 @@ export class PlaylistManagerComponent implements OnInit {
       if (listData.data["nextPageToken"] !== null)
         this.nextPageToken = listData.data.nextPageToken;
       if (listData.code === 0) {
+        this.listVideo = [];
         listData = listData.data.items;
         listData.forEach(item => {
           this.listVideo.push({

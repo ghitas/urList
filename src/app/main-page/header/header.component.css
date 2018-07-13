@@ -1,3 +1,9 @@
+header {
+	text-align: center;
+	padding: 20px 0;
+	font-size: 30px;
+	border-bottom: 2px solid #eee;
+}
 .bg-dark{
     background: linear-gradient(to right,#535584 0%,#b8368c 100%);
 }

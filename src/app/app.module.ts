@@ -1,50 +1,66 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
-import { LeftContentComponent } from './components/left-content/left-content.component';
-import { RightContentComponent } from './components/right-content/right-content.component';
-import { MainContentComponent } from './components/main-content/main-content.component';
+import { AuthuguardGuard } from './authuguard.guard';
 import { Http, HttpModule } from '@angular/http';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { RouterModule, Routes } from '@angular/router';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RequestOptions, XHRBackend } from '@angular/http';
+import { HttpService } from './services/http.service';
+// modal use for all page
+import { AppModalComponent } from './app-modal/app-modal.component';
+// main page 
+import { MainPageComponent } from './main-page/main-page.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+// main page children
+import { HeaderComponent } from './main-page/header/header.component';
+import { FooterComponent } from './main-page/footer/footer.component';
+import { DashboardComponent } from './main-page/dashboard/dashboard.component';
+import { PlaylistManagerComponent } from './main-page/playlist-manager/playlist-manager.component';
+import { UserAdministratorComponent } from './main-page/user-administrator/user-administrator.component';
+// dashboard children
+import { LeftContentComponent } from './main-page/dashboard/left-content/left-content.component';
+import { RightContentComponent } from './main-page/dashboard/right-content/right-content.component';
+// service
 import { PlayListService } from './services/playlist.service';
 import { EventService } from './services/event.service';
 import { PlaceholderDirective } from './directives/place-holder.directive';
-import { RouterModule, Routes } from '@angular/router';
-import { HeaderComponent } from './header/header.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { FooterComponent } from './footer/footer.component';
-import { AuthuguardGuard } from './authuguard.guard';
-import { AppModalComponent } from './app-modal/app-modal.component';
-import { PlaylistManagerComponent } from './playlist-manager/playlist-manager.component';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
-// import ngx-translate and the http loader
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RequestOptions, XHRBackend } from '@angular/http';
-import { HttpService } from './services/http.service';
-import { APP_BASE_HREF } from '@angular/common';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   {
-    path: 'callback',
-    component: MainContentComponent
-  },
-  {
-    path: 'dashboard',
+    path: 'main-page',
     canActivate: [AuthuguardGuard],
-    component: MainContentComponent
-  },
-  {
-    path: 'manager',
-    canActivate: [AuthuguardGuard],
-    component: PlaylistManagerComponent
-  },
-  {
+    component: MainPageComponent,
+    children: [
+      {
+        path: 'dashboard',
+        canActivate: [AuthuguardGuard],
+        component: DashboardComponent
+      }, {
+        path: 'manager',
+        canActivate: [AuthuguardGuard],
+        component: PlaylistManagerComponent
+      }, {
+        path: 'adminitrator',
+        canActivate: [AuthuguardGuard],
+        component: UserAdministratorComponent
+      }, {
+        path: '',
+        canActivate: [AuthuguardGuard],
+        component: DashboardComponent
+      }
+    ]
+  }, {
     path: '',
     component: LoginFormComponent
+  }, {
+    path: '**',
+    component: PageNotFoundComponent
   }
 ]
 export function createTranslateLoader(http: HttpClient) {
@@ -72,23 +88,18 @@ export function httpInterceptor(backend: XHRBackend, options: RequestOptions) {
   ],
 
   declarations: [
-
-    // Components
-    AppComponent, ToolBarComponent,
-    MainContentComponent, LeftContentComponent,
+    AppComponent,
+    DashboardComponent, LeftContentComponent,
     RightContentComponent,
     PlaylistManagerComponent,
-
-    // Directives
     PlaceholderDirective,
-
     HeaderComponent,
-
     LoginFormComponent,
-
     FooterComponent,
-
-    AppModalComponent
+    AppModalComponent,
+    UserAdministratorComponent,
+    MainPageComponent,
+    PageNotFoundComponent
   ],
 
   bootstrap: [AppComponent],
@@ -102,5 +113,3 @@ export function httpInterceptor(backend: XHRBackend, options: RequestOptions) {
   ]
 })
 export class AppModule { }
-
-

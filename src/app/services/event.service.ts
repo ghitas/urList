@@ -39,7 +39,7 @@ export class EventService {
         localStorage.setItem("user", id);
         this.user = id;
         this.getUserLoggedIn();
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/main-page']);
       } else {
         this.isUserLoggedIn = false;
         localStorage.clear();

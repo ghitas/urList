@@ -1,0 +1,50 @@
+<div class="col-12 mt-3">
+  <button class="btn btn-sm btn-default float-right">
+    <i class="fa fa-plus"></i> Add user</button>
+  <!-- Squared THREE -->
+  <!-- <div class="squaredThree">
+    <input type="checkbox" value="None" id="squaredThree" name="check" />
+    <label for="squaredThree"></label>
+  </div> -->
+</div>
+<div class="col-12 mt-3">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Login</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Language</th>
+        <th>Profiles</th>
+        <th>Create date</th>
+        <th>Modified by</th>
+        <th>Modified date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngIf="listUser">
+      <tr *ngFor="let item of listUser">
+        <td>ID</td>
+        <td>Login</td>
+        <td>Email</td>
+        <td>Status</td>
+        <td>Language</td>
+        <td>Profiles</td>
+        <td>Create date</td>
+        <td>Modified by</td>
+        <td>Modified date</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm btn-secondary">
+              <i class="fa fa-view"></i> View</button>
+            <button type="button" class="btn btn-sm btn-secondary">
+              <i class="fa fa-edit"></i> Edit</button>
+            <button type="button" class="btn btn-sm btn-secondary">
+              <i class="fa fa-delete"></i> Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
